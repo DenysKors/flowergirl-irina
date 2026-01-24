@@ -1,9 +1,23 @@
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div className="flex min-h-screen items-center justify-center">
+      <h1 className="font-heading text-2xl">
+        Начинаем строить прекрасный сайт!
+      </h1>
+      {/* Garden plants and flowers provide many benefits including natural beauty,
+      food for pollinators and a gentle way to keep active. Our selection of
+      outdoor plants includes solutions for every gardening challenge. Need all
+      year round foliage? Check out our evergreen shrubs. Want lots of colourful
+      flowers? Be sure to browse our bedding plants collection. Looking for a
+      flowering shrub? Try our easy to grow hydrangeas. With an incomparable
+      collection of garden plants, competitive prices and customer satisfaction
+      guaranteed, you can trust Thompson & Morgan to deliver. From flowering
+      perennials to towering trees, we aim to provide the best quality plants,
+      at affordable prices with excellent customer service so you receive the
+      best garden shopping experience. */}
+      {/* <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -59,7 +73,7 @@ export default function Home() {
             Documentation
           </a>
         </div>
-      </main>
+      </main> */}
     </div>
   );
 }
