@@ -3,23 +3,27 @@
 :root {
   --background: #ffffff;
   --text: #000000;
+  --color: #0f743b;
+  --border: #cccccc;
 }
 
 @theme inline {
-  /* #0f743b */
   --color-background: var(--background);
   --font-heading: var(--font-Playfair-Bold);
   --font-text: var(--font-OpenSans-Regular);
   --color-text: var(--text);
+  --color-main: var(--color);
+  --color-border-gray: var(--border);
 }
 
 @layer components {
   .container {
     width: 100%;
+    max-width: 80rem;
     margin-right: auto;
     margin-left: auto;
-    padding-right: 1.5rem;
-    padding-left: 1.5rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
   }
 }
 

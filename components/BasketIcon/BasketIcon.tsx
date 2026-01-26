@@ -2,7 +2,7 @@ export default function BasketIcon() {
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
   return (
     <button
-      className="relative cursor-pointer"
+      className="flex flex-col items-center cursor-pointer"
       type="button"
       aria-label="Кошик"
       name="Кошик"
@@ -15,6 +15,7 @@ export default function BasketIcon() {
       >
         <use href={`${baseUrl}/icons.svg#icon-shopping-bag`}></use>
       </svg>
+      Кошик
     </button>
   );
 }

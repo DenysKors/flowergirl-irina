@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import BasketIcon from "../BasketIcon/BasketIcon";
 import MobileMenu from "../MobileMenu/MobileMenu";
+import SearchBar from "../SearchBar/SearchBar";
 import Logo from "../../assets/images/Logo.png";
 
 export default function Header() {
@@ -27,6 +28,7 @@ export default function Header() {
           />
         </Link>
         <BasketIcon />
+        <SearchBar />
       </div>
     </header>
   );
