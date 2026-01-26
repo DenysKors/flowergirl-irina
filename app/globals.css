@@ -2,6 +2,7 @@
 
 :root {
   --background: #ffffff;
+  --text: #000000;
 }
 
 @theme inline {
@@ -9,6 +10,17 @@
   --color-background: var(--background);
   --font-heading: var(--font-Playfair-Bold);
   --font-text: var(--font-OpenSans-Regular);
+  --color-text: var(--text);
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
 }
 
 body {

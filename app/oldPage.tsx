@@ -6,6 +6,7 @@ export default function Home() {
       <h1 className="font-heading text-2xl">
         Начинаем строить прекрасный сайт!
       </h1>
+      {/* Квіткове мистецтво в кожен дім */}
       {/* Garden plants and flowers provide many benefits including natural beauty,
       food for pollinators and a gentle way to keep active. Our selection of
       outdoor plants includes solutions for every gardening challenge. Need all
