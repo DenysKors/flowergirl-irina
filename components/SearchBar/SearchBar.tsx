@@ -11,7 +11,7 @@ export default function SearchBar() {
           id="search"
           type="search"
           name="query"
-          placeholder="Пошук..."
+          placeholder="Пошук товару..."
           maxLength={30}
         />
         <button

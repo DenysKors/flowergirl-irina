@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header>
-      <div className="container pt-3.5 lg:pb-3.5 grid grid-cols-[auto_minmax(0px,1fr)_auto] lg:grid-cols-[1fr,0.5fr,1fr] gap-y-3.5 lg:gap-y-0 gap-x-4 lg:gap-x-10 items-center">
+      <div className="container pt-3.5 lg:pb-3.5 grid grid-cols-[1fr_minmax(0px,1fr)_1fr] lg:grid-cols-[1fr_250px_1fr] gap-y-3.5 lg:gap-y-0 gap-x-4 lg:gap-x-10 items-center">
         <MobileMenu />
         <Link
           className="flex justify-center"
