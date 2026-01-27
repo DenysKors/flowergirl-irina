@@ -2,7 +2,7 @@ export default function BasketIcon() {
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
   return (
     <button
-      className="p-2 flex flex-col items-center cursor-pointer justify-self-center"
+      className="lg:p-2 flex flex-col items-center cursor-pointer justify-self-end lg:justify-self-center"
       type="button"
       aria-label="Кошик"
       name="Кошик"

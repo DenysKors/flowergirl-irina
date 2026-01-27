@@ -2,7 +2,7 @@ export default function MobileMenu() {
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
   return (
     <button
-      className="p-2 flex flex-col items-center cursor-pointer lg:hidden justify-self-center"
+      className="flex flex-col items-center cursor-pointer lg:hidden justify-self-start"
       type="button"
       aria-label="Мобільне меню"
     >

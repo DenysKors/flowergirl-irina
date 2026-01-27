@@ -4,6 +4,7 @@ import Link from "next/link";
 import BasketIcon from "../BasketIcon/BasketIcon";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import SearchBar from "../SearchBar/SearchBar";
+import NavBar from "../NavBar/NavBar";
 import Logo from "../../assets/images/Logo.png";
 
 export default function Header() {
@@ -30,6 +31,7 @@ export default function Header() {
         <BasketIcon />
         <SearchBar />
       </div>
+      <NavBar />
     </header>
   );
 }

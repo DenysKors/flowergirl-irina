@@ -4,16 +4,16 @@
   --background: #ffffff;
   --text: #000000;
   --color: #0f743b;
-  --border: #cccccc;
+  --borderGray: #cccccc;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --font-heading: var(--font-Playfair-Bold);
+  --font-heading: var(--font-Alegreya-Bold);
   --font-text: var(--font-OpenSans-Regular);
   --color-text: var(--text);
   --color-main: var(--color);
-  --color-border-gray: var(--border);
+  --color-border-gray: var(--borderGray);
 }
 
 @layer components {

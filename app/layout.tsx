@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const playfairBold = localFont({
-  src: "../assets/fonts/PlayfairDisplay-Bold.ttf",
-  variable: "--font-Playfair-Bold",
+const alegreyaBold = localFont({
+  src: "../assets/fonts/Alegreya-Bold.ttf",
+  variable: "--font-Alegreya-Bold",
 });
 
 const openSansRegular = localFont({
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body
-        className={`${playfairBold.variable} ${openSansRegular.variable} antialiased`}
+        className={`${alegreyaBold.variable} ${openSansRegular.variable} antialiased`}
       >
         {children}
       </body>
