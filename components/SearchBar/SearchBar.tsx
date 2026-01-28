@@ -1,7 +1,7 @@
 export default function SearchBar() {
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
   return (
-    <div className="col-span-full py-4 lg:py-0 lg:col-auto lg:order-first max-sm:hidden">
+    <div className="lg:max-w-80">
       <form className="flex">
         <label className="sr-only" htmlFor="search">
           Пошук квітів, препаратів та іншого
@@ -15,7 +15,7 @@ export default function SearchBar() {
           maxLength={40}
         />
         <button
-          className="flex items-center rounded-md rounded-l-none p-2.5 bg-main"
+          className="flex items-center rounded-md rounded-l-none p-2.5 bg-main cursor-pointer"
           type="submit"
           aria-label="пошук"
           title="Пошук"

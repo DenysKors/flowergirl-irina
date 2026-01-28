@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import SearchBar from "../SearchBar/SearchBar";
 import Logo from "../../assets/images/Logo.png";
 import { userLinkData } from "@/app/userLinkData";
 
@@ -36,7 +37,7 @@ export default function MobileMenu() {
           isMobMenuShow ? "block translate-x-full" : "hidden"
         }`}
       >
-        <div className="flex items-center gap-2 py-4 px-6 border-b border-border-gray">
+        <div className="flex items-center gap-2 py-4 px-6">
           <Image
             src={Logo}
             alt="Ірочка хозяйка логотип"
@@ -55,10 +56,13 @@ export default function MobileMenu() {
             </svg>
           </button>
         </div>
+        <div className="pb-4 px-6 border-b border-border-gray">
+          <SearchBar />
+        </div>
         <nav aria-label="Мобільна навігація">
           <ul className="flex flex-col justify-start gap-x-8 xl:gap-x-10">
             {userLinkData.map(({ title, href }) => (
-              <li key={title}>
+              <li key={title} className="px-6 border-b border-border-gray">
                 <Link
                   className={`${
                     pathname === `${href}`

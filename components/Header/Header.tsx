@@ -23,13 +23,15 @@ export default function Header() {
             className="max-w-30 md:max-w-full"
             src={Logo}
             alt="Ірочка хозяйка логотип"
-            width={250}
-            height={250}
+            width={200}
+            height={200}
             priority
           />
         </Link>
         <BasketIcon />
-        <SearchBar />
+        <div className="col-span-full py-4 lg:py-0 lg:col-auto lg:order-first max-sm:hidden">
+          <SearchBar />
+        </div>
       </div>
       <NavBar />
     </header>
