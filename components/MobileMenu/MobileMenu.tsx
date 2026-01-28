@@ -32,8 +32,8 @@ export default function MobileMenu() {
         Меню
       </button>
       <div
-        className={`absolute z-20 bg-background top-0 left-0 w-full h-full ${
-          isMobMenuShow ? "block" : "hidden"
+        className={`absolute z-20 bg-background top-0 w-full h-full -left-full transition-transform duration-500 ease-out${
+          isMobMenuShow ? "block translate-x-full" : "hidden"
         }`}
       >
         <div className="flex items-center gap-2 py-4 px-6 border-b border-border-gray">
@@ -45,7 +45,7 @@ export default function MobileMenu() {
             priority
           />
           <button
-            className="button ms-auto p-2 bg-neutral-100 border border-gray-300 hover:bg-red-500 cursor-pointer"
+            className="button ms-auto p-2 bg-neutral-100 border border-gray-300 hover:bg-red-500 cursor-pointer transition-colors"
             type="button"
             aria-label="Закрити меню"
             onClick={handleToggle}
