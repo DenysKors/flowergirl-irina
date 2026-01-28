@@ -25,6 +25,12 @@
     padding-right: 2rem;
     padding-left: 2rem;
   }
+
+  .button {
+    display: flex;
+    align-items: center;
+    border-radius: 0.5rem;
+  }
 }
 
 body {

@@ -11,7 +11,7 @@ export default function NavBar() {
   return (
     <div className="border-y border-border-gray hidden lg:block">
       <div className="container">
-        <nav className="hidden lg:block">
+        <nav className="hidden lg:block" aria-label="Головна навігація">
           <ul className="flex flex-wrap justify-center gap-x-8 xl:gap-x-10">
             {userLinkData.map(({ title, href }) => (
               <li key={title}>
