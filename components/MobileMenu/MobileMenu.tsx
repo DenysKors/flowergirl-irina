@@ -20,7 +20,7 @@ export default function MobileMenu() {
   };
 
   return (
-    <div className="lg:hidden">
+    <div className="lg:hidden overflow-y-auto">
       <button
         className="flex flex-col items-center cursor-pointer justify-self-start"
         type="button"
@@ -72,6 +72,9 @@ export default function MobileMenu() {
                   href={href}
                 >
                   {title}
+                  <svg className="h-4 w-4 fill-black">
+                    <use href={`${baseUrl}/icons.svg#icon-arrow-right`}></use>
+                  </svg>
                 </Link>
               </li>
             ))}
