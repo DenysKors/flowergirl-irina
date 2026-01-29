@@ -31,6 +31,14 @@
     align-items: center;
     border-radius: 0.5rem;
   }
+
+  .bg-hero {
+    height: calc((100vw - 64px) / 1.929);
+    background-image: linear-gradient(to bottom, transparent 60%, #0f743b),
+      url(/images/bg-hero.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 }
 
 body {

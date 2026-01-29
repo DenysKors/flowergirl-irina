@@ -1,3 +1,9 @@
+import SectionHero from "@/components/SectionHero/SectionHero";
+
 export default function MainPage() {
-  return <main></main>;
+  return (
+    <main>
+      <SectionHero />
+    </main>
+  );
 }
