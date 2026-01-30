@@ -36,6 +36,10 @@
   padding-left: 2rem;
 }
 
+@utility flex-hero {
+  height: calc((100vw - 64px) / 1.929);
+}
+
 @layer components {
   .button {
     display: flex;
@@ -44,8 +48,7 @@
   }
 
   .bg-hero {
-    height: calc((100vw - 64px) / 1.929);
-    background-image: linear-gradient(to bottom, transparent 60%, #0f743b),
+    background-image: linear-gradient(to bottom, transparent 75%, #0f743b),
       url(/images/bg-hero.jpg);
     background-repeat: no-repeat;
     background-size: cover;

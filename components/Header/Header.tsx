@@ -19,14 +19,19 @@ export default function Header() {
           href={baseUrl}
           title="На головну сторінку"
         >
-          <Image
-            className="max-w-30 md:max-w-full"
-            src={Logo}
-            alt="Ірочка хозяйка логотип"
-            width={200}
-            height={200}
-            priority
-          />
+          <div>
+            <Image
+              className="max-w-30 md:max-w-full"
+              src={Logo}
+              alt="Ірочка хозяйка логотип"
+              width={200}
+              height={200}
+              priority
+            />
+            <p className="font-text text-[8px] md:text-base text-center uppercase">
+              Квіткова крамниця
+            </p>
+          </div>
         </Link>
         <BasketIcon />
         <div className="col-span-full py-4 lg:py-0 lg:col-auto lg:order-first max-sm:hidden">

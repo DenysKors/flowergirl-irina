@@ -17,9 +17,11 @@ export default function MobileMenu() {
 
   const handleToggle = () => {
     setisMobMenuShow((prev) => !prev);
-    isMobMenuShow
-      ? (document.body.style.overflow = "scroll")
-      : (document.body.style.overflow = "hidden");
+    if (isMobMenuShow) {
+      document.body.style.overflow = "scroll";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
   };
 
   return (
@@ -36,7 +38,7 @@ export default function MobileMenu() {
         Меню
       </button>
       <div
-        className={`absolute z-50 bg-background top-0 w-screen h-svw -left-full transition-transform duration-500 ease-out${
+        className={`absolute z-50 bg-background top-0 w-screen h-dvh -left-full transition-transform duration-500 ease-out${
           isMobMenuShow ? "block translate-x-full" : "hidden"
         }`}
       >
