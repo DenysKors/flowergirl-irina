@@ -16,7 +16,7 @@
   --color-border-gray: var(--borderGray);
 }
 
-@layer components {
+@layer utilities {
   .container {
     width: 100%;
     max-width: 80rem;
@@ -25,7 +25,18 @@
     padding-right: 2rem;
     padding-left: 2rem;
   }
+}
 
+@utility container-hero {
+  width: 100%;
+  max-width: 80rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+@layer components {
   .button {
     display: flex;
     align-items: center;
