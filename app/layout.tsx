@@ -8,8 +8,8 @@ const alegreyaBold = localFont({
 });
 
 const openSansRegular = localFont({
-  src: "../assets/fonts/OpenSans-Regular.ttf",
-  variable: "--font-OpenSans-Regular",
+  src: "../assets/fonts/Nunito-Medium.ttf",
+  variable: "--font-Nunito-Medium",
 });
 
 export const metadata: Metadata = {

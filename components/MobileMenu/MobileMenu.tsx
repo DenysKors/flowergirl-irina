@@ -61,7 +61,7 @@ export default function MobileMenu() {
             </svg>
           </button>
         </div>
-        <div className="pb-4 px-6 border-b border-border-gray">
+        <div className="pb-4 px-6 border-b border-border-gray sm:hidden">
           <SearchBar />
         </div>
         <nav aria-label="Мобільна навігація">

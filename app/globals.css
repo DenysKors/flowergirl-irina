@@ -10,7 +10,7 @@
 @theme inline {
   --color-background: var(--background);
   --font-heading: var(--font-Alegreya-Bold);
-  --font-text: var(--font-OpenSans-Regular);
+  --font-text: var(--font-Nunito-Medium);
   --color-text: var(--text);
   --color-main: var(--color);
   --color-border-gray: var(--borderGray);
@@ -41,6 +41,10 @@
 }
 
 @layer components {
+  .base-link {
+    @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600;
+  }
+
   .button {
     display: flex;
     align-items: center;

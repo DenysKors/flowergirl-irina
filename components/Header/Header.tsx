@@ -28,7 +28,7 @@ export default function Header() {
               height={200}
               priority
             />
-            <p className="font-text text-[8px] md:text-base text-center uppercase">
+            <p className="font-text text-[10px] md:text-base text-center uppercase">
               Квіткова крамниця
             </p>
           </div>
