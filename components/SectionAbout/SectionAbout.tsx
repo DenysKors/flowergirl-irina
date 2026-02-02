@@ -9,7 +9,7 @@ export default function SectionAbout() {
         найвищої якості з Голландії. Допомагаю обрати й доглядати за квітами.
         Консультую та ділюся практичними порадами у{" "}
         <a
-          className="base-link"
+          className="link-base"
           href="https://www.tiktok.com/@flowergirl_irina?_r=1&_t=ZS-93WY1ZeQmiF"
           target="_blank"
           rel="noopener noreferrer"
