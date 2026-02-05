@@ -79,6 +79,7 @@ export default function RootLayout({
         className={`${alegreyaBold.variable} ${openSansRegular.variable} antialiased`}
       >
         {children}
+        <div id="modal-root"></div>
       </body>
     </html>
   );
