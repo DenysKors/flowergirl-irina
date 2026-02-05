@@ -42,12 +42,12 @@ export default function Footer() {
               <ModalTerms />
             </ModalRoot>
           )}
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-1">
             <h3 className="font-text text-base md:text-lg lg:text-xl text-background text-center md:text-left">
-              Контакти
+              Контакти:
             </h3>
             <Link
-              className="font-text text-xs md:text-sm lg:text-base text-background hover:underline text-center md:text-left"
+              className="font-text text-sm md:text-base lg:text-lg text-background hover:underline text-center md:text-left"
               href="tel:+380965950404"
             >
               моб. (096) 595 04 04
