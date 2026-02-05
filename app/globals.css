@@ -25,6 +25,16 @@
     padding-right: 2rem;
     padding-left: 2rem;
   }
+
+  .custom-shape-divider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+  }
 }
 
 @utility container-hero {

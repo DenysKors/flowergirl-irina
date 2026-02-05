@@ -35,13 +35,12 @@ export default function Modal({ onClose, children }: UserModalProps) {
 
   return createPortal(
     <div
-      className="fixed top-0 left-0 w-dvh h-dvh flex justify-center items-center bg-gray-400 z-30"
+      className="fixed top-0 left-0 w-dvw h-dvh flex justify-center items-center bg-gray-700/60 z-30"
       onClick={backdropClick}
     >
-      <div className="py-4 px-6 max-w-[calc(100vw - 40px)] max-h-[calc(100vh - 100px)] rounded-xl bg-background overflow-y-auto">
-        {children}
+      <div className="py-4 px-6 max-w-[calc(100dvw-2rem)] sm:max-w-lg max-h-min rounded-xl bg-background overflow-y-auto">
         <button
-          className="button ms-auto p-2 bg-neutral-100 border border-gray-300 hover:bg-red-500 cursor-pointer transition-colors"
+          className="button ms-auto p-2 mb-4 bg-neutral-100 border border-gray-300 hover:bg-red-500 cursor-pointer transition-colors"
           type="button"
           aria-label="Закрити вікно"
           onClick={onClose}
@@ -50,6 +49,7 @@ export default function Modal({ onClose, children }: UserModalProps) {
             <use href={`${baseUrl}/icons.svg#icon-close`}></use>
           </svg>
         </button>
+        {children}
       </div>
     </div>,
     document.getElementById("modal-root")!

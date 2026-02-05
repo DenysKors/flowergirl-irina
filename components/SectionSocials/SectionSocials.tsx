@@ -1,7 +1,10 @@
 export default function SectionSocials() {
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
   return (
-    <section className="bg-linear-to-b from-main from-55% to-violet-800 lg:bg-linear-to-r">
+    <section
+      // className="bg-linear-to-b from-main from-55% to-violet-800 lg:bg-linear-to-r"
+      className="bg-main"
+    >
       <div className="container lg:flex lg:justify-between lg:gap-4">
         <div className="py-8 sm:flex">
           <div className="flex gap-x-4 lg:px-0 lg:max-w-none">
@@ -19,7 +22,7 @@ export default function SectionSocials() {
             </div>
           </div>
         </div>
-        <div className="container lg:px-0 pb-8 lg:pb-0 lg:max-w-none self-center">
+        <div className="w-full max-w-7xl mr-auto ml-auto pr-8 pl-8 lg:px-0 pb-8 lg:pb-0 lg:pr-0 lg:max-w-none self-center">
           <div className="flex justify-center gap-2 lg:gap-3 lg:justify-end">
             <a
               className="p-2 rounded-full transition-colors bg-background hover:bg-slate-300"
