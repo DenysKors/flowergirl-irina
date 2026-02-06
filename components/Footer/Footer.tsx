@@ -54,9 +54,9 @@ export default function Footer() {
             </Link>
             <Link
               className="font-text text-sm md:text-base lg:text-lg text-background hover:underline text-center md:text-left"
-              href="mailto:xxxxxxx@gmail.com"
+              href="mailto:irina.flowergirl@gmail.com"
             >
-              xxxxxxx@gmail.com
+              irina.flowergirl@gmail.com
             </Link>
           </div>
         </div>
