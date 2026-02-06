@@ -18,8 +18,8 @@ export default function NavBar() {
                 <Link
                   className={`${
                     pathname === `${href}`
-                      ? "w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl tracking-wider underline underline-offset-4"
-                      : "w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl tracking-wider hover:underline hover:underline-offset-4 hover:text-main transition"
+                      ? "justify-self-center block pt-4 pb-4 uppercase font-heading text-lg xl:text-xl text-main tracking-wider underline underline-offset-4"
+                      : "justify-self-center block pt-4 pb-4 uppercase font-heading text-lg xl:text-xl tracking-wider hover:underline hover:underline-offset-4 hover:text-main transition"
                   }`}
                   href={href}
                 >

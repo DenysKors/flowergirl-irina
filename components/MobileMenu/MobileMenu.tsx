@@ -71,10 +71,11 @@ export default function MobileMenu() {
                 <Link
                   className={`${
                     pathname === `${href}`
-                      ? "w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl tracking-wider underline underline-offset-4 "
+                      ? "w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl text-main tracking-wider underline underline-offset-4 "
                       : "w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl tracking-wider hover:underline hover:underline-offset-4 hover:text-main transition border-t-border-gray"
                   }`}
                   href={href}
+                  onClick={handleToggle}
                 >
                   {title}
                   <svg className="h-4 w-4 fill-black">
