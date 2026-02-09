@@ -8,6 +8,7 @@ export default function SectionFilters({ plantsCategories }: FilterProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
 
   const onCategoruFilterChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams);
@@ -26,22 +27,25 @@ export default function SectionFilters({ plantsCategories }: FilterProps) {
 
   return (
     <section className="mb-20" aria-label="Фільтри">
-      <legend className="mb-4 font-heading text-base md:text-lg lg:text-xl text-end">
-        Фільтр за категоріями
-      </legend>
+      <h2 className="hidden">Фільтр категорій</h2>
+      <div className="mb-4 flex justify-end">
+        <svg className="w-5 h-5 fill-text md:w-8 md:h-8">
+          <use href={`${baseUrl}/icons.svg#icon-filter`}></use>
+        </svg>
+      </div>
       <ul className="flex gap-2 flex-wrap justify-end">
         {plantsCategories.map(({ label, value }) => {
           return (
             <li
               key={value}
-              className="p-1 flex items-center border border-gray-300 rounded-lg"
+              className="p-1 flex items-center gap-2 border border-gray-300 rounded-lg"
             >
               <label
                 className="flex items-center cursor-pointer relative"
                 htmlFor={value}
               >
                 <input
-                  className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow-sm  border border-slate-200 checked:bg-main checked:border-main"
+                  className="peer h-3.5 w-3.5 md:w-5 md:h-5 cursor-pointer transition-all appearance-none rounded shadow-sm  border border-slate-200 checked:bg-main checked:border-main"
                   id={value}
                   type="checkbox"
                   value={value}
@@ -50,9 +54,8 @@ export default function SectionFilters({ plantsCategories }: FilterProps) {
                 />
                 <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                   <svg
+                    className="w-3 h-3 md:w-4.5 md:h-4.5"
                     fill="none"
-                    width="18px"
-                    height="18px"
                     strokeWidth="2"
                     color="currentColor"
                     viewBox="0 0 24 24"
@@ -61,15 +64,15 @@ export default function SectionFilters({ plantsCategories }: FilterProps) {
                     <path
                       d="M5 13L9 17L19 7"
                       stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     ></path>
                   </svg>
                 </span>
               </label>
               <label
-                className="cursor-pointer text-slate-600 antialiased"
+                className="text-xs md:text-base break-all cursor-pointer text-text antialiased"
                 htmlFor={value}
               >
                 {label}

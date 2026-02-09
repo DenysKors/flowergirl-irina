@@ -14,6 +14,7 @@ export default async function PlantsPage() {
   const plantsCategories: Categories[] = await getAllPlantsCategories();
   return (
     <main className="container">
+      <h1 className="hidden">Каталог рослин</h1>
       <LinkBack />
       <Suspense>
         <SectionFilters plantsCategories={plantsCategories} />
