@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 import LinkBack from "@/components/LinkBack/LinkBack";
 import SectionFilters from "@/components/SectionFilters/SectionFilters";
+import SectionProducts from "@/components/SectionProducts/SectionProducts";
 
 import { getAllPlantsCategories } from "@/lib/api";
 import { Categories } from "@/types/types";
@@ -18,6 +19,7 @@ export default async function PlantsPage() {
       <LinkBack />
       <Suspense>
         <SectionFilters plantsCategories={plantsCategories} />
+        <SectionProducts />
       </Suspense>
     </main>
   );

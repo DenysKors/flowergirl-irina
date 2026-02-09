@@ -26,7 +26,7 @@ export default function SectionFilters({ plantsCategories }: FilterProps) {
   };
 
   return (
-    <section className="mb-20" aria-label="Фільтри">
+    <section className="mb-5 md:mb-10" aria-label="Фільтри">
       <h2 className="hidden">Фільтр категорій</h2>
       <div className="mb-4 flex justify-end">
         <svg className="w-5 h-5 fill-text md:w-8 md:h-8">
@@ -72,7 +72,7 @@ export default function SectionFilters({ plantsCategories }: FilterProps) {
                 </span>
               </label>
               <label
-                className="text-xs md:text-base break-all cursor-pointer text-text antialiased"
+                className="text-sm md:text-base break-all cursor-pointer text-text antialiased"
                 htmlFor={value}
               >
                 {label}
