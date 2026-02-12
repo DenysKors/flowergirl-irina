@@ -10,23 +10,23 @@ type SEctionPlantsProps = {
 };
 
 export default function SectionPlants({ plantsData }: SEctionPlantsProps) {
-  const allPlants = use(plantsData);
+  const userPlants = use(plantsData);
   return (
     <section>
-      {allPlants.plants.length === 0 && (
+      {userPlants.plants.length === 0 && (
         <div className="h-60 font-text flex justify-center items-center text-center md:text-lg">
           За цим запитом нічого не знайдено
         </div>
       )}
-      {allPlants.plants.length > 0 && (
-        <ProductsList products={allPlants.plants} />
-        // {plantsData.totalAmount > PRODUCT_PAGINATION_LIMIT && (
-        //   <Pagination
-        //     totalAmount={productsData.totalAmount}
-        //     paginationLimit={PRODUCT_PAGINATION_LIMIT}
-        //   />
-        // )}
+      {userPlants.plants.length > 0 && (
+        <ProductsList products={userPlants.plants} />
       )}
+      {/* {plantsData.totalAmount > PRODUCT_PAGINATION_LIMIT && (
+         <Pagination
+            totalAmount={productsData.totalAmount}
+            paginationLimit={PRODUCT_PAGINATION_LIMIT}
+          />
+        )} */}
     </section>
   );
 }

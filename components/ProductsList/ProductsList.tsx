@@ -31,13 +31,25 @@ export default function ProductsList({ products }: ProductsListProps) {
                 width={250}
                 height={445}
               />
-              <p className="mt-2 md:mt-4 font-heading text-main md:text-lg lg:text-xl">
+              <p className="mt-2 md:mt-4 font-heading text-main md:text-lg lg:text-xl truncate">
                 {title}
               </p>
             </Link>
-            <div className="mt-2 md:mt-4">
+            <div className="mt-2 md:mt-4 flex justify-between items-center">
               <span className="font-text text-sm lg:text-base">{`${price} грн`}</span>
-              <button type="button" aria-label="Додати у кошик"></button>
+              {qty > 0 && (
+                <button
+                  className="px-2.5 py-1 lg:px-3 lg:py-1.5 text-sm lg:text-base text-background flex items-center justify-center gap-0.5 lg:gap-1 bg-violet-800 rounded-2xl lg:rounded-4xl cursor-pointer"
+                  type="button"
+                  aria-label="Додати у кошик"
+                  title="Додати у кошик"
+                >
+                  +
+                  <svg className="w-3 h-3 fill-background lg:w-5 lg:h-5">
+                    <use href={`${baseUrl}/icons.svg#icon-shopping-bag`}></use>
+                  </svg>
+                </button>
+              )}
             </div>
             <div className="mt-4 md:mt-6">
               <span className="font-text text-xs md:text-sm lg:text-base">

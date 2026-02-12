@@ -29,7 +29,6 @@ export default async function PlantsPage({
       <h1 className="hidden">Каталог рослин</h1>
       <LinkBack />
       <SectionFilters plantsCategories={plantsCategories} />
-      {/* <Suspense fallback={<Skeleton />}> */}
       <Suspense fallback={<Skeleton />}>
         <SectionPlants plantsData={plantsData} />
       </Suspense>
