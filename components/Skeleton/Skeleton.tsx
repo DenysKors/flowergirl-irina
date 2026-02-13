@@ -1,10 +1,13 @@
 export default function Skeleton({ slotsAmount = 2 }) {
   return (
-    <div className="flex flex-wrap gap-3 justify-start">
+    <div
+      // className="flex flex-wrap gap-3 justify-start"
+      className="mx-auto pt-4 pb-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-4 md:gap-8 justify-items-center"
+    >
       {[...Array(slotsAmount)].map((_, idx) => {
         return (
-          <div key={idx} className="animate-pulse">
-            <div className="relative grid h-111.25 max-w-62.5 place-items-center bg-gray-300 rounded-md">
+          <div key={idx} className="animate-pulse place-self-stretch">
+            <div className="h-53.5 md:h-95 lg:h-111.25 grid place-items-center bg-gray-300 rounded-md">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -22,11 +25,11 @@ export default function Skeleton({ slotsAmount = 2 }) {
             </div>
 
             <div>
-              <div className="font-text antialiased text-base text-inherit mb-4 mt-4 h-3 w-56 rounded-full bg-gray-300"></div>
+              <div className="font-text antialiased text-base text-inherit mb-4 mt-4 h-3  rounded-full bg-gray-300"></div>
 
-              <div className="font-text antialiased text-base text-inherit mb-2 h-2 w-full rounded-full bg-gray-300"></div>
+              <div className="font-text antialiased text-base text-inherit mb-2 h-3 w-1/3 rounded-full bg-gray-300"></div>
 
-              <div className="font-text antialiased text-base text-inherit mb-2 h-2 w-full rounded-full bg-gray-300"></div>
+              <div className="font-text antialiased text-base text-inherit mb-2 h-2 w-1/2 rounded-full bg-gray-300"></div>
             </div>
           </div>
         );

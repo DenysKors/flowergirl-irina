@@ -20,23 +20,26 @@ export default function ProductsList({ products }: ProductsListProps) {
             className="pb-3 md:pb-3.5 lg:pb-4 flex flex-col border-b border-b-border-gray"
           >
             <Link
-              className="rounded-md"
+              className="rounded-md group/edit"
               href={{
                 pathname: `/catalog/plants/${code}`,
               }}
             >
-              <img
-                src={`${baseUrl}/plant${code}.jpg`}
-                alt={title}
-                width={250}
-                height={445}
-              />
-              <p className="mt-2 md:mt-4 font-heading text-main md:text-lg lg:text-xl truncate">
+              <div className="overflow-hidden">
+                <img
+                  className="transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
+                  src={`${baseUrl}/plant${code}.jpg`}
+                  alt={title}
+                  width={250}
+                  height={445}
+                />
+              </div>
+              <p className="mt-2 md:mt-4 font-heading text-main md:text-lg lg:text-xl truncate group-hover/edit:underline">
                 {title}
               </p>
             </Link>
             <div className="mt-2 md:mt-4 flex justify-between items-center">
-              <span className="font-text text-sm lg:text-base">{`${price} грн`}</span>
+              <strong className="font-text md:text-lg lg:text-xl">{`${price} грн`}</strong>
               {qty > 0 && (
                 <button
                   className="px-2.5 py-1 lg:px-3 lg:py-1.5 text-sm lg:text-base text-background flex items-center justify-center gap-0.5 lg:gap-1 bg-violet-800 rounded-2xl lg:rounded-4xl cursor-pointer"

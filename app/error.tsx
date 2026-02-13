@@ -7,7 +7,7 @@ export default function Error({ reset }: { reset: () => void }) {
         Щось пішло не так, як хотілось!
       </h2>
       <button
-        className="button p-2 font-text"
+        className="button p-3 font-text hover:bg-border-gray"
         type="button"
         onClick={() => reset()}
       >
