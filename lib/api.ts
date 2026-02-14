@@ -91,3 +91,16 @@ export const getPlants = async (
     }
   }
 };
+
+export const getPlantByCode = cache(async (plantCode: number) => {
+  await dbConnect();
+  try {
+    const plant = await Plant.findOne({ code: plantCode });
+    return plant;
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
+  }
+});

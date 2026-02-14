@@ -7,11 +7,6 @@ export type Categories = {
   value: string;
 };
 
-enum SellStatus {
-  inStock = "В наявності",
-  notAvailable = "Немає в наявності",
-}
-
 export type Product = {
   code: number;
   title: string;
@@ -20,7 +15,6 @@ export type Product = {
   imagesUrl: string[];
   price: number;
   qty: number;
-  sell_status: SellStatus;
 };
 
 export type PlantsData = {

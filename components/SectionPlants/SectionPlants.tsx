@@ -2,8 +2,10 @@
 import { use } from "react";
 
 import ProductsList from "../ProductsList/ProductsList";
+import Pagination from "../Pagination/Pagination";
 
 import { PlantsData } from "@/types/types";
+import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
 
 type SEctionPlantsProps = {
   plantsData: Promise<PlantsData>;
@@ -19,14 +21,14 @@ export default function SectionPlants({ plantsData }: SEctionPlantsProps) {
         </div>
       )}
       {userPlants.plants.length > 0 && (
-        <ProductsList products={userPlants.plants} />
-      )}
-      {/* {plantsData.totalAmount > PRODUCT_PAGINATION_LIMIT && (
-         <Pagination
-            totalAmount={productsData.totalAmount}
+        <>
+          <ProductsList products={userPlants.plants} />
+          <Pagination
+            totalAmount={userPlants.totalAmount}
             paginationLimit={PRODUCT_PAGINATION_LIMIT}
           />
-        )} */}
+        </>
+      )}
     </section>
   );
 }
