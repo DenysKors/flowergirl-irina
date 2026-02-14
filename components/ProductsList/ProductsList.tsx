@@ -12,7 +12,7 @@ type ProductsListProps = {
 export default function ProductsList({ products }: ProductsListProps) {
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
   return (
-    <ul className="mx-auto pt-4 pb-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-4 md:gap-8 justify-items-center">
+    <ul className="mx-auto pb-4 grid grid-cols-1 min-[375px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-4 md:gap-8 justify-items-center">
       {products.map(({ code, title, price, qty }) => {
         return (
           <li
@@ -20,7 +20,7 @@ export default function ProductsList({ products }: ProductsListProps) {
             className="pb-3 md:pb-3.5 lg:pb-4 flex flex-col border-b border-b-border-gray"
           >
             <Link
-              className="rounded-md group/edit"
+              className="group/edit"
               href={{
                 pathname: `/catalog/plants/${code}`,
               }}
@@ -34,7 +34,7 @@ export default function ProductsList({ products }: ProductsListProps) {
                   height={445}
                 />
               </div>
-              <p className="mt-2 md:mt-4 font-heading text-main md:text-lg lg:text-xl truncate group-hover/edit:underline">
+              <p className="mt-2 md:mt-4 font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline">
                 {title}
               </p>
             </Link>

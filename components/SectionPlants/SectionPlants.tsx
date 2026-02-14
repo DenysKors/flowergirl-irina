@@ -14,7 +14,7 @@ type SEctionPlantsProps = {
 export default function SectionPlants({ plantsData }: SEctionPlantsProps) {
   const userPlants = use(plantsData);
   return (
-    <section>
+    <section className="pt-4 pb-4">
       {userPlants.plants.length === 0 && (
         <div className="h-60 font-text flex justify-center items-center text-center md:text-lg">
           За цим запитом нічого не знайдено
