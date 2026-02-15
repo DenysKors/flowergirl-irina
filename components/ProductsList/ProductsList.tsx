@@ -27,7 +27,7 @@ export default function ProductsList({ products }: ProductsListProps) {
             >
               <div className="overflow-hidden">
                 <img
-                  className="transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
+                  className="object-cover object-center transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
                   src={`${baseUrl}/plant${code}.jpg`}
                   alt={title}
                   width={250}
