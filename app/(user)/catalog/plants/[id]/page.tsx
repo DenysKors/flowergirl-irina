@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import LinkBack from "@/components/LinkBack/LinkBack";
 import ProductInteraction from "@/components/ProductInteraction/ProductInteraction";
+import ProductImgGallery from "@/components/ProductImgGallery/ProductImgGallery";
 
 import { getPlantByCode } from "@/lib/api";
 import { SELL_STATUS_ENUMS } from "@/constants/enums";
@@ -47,8 +48,11 @@ export default async function ProductPage({ params }: Props) {
             {title}
           </h1>
         </div>
-        <div className="w-full order-0 md:h-auto md:row-start-1 md:row-span-2 md:col-start-1 md:mb-3.5">
-          gallery
+        <div
+          className="w-full order-0 md:h-auto md:row-start-1 md:row-span-2 md:col-start-1 md:mb-3.5"
+          // className="max-w-[250px] md:max-w-full order-0 md:h-auto md:row-start-1 md:row-span-2 md:col-start-1 md:mb-3.5"
+        >
+          <ProductImgGallery />
         </div>
         <ul className="w-full md:mb-3.5">
           <li className="mb-2 md:mb-4">
