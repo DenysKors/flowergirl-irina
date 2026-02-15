@@ -11,7 +11,7 @@ export type Product = {
   code: number;
   title: string;
   description: string;
-  category: { label: string; value: string };
+  category: { label: string; value: string }[];
   imagesUrl: string[];
   price: number;
   qty: number;

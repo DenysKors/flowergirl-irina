@@ -2,9 +2,11 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import LinkBack from "@/components/LinkBack/LinkBack";
+import ProductInteraction from "@/components/ProductInteraction/ProductInteraction";
 
 import { getPlantByCode } from "@/lib/api";
 import { SELL_STATUS_ENUMS } from "@/constants/enums";
+import { Product } from "@/types/types";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -14,7 +16,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const plantCode = Number(id);
-  const plant = await getPlantByCode(plantCode);
+  const plant: Product = await getPlantByCode(plantCode);
 
   if (!plant) {
     notFound();
@@ -28,14 +30,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
   const plantCode = Number(id);
-  const plant = await getPlantByCode(plantCode);
+  const plant: Product = await getPlantByCode(plantCode);
 
   if (!plant) {
     notFound();
   }
 
-  // const { code, title, description, category, price, qty } = plant;
-  const { code, title, description, category, qty } = plant;
+  const { code, title, description, category, price, qty, imagesUrl } = plant;
 
   return (
     <main className="container">
@@ -51,35 +52,39 @@ export default async function ProductPage({ params }: Props) {
         </div>
         <ul className="w-full md:mb-3.5">
           <li className="mb-2 md:mb-4">
-            <h2 className="block font-heading text-text text-xl border-b border-gray-300 pb-0.5 mb-2 md:mb-4">
+            <h2 className="block font-heading text-text text-xl lg:text-2xl border-b border-gray-300 pb-0.5 mb-2 md:mb-4">
               Опис
             </h2>
-            <div className="text-gray-900 md:text-lg inline">{description}</div>
+            <div className="text-gray-900 font-text md:text-lg inline">
+              {description}
+            </div>
           </li>
           <li className="bg-gray-100 rounded-xl px-4 py-6 mb-4 md:py-4 md:mb-6">
-            <p className="mb-4">{`Артикул: ${code}`}</p>
-            <p className="mb-4">
+            <p className="mb-4 font-text">{`Артикул: ${code}`}</p>
+            <p className="mb-4 font-text">
               {`Категорія:
-              ${category.reduce(
-                (
-                  accum: string,
-                  item: { label: string; value: string },
-                  idx: number
-                ): string => {
-                  if (idx === 0) {
-                    return accum + item.label;
-                  } else {
-                    return accum + ", " + item.label;
-                  }
-                },
-                ""
-              )}`}
+              ${category.reduce((accum, item, idx): string => {
+                if (idx === 0) {
+                  return accum + item.label;
+                } else {
+                  return accum + ", " + item.label;
+                }
+              }, "")}`}
             </p>
-            <p>
+            <p className="mb-4 font-text">
               {qty === 0
                 ? SELL_STATUS_ENUMS.notAvailable
                 : `${SELL_STATUS_ENUMS.inStock} ${qty} шт`}
             </p>
+            {qty > 0 && (
+              <ProductInteraction
+                title={title}
+                price={price}
+                imageUrl={imagesUrl[0]}
+                code={code}
+                qty={qty}
+              />
+            )}
           </li>
         </ul>
       </section>
