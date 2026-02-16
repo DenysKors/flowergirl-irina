@@ -26,7 +26,7 @@ export default function ProductInteraction({
   };
 
   const handleIncr = () => {
-    if (prodQty > 100) return;
+    if (prodQty >= qty) return;
     setProdQty(prodQty + 1);
   };
 

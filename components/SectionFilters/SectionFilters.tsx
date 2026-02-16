@@ -6,12 +6,12 @@ import { FilterProps } from "@/types/types";
 
 export default function SectionFilters({ plantsCategories }: FilterProps) {
   const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const { replace } = useRouter();
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
 
   const onCategoruFilterChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const params = new URLSearchParams(searchParams);
     params.set("page", "1");
 
     if (evt.target.checked) {
@@ -28,12 +28,23 @@ export default function SectionFilters({ plantsCategories }: FilterProps) {
   return (
     <section className="mb-5 md:mb-10" aria-label="Фільтри">
       <h2 className="hidden">Фільтр категорій</h2>
-      <div className="mb-4 flex justify-end">
-        <svg className="w-5 h-5 fill-text md:w-8 md:h-8">
+      <div className="mb-4 flex justify-end items-center gap-2">
+        <button
+          className={
+            params.has("category")
+              ? "p-1 text-sm md:text-base break-all cursor-pointer text-text antialiased border border-gray-300 rounded-lg"
+              : "hidden"
+          }
+          type="button"
+          onClick={() => replace(pathname)}
+        >
+          очистити фільтр
+        </button>
+        <svg className="w-8 h-8 fill-text md:w-9 md:h-9">
           <use href={`${baseUrl}/icons.svg#icon-filter`}></use>
         </svg>
       </div>
-      <ul className="flex gap-2 flex-wrap justify-end">
+      <ul className="max-h-27.5 lg:max-h-37.5 flex gap-2 flex-wrap justify-end overflow-y-scroll">
         {plantsCategories.map(({ label, value }) => {
           return (
             <li

@@ -14,12 +14,12 @@ export default function ProductImgGallery() {
       thumbnail: `${baseUrl}/plant1.jpg`,
     },
     {
-      original: `${baseUrl}/plant2.jpg`,
-      thumbnail: `${baseUrl}/plant2.jpg`,
+      original: `${baseUrl}/plant2_2.jpg`,
+      thumbnail: `${baseUrl}/plant2_2.jpg`,
     },
     {
-      original: `${baseUrl}/plant3.jpg`,
-      thumbnail: `${baseUrl}/plant3.jpg`,
+      original: `${baseUrl}/plant3_3.jpg`,
+      thumbnail: `${baseUrl}/plant3_3.jpg`,
     },
   ];
   return (
