@@ -12,16 +12,10 @@ export default function ProductImgGallery() {
     {
       original: `${baseUrl}/plant1.jpg`,
       thumbnail: `${baseUrl}/plant1.jpg`,
-      // originalHeight: "445",
-      // originalWidth: "250",
-      // thumbnailHeight: "90",
-      // thumbnailWidth: "51",
     },
     {
       original: `${baseUrl}/plant2.jpg`,
       thumbnail: `${baseUrl}/plant2.jpg`,
-      // thumbnailHeight: "90",
-      // thumbnailWidth: "51",
     },
     {
       original: `${baseUrl}/plant3.jpg`,
@@ -37,6 +31,10 @@ export default function ProductImgGallery() {
       showFullscreenButton={false}
       showPlayButton={false}
       disableSwipe={true}
+      useBrowserFullscreen={false}
+      useTranslate3D={false}
+      disableThumbnailScroll={true}
+      disableThumbnailSwipe={true}
     />
   );
 }

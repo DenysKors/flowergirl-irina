@@ -78,3 +78,17 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Fix image gallery native scroll problem */
+
+.image-gallery-slide-wrapper {
+  pointer-events: none;
+}
+
+.image-gallery-left-nav {
+  pointer-events: all;
+}
+
+.image-gallery-right-nav {
+  pointer-events: all;
+}
