@@ -38,8 +38,8 @@ export default function MobileMenu() {
         Меню
       </button>
       <div
-        className={`absolute z-50 bg-background top-0 w-screen h-dvh -left-full transition-transform duration-500 ease-out${
-          isMobMenuShow ? "block translate-x-full" : "hidden"
+        className={`absolute z-50 bg-background top-0 w-screen h-dvh -left-full transition-transform duration-500 ease-out ${
+          isMobMenuShow ? "translate-x-full" : ""
         }`}
       >
         <div className="flex items-center gap-2 py-4 px-6">

@@ -21,3 +21,16 @@ export type PlantsData = {
   plants: Product[];
   totalAmount: number;
 };
+
+export type BasketProduct = {
+  code: number;
+  title: string;
+  imageUrl: string;
+  price: number;
+  qty: number;
+};
+
+export type InitBasketState = {
+  products: BasketProduct[];
+  totalPrice: number;
+};

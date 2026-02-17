@@ -1,6 +1,10 @@
 "use client";
 
+import toast from "react-hot-toast";
+
 import { useState } from "react";
+
+import { useBasketStore } from "@/store/basketStore";
 
 type ProductInteractionProps = {
   title: string;
@@ -19,6 +23,8 @@ export default function ProductInteraction({
 }: ProductInteractionProps) {
   const [prodQty, setProdQty] = useState(1);
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
+  const basketProducts = useBasketStore((state) => state.products);
+  const addProduct = useBasketStore((state) => state.addProduct);
 
   const handleDecr = () => {
     if (prodQty === 1) return;
@@ -30,7 +36,14 @@ export default function ProductInteraction({
     setProdQty(prodQty + 1);
   };
 
-  console.log(title, price, imageUrl, code, qty);
+  const handleBasketClick = () => {
+    const searchedProduct = basketProducts.find((item) => item.code === code);
+    if (searchedProduct) return toast.error("Цей товар вже у кошику");
+    const basketProduct = { title, price, imageUrl, code, qty: prodQty };
+    addProduct(basketProduct);
+    toast.success("Товар додано у кошик");
+  };
+
   return (
     <div className="sm:flex">
       <div className="w-min mb-4 sm:mb-0 sm:mr-4">
@@ -60,8 +73,9 @@ export default function ProductInteraction({
         </div>
       </div>
       <button
-        className="button button-primary justify-center self-end font-text text-background bg-violet-800 py-2 xl:py-2.5 cursor-pointer"
+        className="button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
         type="button"
+        onClick={handleBasketClick}
       >
         Додати у кошик
       </button>

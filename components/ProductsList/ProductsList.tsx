@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import toast from "react-hot-toast";
 
-import { Product } from "@/types/types";
+import { useBasketStore } from "@/store/basketStore";
+import { Product, BasketProduct } from "@/types/types";
 import { SELL_STATUS_ENUMS } from "@/constants/enums";
 
 type ProductsListProps = {
@@ -10,10 +12,32 @@ type ProductsListProps = {
 };
 
 export default function ProductsList({ products }: ProductsListProps) {
+  const basketProducts = useBasketStore((state) => state.products);
+  const addProduct = useBasketStore((state) => state.addProduct);
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
+
+  const handleBasketClick = (
+    code: number,
+    title: string,
+    price: number,
+    imagesUrl: string[]
+  ): void | string => {
+    const searchedProduct = basketProducts.find((item) => item.code === code);
+    if (searchedProduct) return toast.error("Цей товар вже у кошику");
+    const basketProduct: BasketProduct = {
+      title,
+      price,
+      imageUrl: imagesUrl[0],
+      code,
+      qty: 1,
+    };
+    addProduct(basketProduct);
+    toast.success("Товар додано у кошик");
+  };
+
   return (
     <ul className="mx-auto pb-4 grid grid-cols-1 min-[375px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-4 md:gap-8 justify-items-center">
-      {products.map(({ code, title, price, qty }) => {
+      {products.map(({ code, title, price, qty, imagesUrl }) => {
         return (
           <li
             key={code}
@@ -42,10 +66,13 @@ export default function ProductsList({ products }: ProductsListProps) {
               <strong className="font-text md:text-lg lg:text-xl">{`${price} грн`}</strong>
               {qty > 0 && (
                 <button
-                  className="px-2.5 py-1 lg:px-3 lg:py-1.5 text-sm lg:text-base text-background flex items-center justify-center gap-0.5 lg:gap-1 bg-violet-800 rounded-2xl lg:rounded-4xl cursor-pointer"
+                  className="px-3 py-1.5 lg:px-5 lg:py-2 text-sm lg:text-base text-background flex items-center justify-center gap-0.5 lg:gap-1 bg-violet-800 hover:bg-violet-950 rounded-2xl lg:rounded-4xl cursor-pointer"
                   type="button"
                   aria-label="Додати у кошик"
                   title="Додати у кошик"
+                  onClick={() =>
+                    handleBasketClick(code, title, price, imagesUrl)
+                  }
                 >
                   +
                   <svg className="w-3 h-3 fill-background lg:w-5 lg:h-5">

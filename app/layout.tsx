@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -80,6 +81,17 @@ export default function RootLayout({
       >
         {children}
         <div id="modal-root"></div>
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: "#333",
+              color: "#fff",
+            },
+          }}
+        />
       </body>
     </html>
   );
