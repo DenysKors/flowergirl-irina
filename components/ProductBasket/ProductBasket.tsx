@@ -2,6 +2,9 @@
 
 import toast from "react-hot-toast";
 
+import { InputMask } from "@react-input/mask";
+
+import { CustomInput } from "../CustomInput/CustomInput";
 import { useBasketStore } from "@/store/basketStore";
 
 type ProductBasketProp = {
@@ -128,14 +131,14 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                       <use href={`${baseUrl}/icons.svg#icon-trash`}></use>
                     </svg>
                   </button>
-                  <span className="font-text md:text-lg lg:text-xl">{`${product.sumPrice} грн.`}</span>
+                  <span className="font-text md:text-lg lg:text-xl">{`${product.sumPrice} грн`}</span>
                 </div>
               </div>
             );
           })}
         {basketProducts.length > 0 && (
           <p className="text-right">
-            <strong className="mb-3 font-text lg:text-xl">{`Всього: ${totalPrice} грн.`}</strong>
+            <strong className="mb-3 font-text lg:text-xl">{`Всього: ${totalPrice} грн`}</strong>
           </p>
         )}
         {basketProducts.length > 0 && (
@@ -147,25 +150,23 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                   <label className="flex flex-col font-text">
                     Ім&apos;я:
                     <input
-                      className="w-full md:w-80 outline-none focus:outline-none text-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-2 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
+                      className="w-full md:w-80 outline-none focus:outline-none text-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
                       type="text"
                       name="name"
+                      autoComplete="false"
                       required
                       maxLength={30}
                     />
                   </label>
                 </div>
                 <div className="mb-2.5">
-                  <label className="flex flex-col font-text">
-                    Номер телефону:
-                    <input
-                      className="w-full md:w-80 outline-none focus:outline-none text-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-2 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
-                      type="tel"
-                      name="phone"
-                      required
-                      maxLength={20}
-                    />
-                  </label>
+                  <InputMask
+                    component={CustomInput}
+                    showMask={true}
+                    label="Номер телефону:"
+                    mask="(___) ___-__-__"
+                    replacement={{ _: /\d/ }}
+                  />
                 </div>
                 <div>
                   <label className="flex flex-col font-text">
