@@ -39,7 +39,15 @@ export default function ProductInteraction({
   const handleBasketClick = () => {
     const searchedProduct = basketProducts.find((item) => item.code === code);
     if (searchedProduct) return toast.error("Цей товар вже у кошику");
-    const basketProduct = { title, price, imageUrl, code, qty: prodQty };
+    const basketProduct = {
+      title,
+      price,
+      sumPrice: price * prodQty,
+      imageUrl,
+      code,
+      userQty: prodQty,
+      stock: qty,
+    };
     addProduct(basketProduct);
     toast.success("Товар додано у кошик");
   };

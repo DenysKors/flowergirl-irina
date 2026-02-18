@@ -38,9 +38,9 @@ export default function Modal({ onClose, children }: UserModalProps) {
       className="fixed top-0 left-0 w-dvw h-dvh flex justify-center items-center bg-gray-700/60 z-30"
       onClick={backdropClick}
     >
-      <div className="py-4 px-6 max-w-[calc(100dvw-2rem)] sm:max-w-lg max-h-min rounded-xl bg-background overflow-y-auto">
+      <div className="py-4 px-4 w-full h-full md:max-w-[calc(100dvw-2rem)] md:max-h-[calc(100dvh-2rem)] lg:max-w-4xl rounded-xl bg-background overflow-y-auto">
         <button
-          className="button ms-auto p-2 mb-4 bg-neutral-100 border border-gray-300 hover:bg-red-500 cursor-pointer transition-colors"
+          className="button ms-auto p-1 mb-2 bg-neutral-100 border border-gray-300 hover:bg-red-500 cursor-pointer transition-colors"
           type="button"
           aria-label="Закрити вікно"
           onClick={onClose}

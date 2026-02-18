@@ -77,6 +77,7 @@ export default async function ProductPage({ params }: Props) {
                 ? SELL_STATUS_ENUMS.notAvailable
                 : `${SELL_STATUS_ENUMS.inStock} ${qty} шт`}
             </p>
+            <p className="mb-4 font-text text-xl">{`Ціна: ${price} грн`}</p>
             {qty > 0 && (
               <ProductInteraction
                 title={title}

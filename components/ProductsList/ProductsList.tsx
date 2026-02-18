@@ -20,16 +20,19 @@ export default function ProductsList({ products }: ProductsListProps) {
     code: number,
     title: string,
     price: number,
-    imagesUrl: string[]
+    imagesUrl: string[],
+    qty: number
   ): void | string => {
     const searchedProduct = basketProducts.find((item) => item.code === code);
     if (searchedProduct) return toast.error("Цей товар вже у кошику");
     const basketProduct: BasketProduct = {
       title,
       price,
+      sumPrice: price * 1,
       imageUrl: imagesUrl[0],
       code,
-      qty: 1,
+      userQty: 1,
+      stock: qty,
     };
     addProduct(basketProduct);
     toast.success("Товар додано у кошик");
@@ -71,7 +74,7 @@ export default function ProductsList({ products }: ProductsListProps) {
                   aria-label="Додати у кошик"
                   title="Додати у кошик"
                   onClick={() =>
-                    handleBasketClick(code, title, price, imagesUrl)
+                    handleBasketClick(code, title, price, imagesUrl, qty)
                   }
                 >
                   +

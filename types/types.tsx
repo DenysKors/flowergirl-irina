@@ -27,7 +27,9 @@ export type BasketProduct = {
   title: string;
   imageUrl: string;
   price: number;
-  qty: number;
+  sumPrice: number;
+  userQty: number;
+  stock: number;
 };
 
 export type InitBasketState = {
