@@ -30,26 +30,22 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
     increaseQty(code, userQty);
   };
 
-  const handleAccept = (evt: React.FormEvent<HTMLFormElement>) => {
+  const handleAccept = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const data = new FormData(evt.currentTarget);
 
-    const userOrder = {
-      name: data.get("name"),
-      phone: data.get("phone"),
-      comment: data.get("comment"),
-      basketProducts,
-      totalPrice,
-    };
-    //Need to bind telegram bot in product, so you can receive orders and check it immediately
-    console.table(
-      `Замовлення: ${JSON.stringify(
-        userOrder
-      )}. TODO:підключити телеграм бота для збору заказів`
-    );
-    reset();
-    onClose(false);
-    toast.success("Замолення відправлено в обробку. Дякуємо!");
+    const userOrder = new FormData(evt.currentTarget);
+    userOrder.append("products", JSON.stringify(basketProducts));
+    userOrder.append("totalPrice", JSON.stringify(totalPrice));
+
+    const response = await fetch("/api/add-order", {
+      method: "POST",
+      body: userOrder,
+    });
+    if (response.ok) {
+      reset();
+      onClose(false);
+      toast.success("Замолення відправлено в обробку. Дякуємо!");
+    } else toast.error("Помилка при збереженні, повторіть знову");
   };
 
   return (
@@ -137,57 +133,103 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
             );
           })}
         {basketProducts.length > 0 && (
-          <p className="text-right">
-            <strong className="mb-3 font-text lg:text-xl">{`Всього: ${totalPrice} грн`}</strong>
-          </p>
-        )}
-        {basketProducts.length > 0 && (
-          <div>
-            <form onSubmit={handleAccept}>
-              <fieldset className="flex flex-col font-text">
-                Контактні дані для замовлення:
-                <div className="my-2.5">
-                  <label className="flex flex-col font-text">
-                    Ім&apos;я:
-                    <input
-                      className="w-full md:w-80 outline-none focus:outline-none text-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
-                      type="text"
-                      name="name"
-                      autoComplete="false"
-                      required
-                      maxLength={30}
+          <>
+            <p className="text-right">
+              <strong className="mb-3 font-text lg:text-xl">
+                &#42;{`Всього: ${totalPrice} грн`}
+              </strong>
+            </p>
+            <div>
+              <form onSubmit={handleAccept}>
+                <fieldset className="flex flex-col font-text">
+                  Контактні дані для замовлення та відправки:
+                  <div className="my-2.5">
+                    <label className="flex flex-col font-text">
+                      Ім&apos;я:
+                      <input
+                        className="w-full md:w-80 outline-none focus:outline-none text-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
+                        type="text"
+                        name="name"
+                        autoComplete="false"
+                        required
+                        maxLength={30}
+                      />
+                    </label>
+                  </div>
+                  <div className="mb-2.5">
+                    <InputMask
+                      component={CustomInput}
+                      showMask={true}
+                      label="Номер телефону:"
+                      mask="(___) ___-__-__"
+                      replacement={{ _: /\d/ }}
                     />
-                  </label>
-                </div>
-                <div className="mb-2.5">
-                  <InputMask
-                    component={CustomInput}
-                    showMask={true}
-                    label="Номер телефону:"
-                    mask="(___) ___-__-__"
-                    replacement={{ _: /\d/ }}
-                  />
-                </div>
-                <div>
-                  <label className="flex flex-col font-text">
-                    Коментар:
-                    <textarea
-                      className="peer block w-full resize-none rounded-md border border-slate-200 bg-transparent p-2.5 leading-none text-text outline-none ring ring-transparent transition-all duration-300 ease-in hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:outline-none focus:ring-slate-800/10"
-                      name="comment"
-                      rows={4}
-                      maxLength={240}
-                    ></textarea>
-                  </label>
-                </div>
-              </fieldset>
-              <button
-                className="mt-5 button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
-                type="submit"
-              >
-                Підтвердити замовлення
-              </button>
-            </form>
-          </div>
+                  </div>
+                  <div className="my-2.5">
+                    <label className="flex flex-col font-text">
+                      Область:
+                      <input
+                        className="w-full md:w-80 outline-none focus:outline-none text-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
+                        type="text"
+                        name="region"
+                        autoComplete="false"
+                        required
+                        maxLength={50}
+                      />
+                    </label>
+                  </div>
+                  <div className="my-2.5">
+                    <label className="flex flex-col font-text">
+                      Населений пункт:
+                      <input
+                        className="w-full md:w-80 outline-none focus:outline-none text-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
+                        type="text"
+                        name="town"
+                        autoComplete="false"
+                        required
+                        maxLength={30}
+                      />
+                    </label>
+                  </div>
+                  <div className="my-2.5">
+                    <label className="flex flex-col font-text">
+                      Відділення/поштомат &#171;Нова пошта&#187;:
+                      <input
+                        className="w-full md:w-80 outline-none focus:outline-none text-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
+                        type="text"
+                        name="postcode"
+                        autoComplete="false"
+                        required
+                        maxLength={20}
+                      />
+                    </label>
+                  </div>
+                  <div className="my-2.5">
+                    <label className="flex flex-col font-text">
+                      Коментар(за потреби):
+                      <textarea
+                        className="peer block w-full resize-none rounded-md border border-slate-200 bg-transparent p-2.5 leading-none text-text outline-none ring ring-transparent transition-all duration-300 ease-in hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:outline-none focus:ring-slate-800/10"
+                        name="comment"
+                        rows={4}
+                        maxLength={240}
+                      ></textarea>
+                    </label>
+                  </div>
+                </fieldset>
+                <p className="text-text">
+                  &#42;Загальна вартість без урахування вартості доставки
+                  товару. Вартість доставки сплачується покупцем при отриманні
+                  замовлення.
+                </p>
+                <button
+                  className="mt-5 button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
+                  type="submit"
+                >
+                  Підтвердити замовлення
+                </button>
+              </form>
+            </div>
+          </>
         )}
       </div>
     </>

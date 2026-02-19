@@ -104,3 +104,27 @@ export const getPlantByCode = cache(async (plantCode: number) => {
     }
   }
 });
+
+export const addOrder = async (orderData: FormData) => {
+  const userName = orderData.get("name") as string;
+  const userPhone = orderData.get("phone") as string;
+  const userRegion = orderData.get("region") as string;
+  const userTown = orderData.get("town") as string;
+  const userPostcode = orderData.get("postcode") as string;
+  const userComment = orderData.get("comment") as string;
+  const productData = orderData.get("products") as string;
+  const totalPriceData = orderData.get("totalPrice") as string;
+  const userProducts = JSON.parse(productData);
+  const totalPrice = JSON.parse(totalPriceData);
+  console.log({
+    userName,
+    userPhone,
+    userRegion,
+    userTown,
+    userPostcode,
+    userComment,
+    userProducts,
+    totalPrice,
+  });
+  return "";
+};
