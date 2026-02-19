@@ -1,9 +1,11 @@
 import { cache } from "react";
+import { webhookCallback } from "grammy";
 
 import dbConnect from "./connectDB";
 import PlantsCategories from "@/modelsDB/plantsCategories";
 import Plant from "../modelsDB/plant";
 
+import { bot } from "@/services/telegram";
 import { PRODUCT_PAGINATION_LIMIT } from "../constants/pagination";
 
 export const getAllPlantsCategories = cache(async () => {
@@ -106,6 +108,7 @@ export const getPlantByCode = cache(async (plantCode: number) => {
 });
 
 export const addOrder = async (orderData: FormData) => {
+  const chat_id: string = process.env.BOT_CHAT_ID || "";
   const userName = orderData.get("name") as string;
   const userPhone = orderData.get("phone") as string;
   const userRegion = orderData.get("region") as string;
@@ -116,6 +119,8 @@ export const addOrder = async (orderData: FormData) => {
   const totalPriceData = orderData.get("totalPrice") as string;
   const userProducts = JSON.parse(productData);
   const totalPrice = JSON.parse(totalPriceData);
+
+  bot.api.sendMessage(chat_id, "You have an order");
   console.log({
     userName,
     userPhone,
@@ -128,3 +133,5 @@ export const addOrder = async (orderData: FormData) => {
   });
   return "";
 };
+
+export default webhookCallback(bot, "next-js");

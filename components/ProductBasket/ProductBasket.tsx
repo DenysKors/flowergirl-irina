@@ -145,7 +145,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                   Контактні дані для замовлення та відправки:
                   <div className="my-2.5">
                     <label className="flex flex-col font-text">
-                      Ім&apos;я:
+                      Прізвище та Ім&apos;я:
                       <input
                         className="w-full md:w-80 outline-none focus:outline-none text-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
                         type="text"
