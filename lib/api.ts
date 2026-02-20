@@ -5,7 +5,7 @@ import dbConnect from "./connectDB";
 import PlantsCategories from "@/modelsDB/plantsCategories";
 import Plant from "../modelsDB/plant";
 
-import { bot } from "@/services/telegram";
+import { bot } from "@/bot";
 import { PRODUCT_PAGINATION_LIMIT } from "../constants/pagination";
 import { BasketProduct } from "@/types/types";
 

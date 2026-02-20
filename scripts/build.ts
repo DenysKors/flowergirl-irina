@@ -1,4 +1,4 @@
-import { bot } from "@/services/telegram";
+import { bot } from "@/bot";
 
 const webhook: string = process.env.WEBHOOK || "";
 
