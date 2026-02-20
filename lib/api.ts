@@ -33,9 +33,8 @@ export const getPlants = async (
 ) => {
   const paginationPage = Number(page);
   const skip = (paginationPage - 1) * PRODUCT_PAGINATION_LIMIT;
-
+  await dbConnect();
   if (category === "") {
-    await dbConnect();
     try {
       const plants = await Plant.find({}, "", {
         skip,
@@ -60,7 +59,6 @@ export const getPlants = async (
       }
     }
   } else {
-    await dbConnect();
     try {
       const plants = await Plant.find(
         {
@@ -163,25 +161,42 @@ export const addOrder = async (orderData: FormData) => {
 };
 
 export const getSearchedProducts = async (
-  userSearchQuery: string | string[],
+  userSearchQuery: string,
   page: string | string[]
 ) => {
   const paginationPage = Number(page);
   const skip = (paginationPage - 1) * PRODUCT_PAGINATION_LIMIT;
   await dbConnect();
+
   try {
-    const products = await Plant.find({ title: userSearchQuery }, "", {
-      skip,
-      limit: PRODUCT_PAGINATION_LIMIT,
-    })
+    // const products = await Plant.find({ $text: { $search: userSearchQuery } });
+    // const products = await Plant.find({ title: userSearchQuery }, "", {
+    //   skip,
+    //   limit: PRODUCT_PAGINATION_LIMIT,
+    // })
+    //   .collation({ locale: "uk", strength: 1 })
+    //   .sort({ title: 1 })
+    //   .lean();
+
+    const products = await Plant.find(
+      {
+        $text: { $search: userSearchQuery },
+      },
+      "",
+      {
+        skip,
+        limit: PRODUCT_PAGINATION_LIMIT,
+      }
+    )
       .collation({ locale: "uk", strength: 1 })
       .sort({ title: 1 })
       .lean();
 
     const totalAmount = await Plant.countDocuments({
-      title: userSearchQuery,
+      $text: { $search: userSearchQuery },
     }).collation({ locale: "uk", strength: 1 });
 
+    console.log(totalAmount);
     const productsData = JSON.parse(
       JSON.stringify({
         products,

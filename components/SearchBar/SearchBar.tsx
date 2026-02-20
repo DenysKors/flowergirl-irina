@@ -21,10 +21,17 @@ export default function SearchBar({ handleToggle }: SearchBarProps) {
     evt.preventDefault();
     const queryElements = evt.currentTarget.elements as FormElements;
     const userQuery = queryElements.query.value.trim();
-    if (userQuery === "" || userQuery.length > 30)
+
+    if (userQuery === "") {
       toast.error("Заповніть поле пошуку");
-    const searchParamString = encodeURIComponent(userQuery);
-    router.push(`/search?search=${searchParamString}`);
+    } else if (userQuery.length > 30) {
+      toast.error("Кількість символів не більше 30");
+    }
+
+    const params = new URLSearchParams();
+    params.set("search", userQuery);
+    router.push(`/search?${params.toString()}`);
+
     evt.currentTarget.reset();
     if (typeof handleToggle === "function") handleToggle();
   };
@@ -41,7 +48,7 @@ export default function SearchBar({ handleToggle }: SearchBarProps) {
           type="search"
           name="query"
           placeholder="Пошук товару..."
-          maxLength={40}
+          maxLength={30}
         />
         <button
           className="flex items-center rounded-md rounded-l-none p-2.5 bg-main cursor-pointer"

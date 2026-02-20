@@ -15,18 +15,15 @@ export default async function SearchPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const userSearchParams = await searchParams;
-  const userSearchQuery = userSearchParams.search || "";
-  let decodedQuery = "";
-  if (typeof userSearchQuery === "string") {
-    decodedQuery = decodeURIComponent(userSearchQuery);
-  }
+  const userSearchQuery = userSearchParams.search as string;
+
   const page = userSearchParams.page || "1";
   const searchedData = await getSearchedProducts(userSearchQuery, page);
 
   return (
     <main className="container">
       <h1 className="hidden">Пошшук товарів за назвою</h1>
-      <div className="py-4 font-text lg:text-xl">{`Результати пошуку: ${decodedQuery}`}</div>
+      <div className="py-4 font-text lg:text-xl">{`Результати пошуку: ${userSearchQuery}`}</div>
       <section className="pt-4 pb-4">
         {searchedData && searchedData.products.length === 0 && (
           <div className="h-60 font-text flex justify-center items-center text-center md:text-lg">

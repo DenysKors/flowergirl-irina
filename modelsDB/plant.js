@@ -41,4 +41,33 @@ const Plant = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Plant.index({ title: "text" });
+
 export default mongoose.models.Plant || mongoose.model("Plant", Plant);
+
+// interface IStoreDB extends IStore, Document {}
+
+//     const storeSchema = new mongoose.Schema({
+//         name:{
+//             type: String,
+//             required:true,
+//             index: true
+//         },
+//         mobile: {
+//             type: String,
+//             required: false,
+//             unique: true,
+//             sparse: true,
+//             index: true
+//         },
+
+//     }, {
+//         timestamps: true
+//     });
+
+//     storeSchema.index({ name: 'text', mobile: 'text' });
+
+//     const model = createModel<IStoreDB>('Store', storeSchema);
+
+//     export default model;
