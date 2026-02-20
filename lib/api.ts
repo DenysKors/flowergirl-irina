@@ -161,3 +161,38 @@ export const addOrder = async (orderData: FormData) => {
     }
   }
 };
+
+export const getSearchedProducts = async (
+  userSearchQuery: string | string[],
+  page: string | string[]
+) => {
+  const paginationPage = Number(page);
+  const skip = (paginationPage - 1) * PRODUCT_PAGINATION_LIMIT;
+  await dbConnect();
+  try {
+    const products = await Plant.find({ title: userSearchQuery }, "", {
+      skip,
+      limit: PRODUCT_PAGINATION_LIMIT,
+    })
+      .collation({ locale: "uk", strength: 1 })
+      .sort({ title: 1 })
+      .lean();
+
+    const totalAmount = await Plant.countDocuments({
+      title: userSearchQuery,
+    }).collation({ locale: "uk", strength: 1 });
+
+    const productsData = JSON.parse(
+      JSON.stringify({
+        products,
+        totalAmount,
+      })
+    );
+    return productsData;
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
+  }
+};

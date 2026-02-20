@@ -62,7 +62,7 @@ export default function MobileMenu() {
           </button>
         </div>
         <div className="pb-4 px-6 border-b border-border-gray sm:hidden">
-          <SearchBar />
+          <SearchBar handleToggle={handleToggle} />
         </div>
         <nav aria-label="Мобільна навігація">
           <ul className="flex flex-col justify-start gap-x-8 xl:gap-x-10">
