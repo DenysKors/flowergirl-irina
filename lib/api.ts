@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { webhookCallback } from "grammy";
+import { convert } from "telegram-markdown-v2";
 
 import dbConnect from "./connectDB";
 import PlantsCategories from "@/modelsDB/plantsCategories";
@@ -7,6 +7,7 @@ import Plant from "../modelsDB/plant";
 
 import { bot } from "@/services/telegram";
 import { PRODUCT_PAGINATION_LIMIT } from "../constants/pagination";
+import { BasketProduct } from "@/types/types";
 
 export const getAllPlantsCategories = cache(async () => {
   await dbConnect();
@@ -109,6 +110,7 @@ export const getPlantByCode = cache(async (plantCode: number) => {
 
 export const addOrder = async (orderData: FormData) => {
   const chat_id: string = process.env.BOT_CHAT_ID || "";
+
   const userName = orderData.get("name") as string;
   const userPhone = orderData.get("phone") as string;
   const userRegion = orderData.get("region") as string;
@@ -120,18 +122,42 @@ export const addOrder = async (orderData: FormData) => {
   const userProducts = JSON.parse(productData);
   const totalPrice = JSON.parse(totalPriceData);
 
-  bot.api.sendMessage(chat_id, "You have an order");
-  console.log({
-    userName,
-    userPhone,
-    userRegion,
-    userTown,
-    userPostcode,
-    userComment,
-    userProducts,
-    totalPrice,
-  });
-  return "";
-};
+  const parsedProducts = userProducts.reduce(
+    (prev: string, product: BasketProduct, idx: number) => {
+      return (
+        prev +
+        `${idx + 1}.${product.title} 
+    - арт.${product.code} 
+    - кол-во: ${product.userQty}
+    - цена: ${product.price}грн 
+    - сумма: ${product.sumPrice}грн
+     `
+      );
+    },
+    ""
+  );
 
-export default webhookCallback(bot, "next-js");
+  const orderMarkdown = `
+  # Новый заказ
+  ${parsedProducts}
+  # Всего: ${totalPrice}грн
+  Фамилия, имя: ${userName}
+  Моб.: ${userPhone}
+  Область: ${userRegion}
+  Город: ${userTown}
+  Номер отделения: ${userPostcode}
+  Комментарий: ${userComment}
+  `;
+  const telegramMarkdown = convert(orderMarkdown);
+
+  try {
+    bot.api.sendMessage(chat_id, telegramMarkdown, {
+      parse_mode: "MarkdownV2",
+    });
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
+  }
+};
