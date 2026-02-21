@@ -3,7 +3,9 @@ import { convert } from "telegram-markdown-v2";
 
 import dbConnect from "./connectDB";
 import PlantsCategories from "@/modelsDB/plantsCategories";
+import ProtectionCategories from "@/modelsDB/protectionCategories";
 import Plant from "../modelsDB/plant";
+import Protection from "@/modelsDB/protection";
 
 import { bot } from "@/services/telegram";
 import { PRODUCT_PAGINATION_LIMIT } from "../constants/pagination";
@@ -98,6 +100,108 @@ export const getPlantByCode = cache(async (plantCode: number) => {
   try {
     const plant = await Plant.findOne({ code: plantCode });
     return plant;
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
+  }
+});
+
+export const getAllProtectionCategories = cache(async () => {
+  await dbConnect();
+  try {
+    const protectionCategoriesData = await ProtectionCategories.find(
+      {},
+      { _id: 0 }
+    )
+      .sort({
+        label: 1,
+      })
+      .lean();
+    const protectionCategories = JSON.parse(
+      JSON.stringify(protectionCategoriesData)
+    );
+    return protectionCategories;
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
+  }
+});
+
+export const getProtection = async (
+  category: string | string[],
+  page: string | string[]
+) => {
+  const paginationPage = Number(page);
+  const skip = (paginationPage - 1) * PRODUCT_PAGINATION_LIMIT;
+  await dbConnect();
+  if (category === "") {
+    try {
+      const protection = await Protection.find({}, "", {
+        skip,
+        limit: PRODUCT_PAGINATION_LIMIT,
+      })
+        .sort({ title: 1 })
+        .lean();
+
+      const totalAmount = await Protection.countDocuments().lean();
+      const protectionData = JSON.parse(
+        JSON.stringify({
+          protection,
+          totalAmount,
+        })
+      );
+
+      return protectionData;
+    } catch (err: unknown) {
+      if (err instanceof Error) console.log(err.message);
+      else {
+        console.log(err);
+      }
+    }
+  } else {
+    try {
+      const protection = await Protection.find(
+        {
+          $or: [{ "category.value": { $in: category } }],
+        },
+        "",
+        {
+          skip,
+          limit: PRODUCT_PAGINATION_LIMIT,
+        }
+      )
+        .sort({ title: 1 })
+        .lean();
+
+      const totalAmount = await Protection.countDocuments({
+        $or: [{ "category.value": { $in: category } }],
+      }).lean();
+      const protectionData = JSON.parse(
+        JSON.stringify({
+          protection,
+          totalAmount,
+        })
+      );
+
+      return protectionData;
+    } catch (err: unknown) {
+      if (err instanceof Error) console.log(err.message);
+      else {
+        console.log(err);
+      }
+    }
+  }
+};
+
+export const getProtectionByCode = cache(async (protectionCode: number) => {
+  await dbConnect();
+  try {
+    const protection = await Protection.findOne({ code: protectionCode });
+    return protection;
   } catch (err: unknown) {
     if (err instanceof Error) console.log(err.message);
     else {

@@ -4,7 +4,7 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 import { FilterProps } from "@/types/types";
 
-export default function SectionFilters({ plantsCategories }: FilterProps) {
+export default function SectionFilters({ categories }: FilterProps) {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
@@ -45,7 +45,7 @@ export default function SectionFilters({ plantsCategories }: FilterProps) {
         </svg>
       </div>
       <ul className="max-h-27.5 lg:max-h-37.5 flex gap-2 flex-wrap justify-end overflow-y-scroll">
-        {plantsCategories.map(({ label, value }) => {
+        {categories.map(({ label, value }) => {
           return (
             <li
               key={value}

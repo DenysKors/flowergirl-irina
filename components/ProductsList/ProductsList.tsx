@@ -3,6 +3,8 @@
 import Link from "next/link";
 import toast from "react-hot-toast";
 
+import { usePathname } from "next/navigation";
+
 import { useBasketStore } from "@/store/basketStore";
 import { Product, BasketProduct } from "@/types/types";
 import { SELL_STATUS_ENUMS } from "@/constants/enums";
@@ -12,6 +14,7 @@ type ProductsListProps = {
 };
 
 export default function ProductsList({ products }: ProductsListProps) {
+  const pathname = usePathname();
   const basketProducts = useBasketStore((state) => state.products);
   const addProduct = useBasketStore((state) => state.addProduct);
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
@@ -49,7 +52,7 @@ export default function ProductsList({ products }: ProductsListProps) {
             <Link
               className="group/edit"
               href={{
-                pathname: `/catalog/plants/${code}`,
+                pathname: `${pathname}/${code}`,
               }}
             >
               <div className="overflow-hidden">

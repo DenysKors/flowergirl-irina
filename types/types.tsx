@@ -1,5 +1,5 @@
 export type FilterProps = {
-  plantsCategories: Categories[];
+  categories: Categories[];
 };
 
 export type Categories = {
@@ -19,6 +19,11 @@ export type Product = {
 
 export type PlantsData = {
   plants: Product[];
+  totalAmount: number;
+};
+
+export type ProtectionData = {
+  protection: Product[];
   totalAmount: number;
 };
 
