@@ -45,6 +45,30 @@ export default function SectionSocials() {
                 <use href={`${baseUrl}/icons.svg#icon-instagram`}></use>
               </svg>
             </a>
+            <a
+              className="p-2 rounded-full transition-colors bg-background hover:bg-slate-300"
+              href="https://t.me/+380965950404"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Telegram"
+              title="Telegram"
+            >
+              <svg className="w-7 h-7 fill-main md:w-8 md:h-8">
+                <use href={`${baseUrl}/icons.svg#icon-telegram`}></use>
+              </svg>
+            </a>
+            <a
+              className="p-2 rounded-full transition-colors bg-background hover:bg-slate-300"
+              href="viber://chat?number=380965950404"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Viber"
+              title="Viber"
+            >
+              <svg className="w-7 h-7 fill-main md:w-8 md:h-8">
+                <use href={`${baseUrl}/icons.svg#icon-viber`}></use>
+              </svg>
+            </a>
           </div>
         </div>
       </div>

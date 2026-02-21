@@ -152,6 +152,11 @@ export const addOrder = async (orderData: FormData) => {
     bot.api.sendMessage(chat_id, telegramMarkdown, {
       parse_mode: "MarkdownV2",
     });
+    // Add logic for decrease product stock quantity!!!!!
+    // const updatedProduct = await Product.updateOne(
+    //   { code: productData.code },
+    //   { price: productData.price, sell_status: productData.sell_status }
+    // );
   } catch (err: unknown) {
     if (err instanceof Error) console.log(err.message);
     else {
@@ -169,15 +174,6 @@ export const getSearchedProducts = async (
   await dbConnect();
 
   try {
-    // const products = await Plant.find({ $text: { $search: userSearchQuery } });
-    // const products = await Plant.find({ title: userSearchQuery }, "", {
-    //   skip,
-    //   limit: PRODUCT_PAGINATION_LIMIT,
-    // })
-    //   .collation({ locale: "uk", strength: 1 })
-    //   .sort({ title: 1 })
-    //   .lean();
-
     const products = await Plant.find(
       {
         $text: { $search: userSearchQuery },
@@ -196,7 +192,6 @@ export const getSearchedProducts = async (
       $text: { $search: userSearchQuery },
     }).collation({ locale: "uk", strength: 1 });
 
-    console.log(totalAmount);
     const productsData = JSON.parse(
       JSON.stringify({
         products,
