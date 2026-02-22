@@ -27,6 +27,11 @@ export type ProtectionData = {
   totalAmount: number;
 };
 
+export type SuppliesData = {
+  supplies: Product[];
+  totalAmount: number;
+};
+
 export type BasketProduct = {
   code: number;
   title: string;

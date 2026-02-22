@@ -4,8 +4,10 @@ import { convert } from "telegram-markdown-v2";
 import dbConnect from "./connectDB";
 import PlantsCategories from "@/modelsDB/plantsCategories";
 import ProtectionCategories from "@/modelsDB/protectionCategories";
+import SuppliesCategories from "@/modelsDB/suppliesCategories";
 import Plant from "../modelsDB/plant";
 import Protection from "@/modelsDB/protection";
+import Supplies from "@/modelsDB/supplies";
 
 import { bot } from "@/services/telegram";
 import { PRODUCT_PAGINATION_LIMIT } from "../constants/pagination";
@@ -202,6 +204,105 @@ export const getProtectionByCode = cache(async (protectionCode: number) => {
   try {
     const protection = await Protection.findOne({ code: protectionCode });
     return protection;
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
+  }
+});
+
+export const getAllSuppliesCategories = cache(async () => {
+  await dbConnect();
+  try {
+    const suppliesCategoriesData = await SuppliesCategories.find({}, { _id: 0 })
+      .sort({
+        label: 1,
+      })
+      .lean();
+    const suppliesCategories = JSON.parse(
+      JSON.stringify(suppliesCategoriesData)
+    );
+    return suppliesCategories;
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
+  }
+});
+
+export const getSupplies = async (
+  category: string | string[],
+  page: string | string[]
+) => {
+  const paginationPage = Number(page);
+  const skip = (paginationPage - 1) * PRODUCT_PAGINATION_LIMIT;
+  await dbConnect();
+  if (category === "") {
+    try {
+      const supplies = await Supplies.find({}, "", {
+        skip,
+        limit: PRODUCT_PAGINATION_LIMIT,
+      })
+        .sort({ title: 1 })
+        .lean();
+
+      const totalAmount = await Supplies.countDocuments().lean();
+      const suppliesData = JSON.parse(
+        JSON.stringify({
+          supplies,
+          totalAmount,
+        })
+      );
+
+      return suppliesData;
+    } catch (err: unknown) {
+      if (err instanceof Error) console.log(err.message);
+      else {
+        console.log(err);
+      }
+    }
+  } else {
+    try {
+      const supplies = await Supplies.find(
+        {
+          $or: [{ "category.value": { $in: category } }],
+        },
+        "",
+        {
+          skip,
+          limit: PRODUCT_PAGINATION_LIMIT,
+        }
+      )
+        .sort({ title: 1 })
+        .lean();
+
+      const totalAmount = await Supplies.countDocuments({
+        $or: [{ "category.value": { $in: category } }],
+      }).lean();
+      const suppliesData = JSON.parse(
+        JSON.stringify({
+          supplies,
+          totalAmount,
+        })
+      );
+
+      return suppliesData;
+    } catch (err: unknown) {
+      if (err instanceof Error) console.log(err.message);
+      else {
+        console.log(err);
+      }
+    }
+  }
+};
+
+export const getSuppliesByCode = cache(async (suppliesCode: number) => {
+  await dbConnect();
+  try {
+    const supplies = await Supplies.findOne({ code: suppliesCode });
+    return supplies;
   } catch (err: unknown) {
     if (err instanceof Error) console.log(err.message);
     else {
