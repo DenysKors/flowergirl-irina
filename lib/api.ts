@@ -411,3 +411,22 @@ export const getSearchedProducts = async (
     }
   }
 };
+
+export const getAnalytics = async () => {
+  await dbConnect();
+  try {
+    const plantsAmount = await Plant.countDocuments();
+    const protectionAmount = await Protection.countDocuments();
+    const suppliesAmount = await Supplies.countDocuments();
+    return {
+      plantsAmount,
+      protectionAmount,
+      suppliesAmount,
+    };
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
+  }
+};
