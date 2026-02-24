@@ -8,7 +8,7 @@ export type Categories = {
 };
 
 export type Product = {
-  code: number;
+  code: string;
   title: string;
   description: string;
   category: { label: string; value: string }[];
@@ -33,7 +33,7 @@ export type SuppliesData = {
 };
 
 export type BasketProduct = {
-  code: number;
+  code: string;
   title: string;
   imageUrl: string;
   price: number;

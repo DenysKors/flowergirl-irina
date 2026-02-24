@@ -16,8 +16,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const protectionCode = Number(id);
-  const protection: Product = await getProtectionByCode(protectionCode);
+  const protection: Product = await getProtectionByCode(id);
 
   if (!protection) {
     notFound();
@@ -30,8 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProtectionPage({ params }: Props) {
   const { id } = await params;
-  const protectionCode = Number(id);
-  const protection: Product = await getProtectionByCode(protectionCode);
+  const protection: Product = await getProtectionByCode(id);
 
   if (!protection) {
     notFound();
@@ -50,7 +48,7 @@ export default async function ProtectionPage({ params }: Props) {
           </h1>
         </div>
         <div className="w-full order-0 md:h-auto md:row-start-1 md:row-span-2 md:col-start-1 md:mb-3.5">
-          <ProductImgGallery />
+          <ProductImgGallery imagesUrl={imagesUrl} />
         </div>
         <ul className="w-full md:mb-3.5">
           <li className="mb-2 md:mb-4">

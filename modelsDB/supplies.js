@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Supplies = mongoose.Schema(
   {
     code: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
     },

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import toast from "react-hot-toast";
 
+import { CldImage } from "next-cloudinary";
 import { usePathname } from "next/navigation";
 
 import { useBasketStore } from "@/store/basketStore";
@@ -20,7 +21,7 @@ export default function ProductsList({ products }: ProductsListProps) {
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
 
   const handleBasketClick = (
-    code: number,
+    code: string,
     title: string,
     price: number,
     imagesUrl: string[],
@@ -56,9 +57,9 @@ export default function ProductsList({ products }: ProductsListProps) {
               }}
             >
               <div className="overflow-hidden">
-                <img
+                <CldImage
                   className="object-cover object-center transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
-                  src={`${baseUrl}/plant${code}.jpg`}
+                  src={imagesUrl[0]}
                   alt={title}
                   width={250}
                   height={445}

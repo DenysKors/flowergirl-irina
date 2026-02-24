@@ -1,31 +1,36 @@
 "use client";
 
-import { useRef } from "react";
 import ImageGallery from "react-image-gallery";
+
+import { getCldImageUrl } from "next-cloudinary";
+import { useRef } from "react";
 import type { GalleryItem, ImageGalleryRef } from "react-image-gallery";
 
-export default function ProductImgGallery() {
-  const galleryRef = useRef<ImageGalleryRef>(null);
-  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
+type ProductImgGalleryProps = {
+  imagesUrl: string[];
+};
 
-  const images: GalleryItem[] = [
-    {
-      original: `${baseUrl}/plant1.jpg`,
-      thumbnail: `${baseUrl}/plant1.jpg`,
-    },
-    {
-      original: `${baseUrl}/plant2_2.jpg`,
-      thumbnail: `${baseUrl}/plant2_2.jpg`,
-    },
-    {
-      original: `${baseUrl}/plant3_3.jpg`,
-      thumbnail: `${baseUrl}/plant3_3.jpg`,
-    },
-  ];
+export default function ProductImgGallery({
+  imagesUrl,
+}: ProductImgGalleryProps) {
+  const galleryRef = useRef<ImageGalleryRef>(null);
+
+  const galleryUrl: GalleryItem[] = imagesUrl.map((el) => {
+    const url = getCldImageUrl({
+      width: "auto",
+      height: "auto",
+      src: el,
+    });
+    return {
+      original: url,
+      thumbnail: url,
+    };
+  });
+
   return (
     <ImageGallery
       ref={galleryRef}
-      items={images}
+      items={galleryUrl}
       showNav={true}
       showThumbnails={true}
       showFullscreenButton={false}

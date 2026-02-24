@@ -10,7 +10,7 @@ type ProductInteractionProps = {
   title: string;
   price: number;
   imageUrl: string;
-  code: number;
+  code: string;
   qty: number;
 };
 

@@ -10,8 +10,8 @@ const initialState: InitBasketState = {
 type ProductState = typeof initialState & {
   addProduct: (product: BasketProduct) => void;
   removeProduct: (product: BasketProduct) => void;
-  increaseUserQty: (code: number, userQty: number) => void;
-  decreaseUserQty: (code: number, userQty: number) => void;
+  increaseUserQty: (code: string, userQty: number) => void;
+  decreaseUserQty: (code: string, userQty: number) => void;
   reset: () => void;
 };
 

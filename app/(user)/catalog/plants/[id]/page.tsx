@@ -16,8 +16,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const plantCode = Number(id);
-  const plant: Product = await getPlantByCode(plantCode);
+  const plant: Product = await getPlantByCode(id);
 
   if (!plant) {
     notFound();
@@ -30,8 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
-  const plantCode = Number(id);
-  const plant: Product = await getPlantByCode(plantCode);
+  const plant: Product = await getPlantByCode(id);
 
   if (!plant) {
     notFound();
@@ -49,7 +47,7 @@ export default async function ProductPage({ params }: Props) {
           </h1>
         </div>
         <div className="w-full order-0 md:h-auto md:row-start-1 md:row-span-2 md:col-start-1 md:mb-3.5">
-          <ProductImgGallery />
+          <ProductImgGallery imagesUrl={imagesUrl} />
         </div>
         <ul className="w-full md:mb-3.5">
           <li className="mb-2 md:mb-4">

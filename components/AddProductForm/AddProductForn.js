@@ -12,6 +12,9 @@ export default function AddProductForm({ productCategories }) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  if (productCategories.length === 0)
+    return toast.error("Категории товара не добавлены");
+
   const allCategoriesValue = productCategories.map((item) => item.value);
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -126,7 +129,7 @@ export default function AddProductForm({ productCategories }) {
               <>
                 {values.category &&
                   values.category.length > 0 &&
-                  values.category.map((_, index, arr) => (
+                  values.category.map((_, index) => (
                     <div key={index}>
                       <Field
                         className="outline-none focus:outline-none text-text font-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
@@ -256,44 +259,3 @@ export default function AddProductForm({ productCategories }) {
     </Formik>
   );
 }
-// .box {
-//   margin-bottom: 15px;
-
-//   display: flex;
-//   flex-wrap: wrap;
-//   justify-content: flex-start;
-//   gap: 30px;
-// }
-
-// .categoryLabel {
-//   display: flex;
-//   align-items: center;
-//   gap: 5px;
-//   font-size: var(--font-size-footer);
-//   font-family: var(--font-nunito-regular);
-// }
-
-// .optionBox {
-//   margin-bottom: 15px;
-
-//   width: 100%;
-
-//   display: flex;
-//   justify-content: flex-start;
-//   gap: 20px;
-// }
-
-// .thumb {
-//   width: 210px;
-//   height: 196px;
-// }
-
-// @media screen and (min-width: 768px) {
-//   .optionBox {
-//     width: 360px;
-//   }
-
-//   .thumb {
-//     width: 250px;
-//     height: 232px;
-//   }

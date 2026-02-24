@@ -2,6 +2,7 @@
 
 import toast from "react-hot-toast";
 
+import { CldImage } from "next-cloudinary";
 import { InputMask } from "@react-input/mask";
 
 import { CustomInput } from "../CustomInput/CustomInput";
@@ -20,12 +21,12 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
   const reset = useBasketStore((state) => state.reset);
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
 
-  const handleDecr = (code: number, userQty: number) => {
+  const handleDecr = (code: string, userQty: number) => {
     if (userQty === 1) return;
     decreaseQty(code, userQty);
   };
 
-  const handleIncr = (code: number, stock: number, userQty: number) => {
+  const handleIncr = (code: string, stock: number, userQty: number) => {
     if (userQty >= stock) return;
     increaseQty(code, userQty);
   };
@@ -67,12 +68,12 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                 key={product.code}
               >
                 <div className="flex gap-2">
-                  <img
-                    width="60"
-                    height="107"
-                    src={`${baseUrl}/plant${product.code}.jpg`}
+                  <CldImage
+                    width={80}
+                    height={143}
+                    src={product.imageUrl}
                     alt={product.title}
-                    className="object-cover object-center md:w-20 md:h-35.75"
+                    className="w-15 h-26.75 object-cover object-center md:w-20 md:h-35.75"
                   />
                   <div className="flex flex-col gap-1 justify-between">
                     <span className="font-heading text-main md:text-lg lg:text-xl">
