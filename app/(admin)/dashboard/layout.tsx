@@ -11,7 +11,7 @@ type DashboardLayputProps = {
 export default function DashboardLayout({ children }: DashboardLayputProps) {
   return (
     <>
-      <header className="w-full max-w-7xl py-2 px-1 md:py-3 flex items-center justify-between">
+      <header className="mx-auto w-full max-w-7xl py-2 px-1 md:py-3 flex items-center justify-between border-b border-b-border-gray">
         <Image
           src={Logo}
           width={50}
@@ -21,7 +21,7 @@ export default function DashboardLayout({ children }: DashboardLayputProps) {
           alt="Flowergirl Irina Logo"
         />
         <p className="ml-3 font-heading text-main uppercase text-sm md:text-xl">
-          Панель адміністратора
+          Панель администратора
         </p>
         <form
           action={async () => {
@@ -41,8 +41,8 @@ export default function DashboardLayout({ children }: DashboardLayputProps) {
           </button>
         </form>
       </header>
-      <main className="w-full max-w-7xl py-2 px-1 md:py-3 flex flex-row bg-background">
-        <aside className="pt-2 rounded-tl-xs bg-main lg:pt-5 lg:rounded-tl-xl">
+      <main className="mx-auto w-full max-w-7xl py-2 px-1 md:py-3 flex flex-row bg-background">
+        <aside className="py-2 rounded-tl-xs bg-main lg:pt-5 lg:rounded-tl-xl">
           <NavDashboard />
         </aside>
         {children}

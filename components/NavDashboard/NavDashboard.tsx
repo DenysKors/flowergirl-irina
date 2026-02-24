@@ -62,7 +62,7 @@ export default function NavDashboard() {
               : "w-6 h-6 fill-background lg:w-8 lg:h-8"
           }`}
         >
-          <use href="/icons.svg#icon-add-stone"></use>
+          <use href="/icons.svg#icon-add-category"></use>
         </svg>
       </Link>
       <Link

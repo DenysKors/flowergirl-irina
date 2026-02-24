@@ -11,7 +11,7 @@ import Supplies from "@/modelsDB/supplies";
 
 import { bot } from "@/services/telegram";
 import { PRODUCT_PAGINATION_LIMIT } from "../constants/pagination";
-import { BasketProduct } from "@/types/types";
+import { BasketProduct, Product } from "@/types/types";
 
 export const getAllPlantsCategories = cache(async () => {
   await dbConnect();
@@ -429,4 +429,100 @@ export const getAnalytics = async () => {
       console.log(err);
     }
   }
+};
+
+export const addProduct = async (productData: FormData) => {
+  const productType = productData.get("productType");
+  const title = productData.get("title");
+  const description = productData.get("description");
+  const category = productData.get("category");
+  const images = productData.getAll("image");
+  const qty = productData.get("qty");
+  const price = productData.get("price");
+
+  const imagesAmount = images.length;
+  const ImgIdArray = [];
+
+  console.log({
+    productType,
+    title,
+    description,
+    category,
+    price,
+    qty,
+    imagesAmount,
+  });
+
+  let code = "";
+  if (productType === "plant") {
+    code = `1-${Date.now().toString().slice(-4)}`;
+  } else if (productType === "protection") {
+    code = `2-${Date.now().toString().slice(-4)}`;
+  } else if (productType === "supplies") {
+    code = `3-${Date.now().toString().slice(-4)}`;
+  }
+
+  // for (let i = 0; i < imagesAmount; i += 1) {
+  //   let file = images[i];
+
+  // if (
+  //   !(
+  //     file?.type === "image/jpeg" ||
+  //     file.type === "image/jpg" ||
+  //     file.type === "image/png" ||
+  //     file.type === "image/webp"
+  //   )
+  // ) {
+  //   throw new Error("Invalid File Type", { statusCode: 412 });
+  // }
+
+  //   let fileBuffer = await file.arrayBuffer();
+  //   let mimeType = file.type;
+  //   let encoding = "base64";
+  //   let base64Data = Buffer.from(fileBuffer).toString("base64");
+  //   let fileUri = `data:${mimeType};${encoding},${base64Data}`;
+  //   let cloudinaryImgId = await uploadImage(fileUri);
+  //   ImgIdArray.push(cloudinaryImgId);
+  // }
+
+  // if (
+  //   !(
+  //     wideImage.type === "image/jpeg" ||
+  //     wideImage.type === "image/jpg" ||
+  //     wideImage.type === "image/png" ||
+  //     wideImage.type === "image/webp"
+  //   )
+  // ) {
+  //   throw new Error("Invalid File Type", { statusCode: 412 });
+  // }
+
+  // let wideImageBuffer = await wideImage.arrayBuffer();
+  // let mimeType = wideImage.type;
+  // let encoding = "base64";
+  // let base64Data = Buffer.from(wideImageBuffer).toString("base64");
+  // let wideImageUri = `data:${mimeType};${encoding},${base64Data}`;
+  // const cloudinaryWideImgId = await uploadImage(wideImageUri);
+
+  // const product = {
+  //   code,
+  //   title,
+  //   description,
+  //   category,
+  //   stones,
+  //   imagesUrl: ImgIdArray,
+  //   wideImageUrl: cloudinaryWideImgId,
+  //   price,
+  //   sell_status: "в наявності",
+  // };
+
+  // await dbConnect();
+
+  // try {
+  //   const createdProduct = await Product.create(product);
+  //   return createdProduct;
+  // } catch (err) {
+  //   console.log(err.message);
+  // }
+  // };
+  return "";
 };

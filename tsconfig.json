@@ -31,7 +31,8 @@
     "**/*.mts",
     "lib/connectDB.js",
     "modelsDB/plantsCategories.js",
-    "app/(server)/api/all-plants"
+    "app/(server)/api/all-plants",
+    "components/AddProductForm/AddProductForn.js"
   ],
   "exclude": ["node_modules"]
 }

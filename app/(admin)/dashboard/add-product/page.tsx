@@ -1,19 +1,39 @@
-export default async function AddProduct() {
-  //   const { productsAmount, articlesAmount } = await getAnalytics();
+import AddProductForm from "@/components/AddProductForm/AddProductForn";
+import ProductTypeSelect from "@/components/ProductTypeSelect/ProductTypeSelect";
+
+import {
+  getAllPlantsCategories,
+  getAllProtectionCategories,
+  getAllSuppliesCategories,
+} from "@/lib/api";
+import { Categories } from "@/types/types";
+
+export default async function AddProduct({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const productType = await searchParams;
+  const userProduct = productType.type as string;
+  let currentCategories: Categories[] | null = null;
+
+  if (userProduct === "plant") {
+    currentCategories = await getAllPlantsCategories();
+  } else if (userProduct === "protection") {
+    currentCategories = await getAllProtectionCategories();
+  } else if (userProduct === "supplies") {
+    currentCategories = await getAllSuppliesCategories();
+  }
 
   return (
-    <section>
-      {/* <h1 className={styles.subTitle}>Аналитика<h1>
-      <div className={styles.wrapper}>
-        <div className={styles.box}>
-          <p className={styles.text}>Товарів</p>
-          <p className={styles.stats}>{productsAmount}</p>
-        </div>
-        <div className={styles.box}>
-          <p className={styles.text}>Статтей</p>
-          <p className={styles.stats}>{articlesAmount}</p>
-        </div>
-      </div> */}
+    <section className="my-0 mx-auto px-1.5 pb-2.5 lg:px-2.5 lg:pb-5">
+      <h1 className="mb-2 font-heading lg:text-xl uppercase text-center text-text">
+        Добавить товар
+      </h1>
+      <ProductTypeSelect />
+      {currentCategories && currentCategories.length > 0 && (
+        <AddProductForm productCategories={currentCategories} />
+      )}
     </section>
   );
 }
