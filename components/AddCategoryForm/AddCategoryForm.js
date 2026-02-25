@@ -60,7 +60,7 @@ export default function AddCategoryForm({ categoryType }) {
           <label className="mb-4 flex flex-col gap-1 font-heading">
             Название (по-украински):
             <Field
-              className="p-1 w-full md:w-165 font-text text-text bg-background border-b border-b-main"
+              className="p-1 w-full font-text text-text bg-background border-b border-b-main"
               type="text"
               name="label"
               maxLength="25"
@@ -74,7 +74,7 @@ export default function AddCategoryForm({ categoryType }) {
           <label className="mb-4 flex flex-col gap-1 font-heading">
             Значение (перевод названия на английский):
             <Field
-              className="p-1 w-full md:w-165 font-text text-text bg-background border-b border-b-main"
+              className="p-1 w-full font-text text-text bg-background border-b border-b-main"
               type="text"
               name="value"
               maxLength="25"

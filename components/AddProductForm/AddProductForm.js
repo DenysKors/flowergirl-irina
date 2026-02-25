@@ -118,7 +118,7 @@ export default function AddProductForm({ productCategories }) {
           <label className="mb-4 flex flex-col gap-1 font-heading">
             Описание:
             <Field
-              className="p-1 w-full md:w-112.5 lg:w-162.5 font-text border border-border-gray rounded-b-md resize-none"
+              className="p-1 w-full font-text border border-border-gray rounded-b-md resize-none"
               component="textarea"
               name="description"
               rows="10"
