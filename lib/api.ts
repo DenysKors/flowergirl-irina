@@ -511,4 +511,29 @@ export const addProduct = async (productData: FormData) => {
     }
   }
 };
+
+export const addCategory = async (categoryData: FormData) => {
+  const categoryType = categoryData.get("categoryType") as string;
+  const categoryStr = categoryData.get("category") as string;
+  const category = JSON.parse(categoryStr);
+
+  await dbConnect();
+  try {
+    if (categoryType === "plant") {
+      const createdCategory = await PlantsCategories.create(category);
+      return createdCategory;
+    } else if (categoryType === "protection") {
+      const createdCategory = await ProtectionCategories.create(category);
+      return createdCategory;
+    } else if (categoryType === "supplies") {
+      const createdCategory = await SuppliesCategories.create(category);
+      return createdCategory;
+    }
+  } catch (err: any) {
+    console.log(err);
+    if (err?.code === 11000) {
+      throw new Error(`Категория уже существует`);
+    } else console.log(err);
+  }
+};
 /* eslint-disable @typescript-eslint/no-explicit-any */

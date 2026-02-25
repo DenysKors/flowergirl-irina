@@ -1,11 +1,10 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
-
 import Image from "next/image";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 
+import { useSearchParams, useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 
 export default function AddProductForm({ productCategories }) {
@@ -18,7 +17,15 @@ export default function AddProductForm({ productCategories }) {
   const allCategoriesValue = productCategories.map((item) => item.value);
 
   const handleSubmit = async (values, { resetForm }) => {
-    if (values.images.length > 3) {
+    const isDuplicated = values.category.some(
+      (el, idx, arr) => arr.indexOf(el) !== idx
+    );
+
+    if (isDuplicated) {
+      return toast.error(
+        "Добавлено несколько одинаковых категорий, удалите дублирование"
+      );
+    } else if (values.images.length > 3) {
       return toast.error("Добавлено больше 3 фото");
     }
 
@@ -51,7 +58,6 @@ export default function AddProductForm({ productCategories }) {
     });
     if (response.ok) {
       resetForm();
-      window.scrollTo({ top: 0, behavior: "smooth" });
       toast.success("Товар добавлен");
       router.push("/dashboard/analytics/");
     } else toast.error("Ошибка при добавлении, повторите снова");
@@ -95,10 +101,10 @@ export default function AddProductForm({ productCategories }) {
     >
       {({ values, setFieldValue, isSubmitting }) => (
         <Form>
-          <label className="mb-4 flex flex-col gap-1 font-text font-bold">
+          <label className="mb-4 flex flex-col gap-1 font-heading">
             Название:
             <Field
-              className="p-1 w-full md:w-165 font-text text-text bg-background border-b border-b-main"
+              className="p-1 w-full font-text text-text bg-background border-b border-b-main"
               type="text"
               name="title"
               maxLength="50"
@@ -109,7 +115,7 @@ export default function AddProductForm({ productCategories }) {
             name="title"
             component="div"
           />
-          <label className="mb-4 flex flex-col gap-1 font-text font-bold">
+          <label className="mb-4 flex flex-col gap-1 font-heading">
             Описание:
             <Field
               className="p-1 w-full md:w-112.5 lg:w-162.5 font-text border border-border-gray rounded-b-md resize-none"
@@ -123,33 +129,55 @@ export default function AddProductForm({ productCategories }) {
             name="description"
             component="div"
           />
-          <p className="mb-2.5 font-text font-bold">Категория:</p>
-          <FieldArray name="categories">
-            {() => (
+          <p className="mb-2.5 font-heading">Категория:</p>
+          <FieldArray name="category">
+            {({ insert, remove }) => (
               <>
                 {values.category &&
                   values.category.length > 0 &&
-                  values.category.map((_, index) => (
+                  values.category.map((_, index, arr) => (
                     <div key={index}>
-                      <Field
-                        className="outline-none focus:outline-none text-text font-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
-                        as="select"
-                        name={`category.${index}`}
-                      >
-                        <option value="default" hidden>
-                          Выберите категорию
-                        </option>
-                        {productCategories.map((item) => {
-                          return (
-                            <option value={item.value} key={item.value}>
-                              {item.label}
-                            </option>
-                          );
-                        })}
-                      </Field>
+                      <div className="mb-3.5 w-full flex justify-start gap-5">
+                        <button
+                          className="p-1 bg-main rounded-md cursor-pointer"
+                          type="button"
+                          onClick={() => insert(index, "")}
+                        >
+                          <svg className="w-4.5 h-4.5 fill-background">
+                            <use href="/icons.svg#icon-plus"></use>
+                          </svg>
+                        </button>
+                        <Field
+                          className="outline-none focus:outline-none text-text font-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
+                          as="select"
+                          name={`category.${index}`}
+                        >
+                          <option value="default" hidden>
+                            Выберите категорию
+                          </option>
+                          {productCategories.map((item) => {
+                            return (
+                              <option value={item.value} key={item.value}>
+                                {item.label}
+                              </option>
+                            );
+                          })}
+                        </Field>
+                        {index !== arr.length - 1 && (
+                          <button
+                            className="p-1 bg-main rounded-md cursor-pointer"
+                            type="button"
+                            onClick={() => remove(index)}
+                          >
+                            <svg className="w-4.5 h-4.5 fill-background">
+                              <use href="/icons.svg#icon-minus"></use>
+                            </svg>
+                          </button>
+                        )}
+                      </div>
                       <ErrorMessage
                         className="mb-2.5 font-text text-sm md:text-base text-red-500"
-                        name="category"
+                        name={`category.${index}`}
                         component="div"
                       />
                     </div>
@@ -157,7 +185,7 @@ export default function AddProductForm({ productCategories }) {
               </>
             )}
           </FieldArray>
-          <p className="mb-2.5 mt-4 font-text font-bold">Фото, макс. 3шт:</p>
+          <p className="mb-2.5 mt-4 font-heading">Фото, макс. 3шт:</p>
           <Field name="images">
             {() => (
               <input
@@ -214,7 +242,7 @@ export default function AddProductForm({ productCategories }) {
             name="images"
             component="div"
           />
-          <label className="mb-4 flex flex-col gap-1 font-text font-bold">
+          <label className="mb-4 flex flex-col gap-1 font-heading">
             Кол-во:
             <div>
               <Field
@@ -230,7 +258,7 @@ export default function AddProductForm({ productCategories }) {
             name="qty"
             component="div"
           />
-          <label className="mb-4 flex flex-col gap-1 font-text font-bold">
+          <label className="mb-4 flex flex-col gap-1 font-heading">
             Цена:
             <div>
               <Field

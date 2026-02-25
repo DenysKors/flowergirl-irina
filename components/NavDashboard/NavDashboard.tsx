@@ -87,15 +87,15 @@ export default function NavDashboard() {
       <Link
         title="Удалить"
         className={`${
-          pathname === `/dashboard/delete`
+          pathname === `/dashboard/delete-product`
             ? "p-1.5 mx-0.5 lg:p-2 rounded-tl-md rounded-bl-md bg-background lg:rounded-tl-lg lg:rounded-bl-lg"
             : "p-1.5 mx-0.5 lg:p-2"
         }`}
-        href="/dashboard/delete"
+        href="/dashboard/delete-product"
       >
         <svg
           className={`${
-            pathname === `/dashboard/delete`
+            pathname === `/dashboard/delete-product`
               ? "w-6 h-6 fill-main lg:w-8 lg:h-8"
               : "w-6 h-6 fill-background lg:w-8 lg:h-8"
           }`}

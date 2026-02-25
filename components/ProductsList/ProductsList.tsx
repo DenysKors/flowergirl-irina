@@ -48,7 +48,7 @@ export default function ProductsList({ products }: ProductsListProps) {
         return (
           <li
             key={code}
-            className="pb-3 md:pb-3.5 lg:pb-4 flex flex-col border-b border-b-border-gray"
+            className="pb-3 md:pb-3.5 lg:pb-4 flex flex-col justify-between border-b border-b-border-gray"
           >
             <Link
               className="group/edit"
@@ -58,42 +58,46 @@ export default function ProductsList({ products }: ProductsListProps) {
             >
               <div className="overflow-hidden">
                 <CldImage
-                  className="object-cover object-center transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
+                  className="object-cover w-full object-center transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
                   src={imagesUrl[0]}
                   alt={title}
-                  width={250}
-                  height={445}
+                  width={280}
+                  height={498}
                 />
               </div>
-              <p className="mt-2 md:mt-4 font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline">
+              <p className="mt-2 md:mt-4 font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline break-all">
                 {title}
               </p>
             </Link>
-            <div className="mt-2 md:mt-4 flex justify-between items-center">
-              <strong className="font-text md:text-lg lg:text-xl">{`${price} грн`}</strong>
-              {qty > 0 && (
-                <button
-                  className="px-3 py-1.5 lg:px-5 lg:py-2 text-sm lg:text-base text-background flex items-center justify-center gap-0.5 lg:gap-1 bg-violet-800 hover:bg-violet-950 rounded-2xl lg:rounded-4xl cursor-pointer"
-                  type="button"
-                  aria-label="Додати у кошик"
-                  title="Додати у кошик"
-                  onClick={() =>
-                    handleBasketClick(code, title, price, imagesUrl, qty)
-                  }
-                >
-                  +
-                  <svg className="w-3 h-3 fill-background lg:w-5 lg:h-5">
-                    <use href={`${baseUrl}/icons.svg#icon-shopping-bag`}></use>
-                  </svg>
-                </button>
-              )}
-            </div>
-            <div className="mt-4 md:mt-6">
-              <span className="font-text text-xs md:text-sm lg:text-base">
-                {qty === 0
-                  ? SELL_STATUS_ENUMS.notAvailable
-                  : `${SELL_STATUS_ENUMS.inStock} ${qty}`}
-              </span>
+            <div className="mt-2 md:mt-4">
+              <div className=" flex justify-between items-center">
+                <strong className="font-text md:text-lg lg:text-xl">{`${price} грн`}</strong>
+                {qty > 0 && (
+                  <button
+                    className="px-3 py-1.5 lg:px-5 lg:py-2 text-sm lg:text-base text-background flex items-center justify-center gap-0.5 lg:gap-1 bg-violet-800 hover:bg-violet-950 rounded-2xl lg:rounded-4xl cursor-pointer"
+                    type="button"
+                    aria-label="Додати у кошик"
+                    title="Додати у кошик"
+                    onClick={() =>
+                      handleBasketClick(code, title, price, imagesUrl, qty)
+                    }
+                  >
+                    +
+                    <svg className="w-3 h-3 fill-background lg:w-5 lg:h-5">
+                      <use
+                        href={`${baseUrl}/icons.svg#icon-shopping-bag`}
+                      ></use>
+                    </svg>
+                  </button>
+                )}
+              </div>
+              <div className="mt-4 md:mt-6">
+                <span className="font-text text-xs md:text-sm lg:text-base">
+                  {qty === 0
+                    ? SELL_STATUS_ENUMS.notAvailable
+                    : `${SELL_STATUS_ENUMS.inStock} ${qty}`}
+                </span>
+              </div>
             </div>
           </li>
         );

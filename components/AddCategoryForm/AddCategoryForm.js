@@ -1,90 +1,100 @@
 "use client";
 
-// import toast from "react-hot-toast";
-// import * as Yup from "yup";
-// import { Formik, Form, Field, ErrorMessage } from "formik";
+import toast from "react-hot-toast";
+import * as Yup from "yup";
 
-// const initialValues = {
-//   label: "",
-//   value: "",
-// };
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
-// const stoneSchema = Yup.object().shape({
-//   label: Yup.string()
-//     .max(25, "Название слишком длинное")
-//     .matches(
-//       /^[а-яієїґ'()\s]+$/,
-//       "Только маленькие буквы, между словами используйте пробел"
-//     )
-//     .required("Название обязательно"),
-//   value: Yup.string()
-//     .max(25, "Значение слишком длинное")
-//     .matches(
-//       /^[a-z\-]+$/,
-//       "Только маленькие буквы, вместо пробелов используйте тире"
-//     )
-//     .required("Значение обязательно"),
-// });
+const initialValues = {
+  label: "",
+  value: "",
+};
 
-export default function AddCategoryForm({ productCategories }) {
-  // const handleSubmit = async (values, { resetForm }) => {
-  //   const stoneData = {
-  //     name: values.name.trim(),
-  //     value: values.value.trim(),
-  //   };
+const categorySchema = Yup.object().shape({
+  label: Yup.string()
+    .max(25, "Название слишком длинное")
+    .matches(
+      /^[а-яієїґ'()\s]+$/,
+      "Только маленькие буквы, между словами используйте пробел"
+    )
+    .required("Название обязательно"),
+  value: Yup.string()
+    .max(25, "Значение слишком длинное")
+    .matches(/^[a-z]+$/, "Только маленькие буквы, слитно без пробелов")
+    .required("Значение обязательно"),
+});
 
-  //   const response = await fetch("/api/add-stone", {
-  //     method: "POST",
-  //     body: JSON.stringify(stoneData),
-  //   });
-  //   if (response.ok) {
-  //     resetForm();
-  //     toast.success("Камінь збережений");
-  //   } else if (response.status === 422) {
-  //     const message = await response.json();
-  //     toast.error(message);
-  //   } else toast.error("Помилка при збереженні, повторіть знову");
-  // };
+export default function AddCategoryForm({ categoryType }) {
+  const handleSubmit = async (values, { resetForm }) => {
+    const newCategory = {
+      label: values.label.trim(),
+      value: values.value.trim(),
+    };
+    const categoryData = new FormData();
+    categoryData.append("categoryType", categoryType);
+    categoryData.append("category", JSON.stringify(newCategory));
 
-  //   return (
-  //     <Formik
-  //       initialValues={initialValues}
-  //       validationSchema={stoneSchema}
-  //       onSubmit={handleSubmit}
-  //     >
-  //       {({ isSubmitting }) => (
-  //         <Form>
-  //           <label className={styles.lable}>
-  //             Назва (українською):
-  //             <Field
-  //               className={styles.textField}
-  //               type="text"
-  //               name="name"
-  //               maxLength="25"
-  //             />
-  //           </label>
-  //           <ErrorMessage className={styles.error} name="name" component="div" />
-  //           <label className={styles.lable}>
-  //             Значення (переклад назви англійською):
-  //             <Field
-  //               className={styles.textField}
-  //               type="text"
-  //               name="value"
-  //               maxLength="25"
-  //             />
-  //           </label>
-  //           <ErrorMessage className={styles.error} name="value" component="div" />
-  //           <button
-  //             className={styles.button}
-  //             type="submit"
-  //             aria-label="add stone"
-  //             disabled={isSubmitting}
-  //           >
-  //             Зберегти камінь
-  //           </button>
-  //         </Form>
-  //       )}
-  //     </Formik>
-  //   );
-  return "";
+    const response = await fetch("/api/add-category", {
+      method: "POST",
+      body: categoryData,
+    });
+
+    if (response.ok) {
+      resetForm();
+      toast.success("Категория добавлена");
+      router.push("/dashboard/analytics/");
+    } else {
+      const errData = await response.json();
+      toast.error(errData);
+    }
+  };
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={categorySchema}
+      onSubmit={handleSubmit}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <label className="mb-4 flex flex-col gap-1 font-heading">
+            Название (по-украински):
+            <Field
+              className="p-1 w-full md:w-165 font-text text-text bg-background border-b border-b-main"
+              type="text"
+              name="label"
+              maxLength="25"
+            />
+          </label>
+          <ErrorMessage
+            className="mb-2.5 font-text text-sm md:text-base text-red-500"
+            name="label"
+            component="div"
+          />
+          <label className="mb-4 flex flex-col gap-1 font-heading">
+            Значение (перевод названия на английский):
+            <Field
+              className="p-1 w-full md:w-165 font-text text-text bg-background border-b border-b-main"
+              type="text"
+              name="value"
+              maxLength="25"
+            />
+          </label>
+          <ErrorMessage
+            className="mb-2.5 font-text text-sm md:text-base text-red-500"
+            name="value"
+            component="div"
+          />
+          <button
+            className="mt-5 button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
+            type="submit"
+            aria-label="Добавить товар"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Сохранение" : "Сохранить категорию"}
+          </button>
+        </Form>
+      )}
+    </Formik>
+  );
 }
