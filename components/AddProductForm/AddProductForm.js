@@ -3,6 +3,8 @@
 import Image from "next/image";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
+// import ImageBlobReduce from "image-blob-reduce";
+import imageCompression from "browser-image-compression";
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
@@ -69,7 +71,7 @@ export default function AddProductForm({ productCategories }) {
         title: "",
         description: "",
         category: [""],
-        images: null,
+        images: [],
         blobImages: [],
         qty: 0,
         price: 0,
@@ -199,7 +201,13 @@ export default function AddProductForm({ productCategories }) {
                 multiple
                 accept="image/*, .png, .jpeg, .gif, .webp"
                 onChange={(event) => {
-                  setFieldValue("images", event.currentTarget.files);
+                  [...event.currentTarget.files].forEach((file, idx) =>
+                    imageCompression(file, { maxSizeMB: 1.5 }).then((blob) => {
+                      setFieldValue(`images.${idx}`, blob);
+                    })
+                  );
+
+                  // setFieldValue("images", event.currentTarget.files);
                   values.blobImages.length = 0;
                   [...event.currentTarget.files].forEach((file, idx) =>
                     setFieldValue(
@@ -287,3 +295,9 @@ export default function AddProductForm({ productCategories }) {
     </Formik>
   );
 }
+// const reducer = new ImageBlobReduce();
+// [...event.currentTarget.files].forEach((file, idx) =>
+//   reducer.toBlob(file, { max: 1500 }).then((blob) => {
+//     setFieldValue(`images.${idx}`, blob);
+//   })
+// );

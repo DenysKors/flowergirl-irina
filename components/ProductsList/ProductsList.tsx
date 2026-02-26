@@ -48,10 +48,9 @@ export default function ProductsList({ products }: ProductsListProps) {
         return (
           <li
             key={code}
-            className="pb-3 md:pb-3.5 lg:pb-4 flex flex-col justify-between border-b border-b-border-gray"
+            className="group/edit pb-3 md:pb-3.5 lg:pb-4 flex flex-col justify-between border-b border-b-border-gray"
           >
             <Link
-              className="group/edit"
               href={{
                 pathname: `${pathname}/${code}`,
               }}
@@ -65,11 +64,11 @@ export default function ProductsList({ products }: ProductsListProps) {
                   height={498}
                 />
               </div>
-              <p className="mt-2 md:mt-4 font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline break-all">
-                {title}
-              </p>
             </Link>
             <div className="mt-2 md:mt-4">
+              <p className="font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline break-all">
+                {title}
+              </p>
               <div className=" flex justify-between items-center">
                 <strong className="font-text md:text-lg lg:text-xl">{`${price} грн`}</strong>
                 {qty > 0 && (

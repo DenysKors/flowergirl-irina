@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-input/mask": "^2.0.4",
+    "browser-image-compression": "^2.0.2",
     "cloudinary": "^2.9.0",
     "formik": "^2.4.9",
     "grammy": "^1.40.0",

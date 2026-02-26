@@ -510,6 +510,7 @@ export const addProduct = async (productData: FormData) => {
       console.log(err);
     }
   }
+  return "";
 };
 
 export const addCategory = async (categoryData: FormData) => {
@@ -530,7 +531,6 @@ export const addCategory = async (categoryData: FormData) => {
       return createdCategory;
     }
   } catch (err: any) {
-    console.log(err);
     if (err?.code === 11000) {
       throw new Error(`Категория уже существует`);
     } else console.log(err);

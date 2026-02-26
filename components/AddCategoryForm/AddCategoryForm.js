@@ -3,6 +3,7 @@
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 
+import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const initialValues = {
@@ -24,8 +25,12 @@ const categorySchema = Yup.object().shape({
     .required("Значение обязательно"),
 });
 
-export default function AddCategoryForm({ categoryType }) {
+export default function AddCategoryForm({ categoryType = "" }) {
+  const router = useRouter();
+
   const handleSubmit = async (values, { resetForm }) => {
+    if (categoryType === "") return toast.error("Выберите вид товара");
+
     const newCategory = {
       label: values.label.trim(),
       value: values.value.trim(),
