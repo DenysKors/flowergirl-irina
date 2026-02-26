@@ -3,7 +3,6 @@
 import Image from "next/image";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
-// import ImageBlobReduce from "image-blob-reduce";
 import imageCompression from "browser-image-compression";
 
 import { useSearchParams, useRouter } from "next/navigation";
@@ -206,8 +205,6 @@ export default function AddProductForm({ productCategories }) {
                       setFieldValue(`images.${idx}`, blob);
                     })
                   );
-
-                  // setFieldValue("images", event.currentTarget.files);
                   values.blobImages.length = 0;
                   [...event.currentTarget.files].forEach((file, idx) =>
                     setFieldValue(
@@ -295,9 +292,3 @@ export default function AddProductForm({ productCategories }) {
     </Formik>
   );
 }
-// const reducer = new ImageBlobReduce();
-// [...event.currentTarget.files].forEach((file, idx) =>
-//   reducer.toBlob(file, { max: 1500 }).then((blob) => {
-//     setFieldValue(`images.${idx}`, blob);
-//   })
-// );

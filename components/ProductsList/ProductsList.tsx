@@ -51,13 +51,14 @@ export default function ProductsList({ products }: ProductsListProps) {
             className="group/edit pb-3 md:pb-3.5 lg:pb-4 flex flex-col justify-between border-b border-b-border-gray"
           >
             <Link
+              className="h-full cursor-pointer"
               href={{
                 pathname: `${pathname}/${code}`,
               }}
             >
-              <div className="overflow-hidden">
+              <div className="overflow-hidden h-full flex justify-center">
                 <CldImage
-                  className="object-cover w-full object-center transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
+                  className="object-contain w-full object-center transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
                   src={imagesUrl[0]}
                   alt={title}
                   width={280}
@@ -69,7 +70,7 @@ export default function ProductsList({ products }: ProductsListProps) {
               <p className="font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline break-all">
                 {title}
               </p>
-              <div className=" flex justify-between items-center">
+              <div className="mt-2 md:mt-4 flex justify-between items-center">
                 <strong className="font-text md:text-lg lg:text-xl">{`${price} грн`}</strong>
                 {qty > 0 && (
                   <button
