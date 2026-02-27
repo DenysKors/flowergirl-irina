@@ -13,6 +13,7 @@ import { bot } from "@/services/telegram";
 import { PRODUCT_PAGINATION_LIMIT } from "../constants/pagination";
 import { BasketProduct, Product } from "@/types/types";
 import { uploadImage } from "@/lib/cloudinaryUpload";
+import { deleteImage } from "@/lib/cloudinaryDelete";
 
 export const getAllPlantsCategories = cache(async () => {
   await dbConnect();
@@ -592,3 +593,62 @@ export const deleteCategory = async (categoryData: {
     return deletedCategory;
   }
 };
+
+export const deleteProduct = async ({
+  productType,
+  code,
+}: {
+  productType: string;
+  code: string;
+}) => {
+  await dbConnect();
+
+  if (productType === "plant") {
+    const product = await Plant.findOne({ code });
+
+    if (!product) return { deletedCount: 0 };
+
+    const { imagesUrl } = product;
+
+    await deleteImage(imagesUrl);
+
+    const result = await Plant.deleteOne({ code });
+    return result;
+  } else if (productType === "protection") {
+    const product = await Protection.findOne({ code });
+
+    if (!product) return { deletedCount: 0 };
+
+    const { imagesUrl } = product;
+
+    await deleteImage(imagesUrl);
+
+    const result = await Protection.deleteOne({ code });
+    return result;
+  } else if (productType === "supplies") {
+    const product = await Supplies.findOne({ code });
+
+    if (!product) return { deletedCount: 0 };
+
+    const { imagesUrl } = product;
+
+    await deleteImage(imagesUrl);
+
+    const result = await Supplies.deleteOne({ code });
+    return result;
+  }
+};
+
+// export const updateProduct = async (productData) => {
+//   await dbConnect();
+
+//   try {
+//     const updatedProduct = await Product.updateOne(
+//       { code: productData.code },
+//       { price: productData.price, sell_status: productData.sell_status }
+//     );
+//     return updatedProduct;
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// };

@@ -27,14 +27,14 @@ export default function DelProdByCode() {
   return (
     <section className="my-0 mx-auto px-1.5 pb-2.5 lg:px-2.5 lg:pb-5">
       <h1 className="mb-2 font-heading lg:text-xl uppercase text-center text-text">
-        Удалить
+        Удалить товар
       </h1>
-      <div className="w-full flex justify-center border-b border-b-border-gray">
+      <div className="w-full flex justify-center gap-3 md:gap-6 border-b border-b-border-gray bg-gray-100 rounded-xl px-4 py-6 mb-4 md:py-4 md:mb-6">
         <button
           className={`${
             tabId === "plant"
-              ? "pb-2.5 font-text  border-b-2 border-main"
-              : "py-2 px-3 font-text"
+              ? "pb-2.5 font-text border-b-2 border-main"
+              : "py-2 font-text cursor-pointer"
           }`}
           type="button"
           id="tab-plant"
@@ -46,7 +46,7 @@ export default function DelProdByCode() {
           className={`${
             tabId === "protection"
               ? "pb-2.5 font-text border-b-2 border-main"
-              : "py-2 px-3 font-text"
+              : "py-2 font-text cursor-pointer"
           }`}
           type="button"
           id="tab-protection"
@@ -58,7 +58,7 @@ export default function DelProdByCode() {
           className={`${
             tabId === "supplies"
               ? "pb-2.5 font-text border-b-2 border-main"
-              : "py-2 px-3 font-text"
+              : "py-2 font-text cursor-pointer"
           }`}
           type="button"
           id="tab-supplies"
