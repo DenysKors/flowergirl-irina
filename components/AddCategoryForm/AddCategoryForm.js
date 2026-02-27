@@ -62,7 +62,7 @@ export default function AddCategoryForm({ categoryType = "" }) {
     >
       {({ isSubmitting }) => (
         <Form>
-          <label className="mb-4 flex flex-col gap-1 font-heading">
+          <label className="mb-6 flex flex-col gap-1 font-heading">
             Название (по-украински):
             <Field
               className="p-1 w-full font-text text-text bg-background border-b border-b-main"
@@ -76,7 +76,7 @@ export default function AddCategoryForm({ categoryType = "" }) {
             name="label"
             component="div"
           />
-          <label className="mb-4 flex flex-col gap-1 font-heading">
+          <label className="mb-6 flex flex-col gap-1 font-heading">
             Значение (перевод названия на английский):
             <Field
               className="p-1 w-full font-text text-text bg-background border-b border-b-main"

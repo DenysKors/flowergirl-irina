@@ -12,9 +12,6 @@ export default function AddProductForm({ productCategories }) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  if (productCategories.length === 0)
-    return toast.error("Категории товара не добавлены");
-
   const allCategoriesValue = productCategories.map((item) => item.value);
 
   const handleSubmit = async (values, { resetForm }) => {

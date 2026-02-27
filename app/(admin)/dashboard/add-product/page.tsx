@@ -31,6 +31,9 @@ export default async function AddProduct({
         Добавить товар
       </h1>
       <ProductTypeSelect />
+      {currentCategories && currentCategories.length === 0 && (
+        <div className="mt-10 w-full text-center">Нет доступных категорий</div>
+      )}
       {currentCategories && currentCategories.length > 0 && (
         <AddProductForm productCategories={currentCategories} />
       )}
