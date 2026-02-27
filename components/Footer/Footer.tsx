@@ -27,10 +27,7 @@ export default function Footer() {
           </svg>
         </div>
         <div className="container pt-8 pb-6 md:pt-10 lg:pb-5">
-          <div
-            // className="py-8 flex flex-col justify-center md:flex-row md:justify-between items-start gap-4 sm:flex-row text-sm"
-            className="py-8 flex flex-col gap-3 justify-self-center md:flex-row md:justify-between md:items-start md:justify-self-auto"
-          >
+          <div className="py-8 flex flex-col gap-3 justify-self-center md:flex-row md:justify-between md:items-start md:justify-self-auto">
             <button
               className="font-text text-base md:text-lg lg:text-xl text-background hover:underline cursor-pointer"
               type="button"

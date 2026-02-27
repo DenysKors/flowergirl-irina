@@ -85,7 +85,7 @@ export default function NavDashboard() {
         </svg>
       </Link>
       <Link
-        title="Удалить"
+        title="Удалить товар"
         className={`${
           pathname === `/dashboard/delete-product`
             ? "p-1.5 mx-0.5 lg:p-2 rounded-tl-md rounded-bl-md bg-background lg:rounded-tl-lg lg:rounded-bl-lg"
@@ -100,7 +100,26 @@ export default function NavDashboard() {
               : "w-6 h-6 fill-background lg:w-8 lg:h-8"
           }`}
         >
-          <use href="/icons.svg#icon-trash"></use>
+          <use href="/icons.svg#icon-delete-product"></use>
+        </svg>
+      </Link>
+      <Link
+        title="Удалить категорию"
+        className={`${
+          pathname === `/dashboard/delete-category`
+            ? "p-1.5 mx-0.5 lg:p-2 rounded-tl-md rounded-bl-md bg-background lg:rounded-tl-lg lg:rounded-bl-lg"
+            : "p-1.5 mx-0.5 lg:p-2"
+        }`}
+        href="/dashboard/delete-category"
+      >
+        <svg
+          className={`${
+            pathname === `/dashboard/delete-category`
+              ? "w-6 h-6 fill-main lg:w-8 lg:h-8"
+              : "w-6 h-6 fill-background lg:w-8 lg:h-8"
+          }`}
+        >
+          <use href="/icons.svg#icon-delete-category"></use>
         </svg>
       </Link>
     </nav>

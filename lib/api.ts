@@ -510,7 +510,6 @@ export const addProduct = async (productData: FormData) => {
       console.log(err);
     }
   }
-  return "";
 };
 
 export const addCategory = async (categoryData: FormData) => {
@@ -532,8 +531,64 @@ export const addCategory = async (categoryData: FormData) => {
     }
   } catch (err: any) {
     if (err?.code === 11000) {
-      throw new Error(`Категория уже существует`);
+      throw new Error("Категория уже существует");
     } else console.log(err);
   }
 };
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+export const deleteCategory = async (categoryData: {
+  productType: string;
+  categoryLabel: string;
+}) => {
+  const { productType, categoryLabel } = categoryData;
+
+  await dbConnect();
+
+  if (productType === "plant") {
+    const totalAmount = await Plant.countDocuments({
+      $or: [{ "category.label": { $in: categoryLabel } }],
+    }).lean();
+
+    if (totalAmount > 0) {
+      throw new Error(
+        `В данной категории есть ${totalAmount} товара. Удаление невозможно.`
+      );
+    }
+
+    const deletedCategory = await PlantsCategories.deleteOne({
+      label: categoryLabel,
+    });
+    return deletedCategory;
+  } else if (productType === "protection") {
+    const totalAmount = await Protection.countDocuments({
+      $or: [{ "category.label": { $in: categoryLabel } }],
+    }).lean();
+
+    if (totalAmount > 0) {
+      throw new Error(
+        `В данной категории есть ${totalAmount} товар(а). Удаление невозможно.`
+      );
+    }
+
+    const deletedCategory = await ProtectionCategories.deleteOne({
+      label: categoryLabel,
+    });
+    return deletedCategory;
+  } else if (productType === "supplies") {
+    const totalAmount = await Supplies.countDocuments({
+      $or: [{ "category.label": { $in: categoryLabel } }],
+    }).lean();
+
+    if (totalAmount > 0) {
+      throw new Error(
+        `В данной категории есть ${totalAmount} товар(а). Удаление невозможно.`
+      );
+    }
+
+    const deletedCategory = await SuppliesCategories.deleteOne({
+      label: categoryLabel,
+    });
+    return deletedCategory;
+  }
+};

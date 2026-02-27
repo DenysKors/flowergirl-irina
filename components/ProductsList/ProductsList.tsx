@@ -43,7 +43,7 @@ export default function ProductsList({ products }: ProductsListProps) {
   };
 
   return (
-    <ul className="mx-auto pb-4 grid grid-cols-1 min-[375px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-4 md:gap-8 justify-items-center">
+    <ul className="mx-auto pb-6 grid grid-cols-1 min-[375px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-4 md:gap-8 justify-items-center">
       {products.map(({ code, title, price, qty, imagesUrl }) => {
         return (
           <li
@@ -58,19 +58,20 @@ export default function ProductsList({ products }: ProductsListProps) {
             >
               <div className="overflow-hidden h-full flex justify-center">
                 <CldImage
-                  className="object-contain w-full object-center transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
+                  className="object-contain w-full h-auto transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
                   src={imagesUrl[0]}
                   alt={title}
                   width={280}
                   height={498}
+                  loading="eager"
                 />
               </div>
             </Link>
-            <div className="mt-2 md:mt-4">
+            <div className="mt-2 md:mt-4 flex flex-col gap-2 md:gap-4">
               <p className="font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline break-all">
                 {title}
               </p>
-              <div className="mt-2 md:mt-4 flex justify-between items-center">
+              <div className="flex justify-between items-center">
                 <strong className="font-text md:text-lg lg:text-xl">{`${price} грн`}</strong>
                 {qty > 0 && (
                   <button
@@ -91,7 +92,7 @@ export default function ProductsList({ products }: ProductsListProps) {
                   </button>
                 )}
               </div>
-              <div className="mt-4 md:mt-6">
+              <div>
                 <span className="font-text text-xs md:text-sm lg:text-base">
                   {qty === 0
                     ? SELL_STATUS_ENUMS.notAvailable

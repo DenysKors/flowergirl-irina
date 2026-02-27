@@ -1,13 +1,12 @@
-import { addCategory } from "@/lib/api";
+import { deleteCategory } from "@/lib/api";
 
-export async function POST(request: Request) {
+export async function DELETE(request: Request) {
   try {
-    const categoryData = await request.formData();
-    const newCategory = await addCategory(categoryData);
-    return Response.json(newCategory);
+    const categoryData = await request.json();
+    const deletedCategory = await deleteCategory(categoryData);
+    return Response.json(deletedCategory);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.log("error", error);
       return new Response(JSON.stringify(`${error.message}`), {
         status: 422,
       });
