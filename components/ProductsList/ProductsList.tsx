@@ -68,7 +68,7 @@ export default function ProductsList({ products }: ProductsListProps) {
               </div>
             </Link>
             <div className="mt-2 md:mt-4 flex flex-col gap-2 md:gap-4">
-              <p className="font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline break-all">
+              <p className="font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline wrap-anywhere">
                 {title}
               </p>
               <div className="flex justify-between items-center">

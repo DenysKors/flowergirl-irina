@@ -2,19 +2,19 @@
 
 import toast from "react-hot-toast";
 import { useState } from "react";
-// import * as Yup from "yup";
-// import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
-// const updateProdSchema = Yup.object().shape({
-//   code: Yup.string(),
-//   price: Yup.number()
-//     .integer("Цена должна быть целым числом")
-//     .moreThan(0, "Цена должна быть больше 0")
-//     .required("Цена обязательна"),
-//   qty: Yup.number()
-//     .positive("Кол-во должно быть больше или равно 0")
-//     .required("Кол-во обязательно"),
-// });
+const updateProdSchema = Yup.object().shape({
+  price: Yup.number()
+    .integer("Цена должна быть целым числом")
+    .moreThan(0, "Цена должна быть больше 0")
+    .required("Цена обязательна"),
+  qty: Yup.number()
+    .integer("Количество должно быть целым числом")
+    .moreThan(-1, "Количество должно быть больше или равно 0")
+    .required("Кол-во обязательно"),
+});
 
 export default function ProductUpdate() {
   const [code, setCode] = useState("");
@@ -31,8 +31,9 @@ export default function ProductUpdate() {
       toast.success("Товар найден");
       const productData = await response.json();
       setProduct({
+        title: productData.title,
         price: productData.price,
-        sell_status: productData.sell_status,
+        qty: productData.qty,
       });
     } else if (response.status === 404) {
       setCode("");
@@ -40,19 +41,24 @@ export default function ProductUpdate() {
     } else toast.error("Ошибка поиска, повторите снова");
   };
 
-  //   const handleSubmit = async (values, { resetForm }) => {
-  //     const response = await fetch("/api/update-product", {
-  //       method: "PATCH",
-  //       body: JSON.stringify(values),
-  //     });
-  //     console.log(response);
-  //     if (response.ok) {
-  //       resetForm();
-  //       setCode("");
-  //       setProduct(null);
-  //       toast.success("Товар оновлений");
-  //     } else toast.error("Помилка при збереженні, повторіть знову");
-  //   };
+  const handleSubmit = async (values, { resetForm }) => {
+    const newValues = {
+      code,
+      price: values.price,
+      qty: values.qty,
+    };
+
+    const response = await fetch("/api/update-product", {
+      method: "PATCH",
+      body: JSON.stringify(newValues),
+    });
+    if (response.ok) {
+      resetForm();
+      setCode("");
+      setProduct(null);
+      toast.success("Товар обновлен");
+    } else toast.error("Ошибка при обновлении, повторите снова");
+  };
   return (
     <>
       <div className="w-full flex justify-center flex-row">
@@ -77,20 +83,39 @@ export default function ProductUpdate() {
           </svg>
         </button>
       </div>
-      {/* {product && (
+      {product && (
         <Formik
           initialValues={product}
           validationSchema={updateProdSchema}
           enableReinitialize={true}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting }) => (
-            <Form className={styles.form}>
-              <label className={styles.label}>
-                Ціна:
+          {({ values, isSubmitting }) => (
+            <Form className="mt-10">
+              <h1 className="mb-4 font-heading text-main md:text-lg lg:text-xl">
+                {values.title}
+              </h1>
+              <label className="mb-4 flex flex-col gap-1 font-heading">
+                Количество:
                 <div>
                   <Field
-                    className={styles.inputNumber}
+                    className="p-1.5 max-w-25 bg-background border-b border-b-main"
+                    type="number"
+                    name="qty"
+                  />
+                  <span>шт.</span>
+                </div>
+              </label>
+              <ErrorMessage
+                className="mb-2.5 font-text text-sm md:text-base text-red-500"
+                name="qty"
+                component="div"
+              />
+              <label className="mb-4 flex flex-col gap-1 font-heading">
+                Цена:
+                <div>
+                  <Field
+                    className="p-1.5 max-w-25 bg-background border-b border-b-main"
                     type="number"
                     name="price"
                   />
@@ -98,38 +123,22 @@ export default function ProductUpdate() {
                 </div>
               </label>
               <ErrorMessage
-                className={styles.error}
+                className="mb-2.5 font-text text-sm md:text-base text-red-500"
                 name="price"
                 component="div"
               />
-              <p className={styles.title}>Статус:</p>
-              <div className={styles.box}>
-                {Object.values(SELL_STATUS_ENUMS).map((status, index) => {
-                  return (
-                    <label key={index} className={styles.categoryLabel}>
-                      <Field type="radio" name="sell_status" value={status} />
-                      {status}
-                    </label>
-                  );
-                })}
-              </div>
-              <ErrorMessage
-                className={styles.error}
-                name="category"
-                component="div"
-              />
               <button
-                className={styles.button}
+                className="mt-5 button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
                 type="submit"
                 aria-label="delete product"
                 disabled={isSubmitting}
               >
-                Оновити товар
+                {isSubmitting ? "Сохранение" : "Сохранить изменения"}
               </button>
             </Form>
           )}
         </Formik>
-      )} */}
+      )}
     </>
   );
 }

@@ -654,16 +654,22 @@ export const getProductByCode = async (code: string) => {
   } else return null;
 };
 
-// export const updateProduct = async (productData) => {
-//   await dbConnect();
+export const updateProduct = async (productData: {
+  code: string;
+  price: number;
+  qty: number;
+}) => {
+  const { code, price, qty } = productData;
+  await dbConnect();
 
-//   try {
-//     const updatedProduct = await Product.updateOne(
-//       { code: productData.code },
-//       { price: productData.price, sell_status: productData.sell_status }
-//     );
-//     return updatedProduct;
-//   } catch (err) {
-//     console.log(err.message);
-//   }
-// };
+  if (code.charAt(0) === "1") {
+    const updatedProduct = await Plant.updateOne({ code }, { price, qty });
+    return updatedProduct;
+  } else if (code.charAt(0) === "2") {
+    const updatedProduct = await Protection.updateOne({ code }, { price, qty });
+    return updatedProduct;
+  } else if (code.charAt(0) === "3") {
+    const updatedProduct = await Supplies.updateOne({ code }, { price, qty });
+    return updatedProduct;
+  }
+};
