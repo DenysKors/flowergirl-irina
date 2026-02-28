@@ -639,6 +639,21 @@ export const deleteProduct = async ({
   }
 };
 
+export const getProductByCode = async (code: string) => {
+  await dbConnect();
+
+  if (code.charAt(0) === "1") {
+    const plant = await Plant.findOne({ code });
+    return plant;
+  } else if (code.charAt(0) === "2") {
+    const plant = await Protection.findOne({ code });
+    return plant;
+  } else if (code.charAt(0) === "3") {
+    const plant = await Supplies.findOne({ code });
+    return plant;
+  } else return null;
+};
+
 // export const updateProduct = async (productData) => {
 //   await dbConnect();
 

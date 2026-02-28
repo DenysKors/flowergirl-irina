@@ -14,6 +14,14 @@ const productDeleteSchema = Yup.object().shape({
 
 export default function ProductDelete({ productType }) {
   const handleSubmit = async (values, { resetForm }) => {
+    if (productType === "plant" && values.code.charAt(0) !== "1") {
+      return toast.error("Код не соответствует категории товара");
+    } else if (productType === "protection" && values.code.charAt(0) !== "2") {
+      return toast.error("Код не соответствует категории товара");
+    } else if (productType === "supplies" && values.code.charAt(0) !== "3") {
+      return toast.error("Код не соответствует категории товара");
+    }
+
     const response = await fetch("/api/delete-product", {
       method: "DELETE",
       body: JSON.stringify({ productType, code: values.code }),
