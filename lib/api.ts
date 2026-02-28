@@ -324,17 +324,42 @@ export const addOrder = async (orderData: FormData) => {
   const userComment = orderData.get("comment") as string;
   const productData = orderData.get("products") as string;
   const totalPriceData = orderData.get("totalPrice") as string;
-  const userProducts = JSON.parse(productData);
-  const totalPrice = JSON.parse(totalPriceData);
+  const userProducts: BasketProduct[] = JSON.parse(productData);
+  const totalPrice: number = JSON.parse(totalPriceData);
+
+  await dbConnect();
+
+  const productsAmount = userProducts.length;
+
+  for (let i = 0; i < productsAmount; i += 1) {
+    const { code, userQty } = userProducts[i];
+
+    if (code.charAt(0) === "1") {
+      const plant = await Plant.findOne({ code });
+      let updatedQty = plant.qty - userQty;
+      if (updatedQty < 0) updatedQty = 0;
+      await Plant.updateOne({ code }, { qty: updatedQty });
+    } else if (code.charAt(0) === "2") {
+      const protection = await Protection.findOne({ code });
+      let updatedQty = protection.qty - userQty;
+      if (updatedQty < 0) updatedQty = 0;
+      await Protection.updateOne({ code }, { qty: updatedQty });
+    } else if (code.charAt(0) === "3") {
+      const supplies = await Supplies.findOne({ code });
+      let updatedQty = supplies.qty - userQty;
+      if (updatedQty < 0) updatedQty = 0;
+      await Supplies.updateOne({ code }, { qty: updatedQty });
+    }
+  }
 
   const parsedProducts = userProducts.reduce(
     (prev: string, product: BasketProduct, idx: number) => {
       return (
         prev +
-        `${idx + 1}.${product.title} 
-    - арт.${product.code} 
+        `${idx + 1}.${product.title}
+    - арт.${product.code}
     - кол-во: ${product.userQty}
-    - цена: ${product.price}грн 
+    - цена: ${product.price}грн
     - сумма: ${product.sumPrice}грн
      `
       );
@@ -359,11 +384,6 @@ export const addOrder = async (orderData: FormData) => {
     bot.api.sendMessage(chat_id, telegramMarkdown, {
       parse_mode: "MarkdownV2",
     });
-    // Add logic for decrease product stock quantity!!!!!
-    // const updatedProduct = await Product.updateOne(
-    //   { code: productData.code },
-    //   { price: productData.price, sell_status: productData.sell_status }
-    // );
   } catch (err: unknown) {
     if (err instanceof Error) console.log(err.message);
     else {
@@ -646,11 +666,11 @@ export const getProductByCode = async (code: string) => {
     const plant = await Plant.findOne({ code });
     return plant;
   } else if (code.charAt(0) === "2") {
-    const plant = await Protection.findOne({ code });
-    return plant;
+    const protection = await Protection.findOne({ code });
+    return protection;
   } else if (code.charAt(0) === "3") {
-    const plant = await Supplies.findOne({ code });
-    return plant;
+    const supplies = await Supplies.findOne({ code });
+    return supplies;
   } else return null;
 };
 
