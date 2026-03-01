@@ -34,7 +34,8 @@
     "modelsDB/plantsCategories.js",
     "app/(server)/api/all-plants",
     "components/AddProductForm/AddProductForm.js",
-    "components/ProductDelete/ProductDelete.js"
+    "components/ProductDelete/ProductDelete.js",
+    "lib/actions.js"
   ],
   "exclude": ["node_modules"]
 }

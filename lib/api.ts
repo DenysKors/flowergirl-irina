@@ -8,6 +8,7 @@ import SuppliesCategories from "@/modelsDB/suppliesCategories";
 import Plant from "../modelsDB/plant";
 import Protection from "@/modelsDB/protection";
 import Supplies from "@/modelsDB/supplies";
+import User from "@/modelsDB/user";
 
 import { bot } from "@/services/telegram";
 import { PRODUCT_PAGINATION_LIMIT } from "../constants/pagination";
@@ -413,13 +414,12 @@ export const getSearchedProducts = async (
         limit: PRODUCT_PAGINATION_LIMIT,
       }
     )
-      .collation({ locale: "uk", strength: 1 })
       .sort({ title: 1 })
       .lean();
 
     const totalAmount = await Plant.countDocuments({
       $text: { $search: userSearchQuery },
-    }).collation({ locale: "uk", strength: 1 });
+    });
 
     const productsData = JSON.parse(
       JSON.stringify({
@@ -691,5 +691,48 @@ export const updateProduct = async (productData: {
   } else if (code.charAt(0) === "3") {
     const updatedProduct = await Supplies.updateOne({ code }, { price, qty });
     return updatedProduct;
+  }
+};
+
+// export const createUser = async (formData: FormData, role = "admin") => {
+//   const email = formData.get("email") as string;
+//   const password = formData.get("password") as string;
+//   await dbConnect();
+
+//   try {
+//     const existedUser = await User.findOne({ email });
+
+//     if (existedUser) {
+//       return null;
+//     }
+
+//     const createdUser = await User.create({
+//       email,
+//       password,
+//       role,
+//     });
+
+//     createdUser.password = undefined;
+
+//     return createdUser;
+//   } catch (err: unknown) {
+//     if (err instanceof Error) console.log(err.message);
+//     else {
+//       console.log(err);
+//     }
+//   }
+// };
+
+export const getUser = async (email: string) => {
+  await dbConnect();
+
+  try {
+    const user = await User.findOne({ email }).select("+password");
+    return user;
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
   }
 };

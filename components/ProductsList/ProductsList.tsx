@@ -63,7 +63,7 @@ export default function ProductsList({ products }: ProductsListProps) {
                   alt={title}
                   width={280}
                   height={498}
-                  loading="eager"
+                  loading="lazy"
                 />
               </div>
             </Link>

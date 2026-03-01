@@ -42,6 +42,6 @@ const Supplies = mongoose.Schema(
   { timestamps: true }
 );
 
-Supplies.index({ title: "text" });
+// Supplies.index({ title: "text" });
 
 export default mongoose.models.Supplies || mongoose.model("Supplies", Supplies);

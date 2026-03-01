@@ -3,7 +3,8 @@ import Image from "next/image";
 import Logo from "@/assets/images/Logo.png";
 
 import NavDashboard from "@/components/NavDashboard/NavDashboard";
-// import { signOut } from "@/auth";
+import { signOut } from "@/app/auth";
+
 type DashboardLayputProps = {
   children: React.ReactNode;
 };
@@ -26,7 +27,7 @@ export default function DashboardLayout({ children }: DashboardLayputProps) {
         <form
           action={async () => {
             "use server";
-            // await signOut({ redirectTo: "/" });
+            await signOut({ redirectTo: "/" });
           }}
         >
           <button

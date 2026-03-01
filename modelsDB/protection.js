@@ -42,7 +42,7 @@ const Protection = mongoose.Schema(
   { timestamps: true }
 );
 
-Protection.index({ title: "text" });
+// Protection.index({ title: "text" });
 
 export default mongoose.models.Protection ||
   mongoose.model("Protection", Protection);
