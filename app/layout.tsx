@@ -50,8 +50,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title:
-      "Flowergirl-irina / Квіти та інші рослини для дому та саду, добрива та засоби захисту",
+    title: "Flowergirl-irina / Квіти, рослини, добрива та засоби захисту",
     description:
       "Розсада вуличних квітів та інших рослин, кімнатні квіти з Голландії, добрива та засоби захисту рослин для дому та саду",
     url: "https://flowergirl-irina.vercel.app/",
