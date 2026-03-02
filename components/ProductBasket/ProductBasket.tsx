@@ -2,6 +2,7 @@
 
 import toast from "react-hot-toast";
 
+import { useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 import { InputMask } from "@react-input/mask";
 
@@ -20,6 +21,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
   const decreaseQty = useBasketStore((state) => state.decreaseUserQty);
   const reset = useBasketStore((state) => state.reset);
   const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
+  const router = useRouter();
 
   const handleDecr = (code: string, userQty: number) => {
     if (userQty === 1) return;
@@ -46,6 +48,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
       reset();
       onClose(false);
       toast.success("Замолення відправлено в обробку. Дякуємо!");
+      router.refresh();
     } else toast.error("Помилка при збереженні, повторіть знову");
   };
 

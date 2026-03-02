@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   robots: {
-    index: false,
+    index: true,
     follow: true,
     nocache: true,
     googleBot: {
@@ -50,17 +50,17 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Flowergirl-irina / Квіти, рослини, добрива та засоби захисту",
+    title: "Квіти та інші рослини, добрива та засоби захисту",
     description:
       "Розсада вуличних квітів та інших рослин, кімнатні квіти з Голландії, добрива та засоби захисту рослин для дому та саду",
-    url: "https://flowergirl-irina.vercel.app/",
+    url: "https://flowergirl-irina.com/",
     siteName:
       "Розсада вуличних квітів та інших рослин, кімнатні квіти з Голландії, добрива та засоби захисту рослин для дому та саду",
     images: [
       {
-        url: "https://flowergirl-irina.vercel.app/opengraph-image.jpg",
-        width: 124,
-        height: 124,
+        url: "https://flowergirl-irina.com/opengraph-image.jpg",
+        width: 1200,
+        height: 630,
       },
     ],
     locale: "uk_UA",
