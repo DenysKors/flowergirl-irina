@@ -1,7 +1,7 @@
 import { getSearchedProducts } from "@/lib/api";
 
 import Pagination from "@/components/Pagination/Pagination";
-import ProductsList from "@/components/ProductsList/ProductsList";
+import SearchList from "@/components/SearchList/SearchList";
 
 import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
 
@@ -32,7 +32,7 @@ export default async function SearchPage({
         )}
         {searchedData && searchedData.products.length > 0 && (
           <>
-            <ProductsList products={searchedData.products} />
+            <SearchList products={searchedData.products} />
             <Pagination
               totalAmount={searchedData.totalAmount}
               paginationLimit={PRODUCT_PAGINATION_LIMIT}
