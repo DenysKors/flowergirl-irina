@@ -21,14 +21,17 @@ export default function SearchList({ products }: SearchListProps) {
 
   const handleBtnClick = (code: string) => {
     const productTypeCode = code.charAt(0);
+
     switch (productTypeCode) {
       case "1":
         router.push(`/catalog/plants/${code}`);
         break;
       case "2":
         router.push(`/catalog/protection/${code}`);
+        break;
       case "3":
         router.push(`/catalog/supplies/${code}`);
+        break;
       default:
         router.push("/");
     }

@@ -393,8 +393,6 @@ export const addOrder = async (orderData: FormData) => {
   }
 };
 
-// Add search from other collections
-
 export const getSearchedProducts = async (
   userSearchQuery: string,
   page: string | string[]
@@ -404,7 +402,7 @@ export const getSearchedProducts = async (
   await dbConnect();
 
   try {
-    const products = await Plant.find(
+    const productsPlants = await Plant.find(
       {
         $text: { $search: userSearchQuery },
       },
@@ -417,9 +415,51 @@ export const getSearchedProducts = async (
       .sort({ title: 1 })
       .lean();
 
-    const totalAmount = await Plant.countDocuments({
+    const totalAmountPlants = await Plant.countDocuments({
       $text: { $search: userSearchQuery },
     });
+
+    const productsProtection = await Protection.find(
+      {
+        $text: { $search: userSearchQuery },
+      },
+      "",
+      {
+        skip,
+        limit: PRODUCT_PAGINATION_LIMIT,
+      }
+    )
+      .sort({ title: 1 })
+      .lean();
+
+    const totalAmountProtection = await Protection.countDocuments({
+      $text: { $search: userSearchQuery },
+    });
+
+    const productsSupplies = await Supplies.find(
+      {
+        $text: { $search: userSearchQuery },
+      },
+      "",
+      {
+        skip,
+        limit: PRODUCT_PAGINATION_LIMIT,
+      }
+    )
+      .sort({ title: 1 })
+      .lean();
+
+    const totalAmountSupplies = await Supplies.countDocuments({
+      $text: { $search: userSearchQuery },
+    });
+
+    const products = [
+      ...productsPlants,
+      ...productsProtection,
+      ...productsSupplies,
+    ];
+    const totalAmount =
+      totalAmountPlants + totalAmountProtection + totalAmountSupplies;
 
     const productsData = JSON.parse(
       JSON.stringify({
