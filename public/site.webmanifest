@@ -2,7 +2,7 @@
   "name": "Flowergirl-irina / Квіти та інші рослини для дому та саду, добрива та засоби захисту",
   "short_name": "Flowergirl-irina",
   "description": "Розсада вуличних квітів та інших рослин, кімнатні квіти з Голландії, добрива та засоби захисту рослин для дому та саду",
-  "start_url": "https://flowergirl-irina.com/",
+  "start_url": "https://flowergirl-irina.vercel.app/",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
