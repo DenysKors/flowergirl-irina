@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   robots: {
-    index: true,
+    index: false,
     follow: true,
     nocache: true,
     googleBot: {
