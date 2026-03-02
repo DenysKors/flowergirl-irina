@@ -53,12 +53,12 @@ export const metadata: Metadata = {
     title: "Квіти та інші рослини, добрива та засоби захисту",
     description:
       "Розсада вуличних квітів та інших рослин, кімнатні квіти з Голландії, добрива та засоби захисту рослин для дому та саду",
-    url: "https://flowergirl-irina.com/",
+    url: "https://flowergirl-irina.vercel.app/",
     siteName:
       "Розсада вуличних квітів та інших рослин, кімнатні квіти з Голландії, добрива та засоби захисту рослин для дому та саду",
     images: [
       {
-        url: "https://flowergirl-irina.com/opengraph-image.jpg",
+        url: "https://flowergirl-irina.vercel.app/opengraph-image.jpg",
         width: 1200,
         height: 630,
       },
