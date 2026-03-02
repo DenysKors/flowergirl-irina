@@ -85,6 +85,10 @@ body {
   pointer-events: none;
 }
 
+.image-gallery-slide {
+  align-self: center !important;
+}
+
 .image-gallery-left-nav {
   pointer-events: all;
 }

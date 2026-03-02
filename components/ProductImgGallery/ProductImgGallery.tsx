@@ -7,11 +7,13 @@ import { useRef } from "react";
 import type { GalleryItem, ImageGalleryRef } from "react-image-gallery";
 
 type ProductImgGalleryProps = {
+  title: string;
   imagesUrl: string[];
 };
 
 export default function ProductImgGallery({
   imagesUrl,
+  title,
 }: ProductImgGalleryProps) {
   const galleryRef = useRef<ImageGalleryRef>(null);
 
@@ -19,11 +21,14 @@ export default function ProductImgGallery({
     const url = getCldImageUrl({
       width: "auto",
       height: "auto",
+      quality: "30",
       src: el,
     });
     return {
       original: url,
       thumbnail: url,
+      originalAlt: title,
+      thumbnailAlt: title,
     };
   });
 

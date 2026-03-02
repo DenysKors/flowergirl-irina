@@ -59,10 +59,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://flowergirl-irina.vercel.app/opengraph-image.jpg",
-        // width: 1200,
-        // height: 630,
-        width: 124,
-        height: 124,
+        width: 1200,
+        height: 630,
       },
     ],
     locale: "uk_UA",

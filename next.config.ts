@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   devIndicators: false,
   images: {
+    qualities: [30],
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {

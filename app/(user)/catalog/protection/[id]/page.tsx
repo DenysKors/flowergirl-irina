@@ -48,7 +48,7 @@ export default async function ProtectionPage({ params }: Props) {
           </h1>
         </div>
         <div className="w-full order-0 md:h-auto md:row-start-1 md:row-span-2 md:col-start-1 md:mb-3.5">
-          <ProductImgGallery imagesUrl={imagesUrl} />
+          <ProductImgGallery imagesUrl={imagesUrl} title={title} />
         </div>
         <ul className="w-full md:mb-3.5">
           <li className="mb-2 md:mb-4">

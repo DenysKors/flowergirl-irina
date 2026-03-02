@@ -80,6 +80,7 @@ export default function SearchList({ products }: SearchListProps) {
                   width={280}
                   height={498}
                   loading="lazy"
+                  quality={30}
                 />
               </div>
             </button>

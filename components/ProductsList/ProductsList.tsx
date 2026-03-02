@@ -64,6 +64,7 @@ export default function ProductsList({ products }: ProductsListProps) {
                   width={280}
                   height={498}
                   loading="lazy"
+                  quality={30}
                 />
               </div>
             </Link>
