@@ -133,7 +133,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                     onClick={() => removeProduct(product)}
                   >
                     <svg className="w-6 h-6 fill-border-gray hover:fill-red-500">
-                      <use href="icons.svg#icon-trash"></use>
+                      <use href="/icons.svg#icon-trash"></use>
                     </svg>
                   </button>
                   <span className="font-text md:text-lg lg:text-xl">{`${product.sumPrice} грн`}</span>

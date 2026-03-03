@@ -32,7 +32,7 @@ export default function MobileMenu() {
         onClick={handleToggle}
       >
         <svg className="w-7 h-7 fill-text md:w-8 md:h-8">
-          <use href="icons.svg#icon-menu"></use>
+          <use href="/icons.svg#icon-menu"></use>
         </svg>
         Меню
       </button>
@@ -56,7 +56,7 @@ export default function MobileMenu() {
             onClick={handleToggle}
           >
             <svg className="h-6 w-6 fill-black">
-              <use href="icons.svg#icon-close"></use>
+              <use href="/icons.svg#icon-close"></use>
             </svg>
           </button>
         </div>
@@ -78,7 +78,7 @@ export default function MobileMenu() {
                 >
                   {title}
                   <svg className="h-4 w-4 fill-black">
-                    <use href="icons.svg#icon-arrow-right"></use>
+                    <use href="/icons.svg#icon-arrow-right"></use>
                   </svg>
                 </Link>
               </li>

@@ -142,7 +142,7 @@ export default function AddProductForm({ productCategories }) {
                           onClick={() => insert(index, "")}
                         >
                           <svg className="w-4.5 h-4.5 fill-background">
-                            <use href="icons.svg#icon-plus"></use>
+                            <use href="/icons.svg#icon-plus"></use>
                           </svg>
                         </button>
                         <Field
@@ -168,7 +168,7 @@ export default function AddProductForm({ productCategories }) {
                             onClick={() => remove(index)}
                           >
                             <svg className="w-4.5 h-4.5 fill-background">
-                              <use href="icons.svg#icon-minus"></use>
+                              <use href="/icons.svg#icon-minus"></use>
                             </svg>
                           </button>
                         )}

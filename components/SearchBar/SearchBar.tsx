@@ -55,7 +55,7 @@ export default function SearchBar({ handleToggle }: SearchBarProps) {
           title="Пошук"
         >
           <svg className="h-3 w-3 md:w-6 md:h-6 fill-background">
-            <use href="icons.svg#icon-search"></use>
+            <use href="/icons.svg#icon-search"></use>
           </svg>
         </button>
       </form>

@@ -79,7 +79,7 @@ export default function ProductUpdate() {
           onClick={handleClick}
         >
           <svg className="h-3 w-3 md:w-6 md:h-6 fill-background">
-            <use href="icons.svg#icon-search"></use>
+            <use href="/icons.svg#icon-search"></use>
           </svg>
         </button>
       </div>

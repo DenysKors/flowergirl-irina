@@ -16,7 +16,7 @@ export default function LinkBack() {
         }}
       >
         <svg className="h-6 w-6 lg:h-8 lg:w-8 fill-black">
-          <use href="icons.svg#icon-arrow-left"></use>
+          <use href="/icons.svg#icon-arrow-left"></use>
         </svg>
       </button>
     </div>

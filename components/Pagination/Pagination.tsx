@@ -45,7 +45,7 @@ export default function Pagination({
           onClick={handlePrevPageChange}
         >
           <svg className="w-1.5 h-3.5 fill-text transition-colors group-hover/edit:fill-main rotate-y-180">
-            <use href="icons.svg#icon-Vector"></use>
+            <use href="/icons.svg#icon-Vector"></use>
           </svg>
           назад
         </button>
@@ -61,7 +61,7 @@ export default function Pagination({
         >
           далі
           <svg className="w-1.5 h-3.5 fill-text transition-colors group-hover/edit:fill-main">
-            <use href="icons.svg#icon-Vector"></use>
+            <use href="/icons.svg#icon-Vector"></use>
           </svg>
         </button>
       )}

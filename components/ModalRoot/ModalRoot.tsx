@@ -44,7 +44,7 @@ export default function Modal({ onClose, children }: UserModalProps) {
           onClick={onClose}
         >
           <svg className="h-6 w-6 fill-black">
-            <use href="icons.svg#icon-close"></use>
+            <use href="/icons.svg#icon-close"></use>
           </svg>
         </button>
         {children}
