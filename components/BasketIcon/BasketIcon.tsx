@@ -27,7 +27,7 @@ export default function BasketIcon() {
               : "w-7 h-7 fill-main md:w-8 md:h-8 "
           }`}
         >
-          <use href="/icons.svg#icon-shopping-bag"></use>
+          <use href="icons.svg#icon-shopping-bag"></use>
         </svg>
         {basketProducts.length > 0 && (
           <span className="absolute -top-2 left-[68%] px-2 py-0.75 text-xs lg:text-base font-bold rounded-full bg-violet-800 text-background leading-none text-center uppercase">

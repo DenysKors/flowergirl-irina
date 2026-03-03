@@ -40,7 +40,7 @@ export default function SectionFilters({ categories }: FilterProps) {
           очистити фільтр
         </button>
         <svg className="w-8 h-8 fill-text md:w-9 md:h-9">
-          <use href="/icons.svg#icon-filter"></use>
+          <use href="icons.svg#icon-filter"></use>
         </svg>
       </div>
       <ul className="max-h-27.5 lg:max-h-37.5 flex gap-2 flex-wrap justify-end overflow-y-scroll">

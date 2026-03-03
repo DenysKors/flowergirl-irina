@@ -24,7 +24,7 @@ export default function NavDashboard() {
               : "w-6 h-6 fill-background lg:w-8 lg:h-8"
           }`}
         >
-          <use href="/icons.svg#icon-analytics"></use>
+          <use href="icons.svg#icon-analytics"></use>
         </svg>
       </Link>
       <Link
@@ -43,7 +43,7 @@ export default function NavDashboard() {
               : "w-6 h-6 fill-background lg:w-8 lg:h-8"
           }`}
         >
-          <use href="/icons.svg#icon-add-product"></use>
+          <use href="icons.svg#icon-add-product"></use>
         </svg>
       </Link>
       <Link
@@ -62,7 +62,7 @@ export default function NavDashboard() {
               : "w-6 h-6 fill-background lg:w-8 lg:h-8"
           }`}
         >
-          <use href="/icons.svg#icon-add-category"></use>
+          <use href="icons.svg#icon-add-category"></use>
         </svg>
       </Link>
       <Link
@@ -81,7 +81,7 @@ export default function NavDashboard() {
               : "w-6 h-6 fill-background lg:w-8 lg:h-8"
           }`}
         >
-          <use href="/icons.svg#icon-refresh"></use>
+          <use href="icons.svg#icon-refresh"></use>
         </svg>
       </Link>
       <Link
@@ -100,7 +100,7 @@ export default function NavDashboard() {
               : "w-6 h-6 fill-background lg:w-8 lg:h-8"
           }`}
         >
-          <use href="/icons.svg#icon-delete-product"></use>
+          <use href="icons.svg#icon-delete-product"></use>
         </svg>
       </Link>
       <Link
@@ -119,7 +119,7 @@ export default function NavDashboard() {
               : "w-6 h-6 fill-background lg:w-8 lg:h-8"
           }`}
         >
-          <use href="/icons.svg#icon-delete-category"></use>
+          <use href="icons.svg#icon-delete-category"></use>
         </svg>
       </Link>
     </nav>
