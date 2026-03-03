@@ -81,6 +81,10 @@ export default function SearchList({ products }: SearchListProps) {
                   height={498}
                   loading="lazy"
                   quality={30}
+                  onError={(e) => {
+                    const clickedElement = e.target as HTMLImageElement;
+                    clickedElement.srcset = "/no-image-placeholder.png";
+                  }}
                 />
               </div>
             </button>

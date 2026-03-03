@@ -74,8 +74,14 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                   <CldImage
                     width={80}
                     height={143}
+                    loading="lazy"
+                    quality={30}
                     src={product.imageUrl}
                     alt={product.title}
+                    onError={(e) => {
+                      const clickedElement = e.target as HTMLImageElement;
+                      clickedElement.srcset = "/no-image-placeholder.png";
+                    }}
                     className="w-15 h-26.75 object-cover object-center md:w-20 md:h-35.75"
                   />
                   <div className="flex flex-col gap-1 justify-between">

@@ -23,6 +23,7 @@ export default function ProductImgGallery({
       height: "auto",
       quality: "30",
       src: el,
+      defaultImage: "/no-image-placeholder.png",
     });
     return {
       original: url,

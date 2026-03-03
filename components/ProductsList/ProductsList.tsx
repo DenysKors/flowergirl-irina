@@ -65,6 +65,10 @@ export default function ProductsList({ products }: ProductsListProps) {
                   height={498}
                   loading="lazy"
                   quality={30}
+                  onError={(e) => {
+                    const clickedElement = e.target as HTMLImageElement;
+                    clickedElement.srcset = "/no-image-placeholder.png";
+                  }}
                 />
               </div>
             </Link>
