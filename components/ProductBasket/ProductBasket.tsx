@@ -98,7 +98,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                           }
                         >
                           <svg className="w-4.5 h-4.5">
-                            <use href="icons.svg#icon-minus"></use>
+                            <use href="/icons.svg#icon-minus"></use>
                           </svg>
                         </button>
                         <span className="px-1 py-2 w-10 text-center">
@@ -117,7 +117,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                           }
                         >
                           <svg className="w-4.5 h-4.5">
-                            <use href="icons.svg#icon-plus"></use>
+                            <use href="/icons.svg#icon-plus"></use>
                           </svg>
                         </button>
                       </div>
