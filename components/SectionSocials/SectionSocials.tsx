@@ -1,12 +1,11 @@
 export default function SectionSocials() {
-  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
   return (
     <section className="bg-main">
       <div className="container lg:flex lg:justify-between lg:gap-4">
         <div className="py-8 sm:flex">
           <div className="flex gap-x-4 lg:px-0 lg:max-w-none">
             <svg className="ml-auto sm:ml-0 w-7 h-7 shrink-0 fill-background md:w-8 md:h-8">
-              <use href={`${baseUrl}/icons.svg#icon-chat`}></use>
+              <use href="/icons.svg#icon-chat"></use>
             </svg>
             <div className="max-w-4xl">
               <p className="mb-1.5 font-heading text-xl md:text-2xl lg:text-3xl text-background">
@@ -30,7 +29,7 @@ export default function SectionSocials() {
               title="TikTok"
             >
               <svg className="w-7 h-7 fill-main md:w-8 md:h-8">
-                <use href={`${baseUrl}/icons.svg#icon-tiktok`}></use>
+                <use href="/icons.svg#icon-tiktok"></use>
               </svg>
             </a>
             <a
@@ -42,7 +41,7 @@ export default function SectionSocials() {
               title="Instagram"
             >
               <svg className="w-7 h-7 fill-main md:w-8 md:h-8">
-                <use href={`${baseUrl}/icons.svg#icon-instagram`}></use>
+                <use href="/icons.svg#icon-instagram"></use>
               </svg>
             </a>
             <a
@@ -54,7 +53,7 @@ export default function SectionSocials() {
               title="Telegram"
             >
               <svg className="w-7 h-7 fill-main md:w-8 md:h-8">
-                <use href={`${baseUrl}/icons.svg#icon-telegram`}></use>
+                <use href="/icons.svg#icon-telegram"></use>
               </svg>
             </a>
             <a
@@ -66,7 +65,7 @@ export default function SectionSocials() {
               title="Viber"
             >
               <svg className="w-7 h-7 fill-main md:w-8 md:h-8">
-                <use href={`${baseUrl}/icons.svg#icon-viber`}></use>
+                <use href="/icons.svg#icon-viber"></use>
               </svg>
             </a>
           </div>

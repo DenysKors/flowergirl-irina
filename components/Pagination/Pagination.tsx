@@ -16,7 +16,6 @@ export default function Pagination({
   const { replace } = useRouter();
   const totalPages = Math.ceil(totalAmount / paginationLimit);
   const currentPage = Number(searchParams.get("page")) || 1;
-  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
 
   const createPageURL = (pageNumber: number) => {
     const params = new URLSearchParams(searchParams);
@@ -46,7 +45,7 @@ export default function Pagination({
           onClick={handlePrevPageChange}
         >
           <svg className="w-1.5 h-3.5 fill-text transition-colors group-hover/edit:fill-main rotate-y-180">
-            <use href={`${baseUrl}/icons.svg#icon-Vector`}></use>
+            <use href="/icons.svg#icon-Vector"></use>
           </svg>
           назад
         </button>

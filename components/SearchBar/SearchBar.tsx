@@ -13,8 +13,6 @@ type SearchBarProps = {
 };
 
 export default function SearchBar({ handleToggle }: SearchBarProps) {
-  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
-
   const router = useRouter();
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
@@ -57,7 +55,7 @@ export default function SearchBar({ handleToggle }: SearchBarProps) {
           title="Пошук"
         >
           <svg className="h-3 w-3 md:w-6 md:h-6 fill-background">
-            <use href={`${baseUrl}/icons.svg#icon-search`}></use>
+            <use href="/icons.svg#icon-search"></use>
           </svg>
         </button>
       </form>

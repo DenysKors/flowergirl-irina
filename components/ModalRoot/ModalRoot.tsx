@@ -9,8 +9,6 @@ type UserModalProps = {
 };
 
 export default function Modal({ onClose, children }: UserModalProps) {
-  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
-
   useEffect(() => {
     const handleCloseEsc = (evt: KeyboardEvent) => {
       if (evt.code === "Escape") {
@@ -46,7 +44,7 @@ export default function Modal({ onClose, children }: UserModalProps) {
           onClick={onClose}
         >
           <svg className="h-6 w-6 fill-black">
-            <use href={`${baseUrl}/icons.svg#icon-close`}></use>
+            <use href="/icons.svg#icon-close"></use>
           </svg>
         </button>
         {children}

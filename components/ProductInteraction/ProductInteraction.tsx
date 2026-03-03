@@ -22,7 +22,6 @@ export default function ProductInteraction({
   qty,
 }: ProductInteractionProps) {
   const [prodQty, setProdQty] = useState(1);
-  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
   const basketProducts = useBasketStore((state) => state.products);
   const addProduct = useBasketStore((state) => state.addProduct);
 
@@ -64,7 +63,7 @@ export default function ProductInteraction({
             onClick={handleDecr}
           >
             <svg className="w-4.5 h-4.5">
-              <use href={`${baseUrl}/icons.svg#icon-minus`}></use>
+              <use href="/icons.svg#icon-minus"></use>
             </svg>
           </button>
           <span className="px-1 py-2 w-10 text-center">{prodQty}</span>
@@ -75,7 +74,7 @@ export default function ProductInteraction({
             onClick={handleIncr}
           >
             <svg className="w-4.5 h-4.5">
-              <use href={`${baseUrl}/icons.svg#icon-plus`}></use>
+              <use href="/icons.svg#icon-plus"></use>
             </svg>
           </button>
         </div>

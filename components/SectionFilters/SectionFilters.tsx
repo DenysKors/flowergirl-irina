@@ -9,7 +9,6 @@ export default function SectionFilters({ categories }: FilterProps) {
   const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const { replace } = useRouter();
-  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
 
   const onCategoruFilterChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     params.set("page", "1");
@@ -41,7 +40,7 @@ export default function SectionFilters({ categories }: FilterProps) {
           очистити фільтр
         </button>
         <svg className="w-8 h-8 fill-text md:w-9 md:h-9">
-          <use href={`${baseUrl}/icons.svg#icon-filter`}></use>
+          <use href="/icons.svg#icon-filter"></use>
         </svg>
       </div>
       <ul className="max-h-27.5 lg:max-h-37.5 flex gap-2 flex-wrap justify-end overflow-y-scroll">

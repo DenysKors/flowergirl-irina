@@ -18,7 +18,6 @@ export default function ProductsList({ products }: ProductsListProps) {
   const pathname = usePathname();
   const basketProducts = useBasketStore((state) => state.products);
   const addProduct = useBasketStore((state) => state.addProduct);
-  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
 
   const handleBasketClick = (
     code: string,
@@ -90,9 +89,7 @@ export default function ProductsList({ products }: ProductsListProps) {
                   >
                     +
                     <svg className="w-3 h-3 fill-background lg:w-5 lg:h-5">
-                      <use
-                        href={`${baseUrl}/icons.svg#icon-shopping-bag`}
-                      ></use>
+                      <use href="/icons.svg#icon-shopping-bag"></use>
                     </svg>
                   </button>
                 )}

@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 
 export default function LinkBack() {
   const router = useRouter();
-  const baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || "/";
   return (
     <div className="py-4">
       <button
@@ -17,7 +16,7 @@ export default function LinkBack() {
         }}
       >
         <svg className="h-6 w-6 lg:h-8 lg:w-8 fill-black">
-          <use href={`${baseUrl}/icons.svg#icon-arrow-left`}></use>
+          <use href="/icons.svg#icon-arrow-left"></use>
         </svg>
       </button>
     </div>
