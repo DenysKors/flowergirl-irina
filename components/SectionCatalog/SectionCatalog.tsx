@@ -21,6 +21,7 @@ export default function SectionCatalog() {
               alt="Різноманіття рослин"
               width={384}
               height={256}
+              priority
             />
           </div>
           <div className="p-1 md:p-3 max-w-[384px] flex items-center justify-center grow bg-main">
@@ -40,6 +41,7 @@ export default function SectionCatalog() {
               alt="Товари захисту рослин"
               width={384}
               height={256}
+              priority
             />
           </div>
           <div className="p-1 md:p-3 max-w-[384px] flex items-center justify-center grow bg-main">
@@ -59,6 +61,7 @@ export default function SectionCatalog() {
               alt="Допоміжні матеріали для квітів"
               width={384}
               height={256}
+              priority
             />
           </div>
           <div className="p-1 md:p-3 max-w-[384px] flex items-center justify-center grow bg-main">

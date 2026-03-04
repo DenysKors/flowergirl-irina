@@ -34,8 +34,13 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
 
   const handleAccept = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
     const userOrder = new FormData(evt.currentTarget);
+    const userMaskPhone = userOrder.get("phone") as string;
+    const numericValue = userMaskPhone.replace(/[^0-9]/g, "");
+
+    if (numericValue?.length !== 12)
+      return toast.error("Недостатня кількість цифр. Перевірте введений номер");
+
     userOrder.append("products", JSON.stringify(basketProducts));
     userOrder.append("totalPrice", JSON.stringify(totalPrice));
 
@@ -170,7 +175,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                       component={CustomInput}
                       showMask={true}
                       label="Номер телефону:"
-                      mask="(___) ___-__-__"
+                      mask="+38(0__)___-__-__"
                       replacement={{ _: /\d/ }}
                     />
                   </div>
