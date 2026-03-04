@@ -39,7 +39,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
     const numericValue = userMaskPhone.replace(/[^0-9]/g, "");
 
     if (numericValue?.length !== 12)
-      return toast.error("Недостатня кількість цифр. Перевірте введений номер");
+      return toast.error("Недостатня кількість цифр. Перевірте номер телефону");
 
     userOrder.append("products", JSON.stringify(basketProducts));
     userOrder.append("totalPrice", JSON.stringify(totalPrice));
