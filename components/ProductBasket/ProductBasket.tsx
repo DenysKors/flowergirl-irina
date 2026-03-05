@@ -2,6 +2,7 @@
 
 import toast from "react-hot-toast";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 import { InputMask } from "@react-input/mask";
@@ -14,6 +15,7 @@ type ProductBasketProp = {
 };
 
 export default function ProductBasket({ onClose }: ProductBasketProp) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const basketProducts = useBasketStore((state) => state.products);
   const totalPrice = useBasketStore((state) => state.totalPrice);
   const removeProduct = useBasketStore((state) => state.removeProduct);
@@ -34,6 +36,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
 
   const handleAccept = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
     const userOrder = new FormData(evt.currentTarget);
     const userMaskPhone = userOrder.get("phone") as string;
     const numericValue = userMaskPhone.replace(/[^0-9]/g, "");
@@ -43,17 +46,28 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
 
     userOrder.append("products", JSON.stringify(basketProducts));
     userOrder.append("totalPrice", JSON.stringify(totalPrice));
+    setIsSubmitted(true);
 
-    const response = await fetch("/api/add-order", {
-      method: "POST",
-      body: userOrder,
-    });
-    if (response.ok) {
-      reset();
-      onClose(false);
-      toast.success("Замолення відправлено в обробку. Дякуємо!");
-      router.refresh();
-    } else toast.error("Помилка при збереженні, повторіть знову");
+    try {
+      const response = await fetch("/api/add-order", {
+        method: "POST",
+        body: userOrder,
+      });
+      if (response.ok) {
+        reset();
+        onClose(false);
+        router.refresh();
+        window.alert(
+          "Дякуємо за замовлення. Найближчим часом ми з вами зв'яжемося для надання реквізитів на оплату."
+        );
+      } else {
+        toast.error("Помилка при збереженні, повторіть знову");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsSubmitted(false);
+    }
   };
 
   return (
@@ -238,8 +252,9 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                 <button
                   className="mt-5 button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
                   type="submit"
+                  disabled={isSubmitted}
                 >
-                  Підтвердити замовлення
+                  {isSubmitted ? "Відправка..." : "Підтвердити замовлення"}
                 </button>
               </form>
             </div>

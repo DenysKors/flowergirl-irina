@@ -40,22 +40,38 @@ export default function Footer() {
                 <ModalTerms />
               </ModalRoot>
             )}
-            <div className="flex flex-col gap-1">
-              <h3 className="font-text text-base md:text-lg lg:text-xl text-background text-center md:text-left">
-                Контакти:
-              </h3>
-              <Link
-                className="font-text text-sm md:text-base lg:text-lg text-background hover:underline text-center md:text-left"
-                href="tel:+380965950404"
-              >
-                моб. (096) 595 04 04
-              </Link>
-              <Link
-                className="font-text text-sm md:text-base lg:text-lg text-background hover:underline text-center md:text-left"
-                href="mailto:irina.flowergirl@gmail.com"
-              >
-                irina.flowergirl@gmail.com
-              </Link>
+            <div>
+              <div className="mb-2">
+                <h3 className="font-text text-base md:text-lg lg:text-xl text-background text-center md:text-left">
+                  Час роботи (обробка замовлень):
+                </h3>
+                <p className="ml-3 font-text text-sm md:text-md lg:text-lg text-background text-center md:text-left">
+                  Понеділок - Субота
+                </p>
+                <p className="ml-3 font-text text-sm md:text-md lg:text-lg text-background text-center md:text-left">
+                  з 9:00 до 18:00
+                </p>
+                <p className="ml-3 font-text text-sm md:text-md lg:text-lg text-background text-center md:text-left">
+                  Неділя - вихідний
+                </p>
+              </div>
+              <div className="flex flex-col gap-1">
+                <h3 className="font-text text-base md:text-lg lg:text-xl text-background text-center md:text-left">
+                  Контакти:
+                </h3>
+                <Link
+                  className="font-text text-sm md:text-base lg:text-lg text-background hover:underline text-center md:text-left"
+                  href="tel:+380965950404"
+                >
+                  моб. (096) 595 04 04
+                </Link>
+                <Link
+                  className="font-text text-sm md:text-base lg:text-lg text-background hover:underline text-center md:text-left"
+                  href="mailto:irina.flowergirl@gmail.com"
+                >
+                  irina.flowergirl@gmail.com
+                </Link>
+              </div>
             </div>
           </div>
           <div className="text-center">
