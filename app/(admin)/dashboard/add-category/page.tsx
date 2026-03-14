@@ -15,7 +15,7 @@ export default async function AddCategory({
         Добавить категорию товара
       </h1>
       <CategoryTypeSelect />
-      <AddCategoryForm categoryType={categoryType} />
+      {categoryType && <AddCategoryForm categoryType={categoryType} />}
     </section>
   );
 }

@@ -76,7 +76,7 @@ export default function CategoriesList({
       </ul>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <div className="h-full w-full flex flex-col justify-center items-center">
+          <div className="w-full flex flex-col justify-center items-center">
             <h3 className="font-heading text-xl text-center">
               {`Вы действительно хотите удалить категорию "${categoryLabel}" ?`}
             </h3>

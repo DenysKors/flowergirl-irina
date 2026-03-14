@@ -699,21 +699,6 @@ export const deleteProduct = async ({
   }
 };
 
-export const getProductByCode = async (code: string) => {
-  await dbConnect();
-
-  if (code.charAt(0) === "1") {
-    const plant = await Plant.findOne({ code });
-    return plant;
-  } else if (code.charAt(0) === "2") {
-    const protection = await Protection.findOne({ code });
-    return protection;
-  } else if (code.charAt(0) === "3") {
-    const supplies = await Supplies.findOne({ code });
-    return supplies;
-  } else return null;
-};
-
 export const updateProduct = async (productData: {
   code: string;
   price: number;
@@ -769,6 +754,31 @@ export const getUser = async (email: string) => {
   try {
     const user = await User.findOne({ email }).select("+password");
     return user;
+  } catch (err: unknown) {
+    if (err instanceof Error) console.log(err.message);
+    else {
+      console.log(err);
+    }
+  }
+};
+
+export const getProductsAdmin = async (productType) => {
+  await dbConnect();
+
+  try {
+    if (productType === "plant") {
+      const plants = await Plant.find({}).sort({ qty: 1 }).lean();
+      const plantsData = JSON.parse(JSON.stringify(plants));
+      return plantsData;
+    } else if (productType === "protection") {
+      const protection = await Protection.find({}).sort({ qty: 1 }).lean();
+      const protectionData = JSON.parse(JSON.stringify(protection));
+      return protectionData;
+    } else if (productType === "supplies") {
+      const supplies = await Supplies.find({}).sort({ qty: 1 }).lean();
+      const suppliesData = JSON.parse(JSON.stringify(supplies));
+      return suppliesData;
+    }
   } catch (err: unknown) {
     if (err instanceof Error) console.log(err.message);
     else {
