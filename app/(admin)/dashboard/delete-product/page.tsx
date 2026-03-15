@@ -27,10 +27,7 @@ export default async function DelProduct({
         <div className="w-full text-center">Нет товаров для удаления</div>
       )}
       {currentProducts && currentProducts.length > 0 && (
-        <ProductDelete
-          currentProducts={currentProducts}
-          productType={userProduct}
-        />
+        <ProductDelete currentProducts={currentProducts} />
       )}
     </section>
   );

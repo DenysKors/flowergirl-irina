@@ -654,16 +654,10 @@ export const deleteCategory = async (categoryData: {
   }
 };
 
-export const deleteProduct = async ({
-  productType,
-  code,
-}: {
-  productType: string;
-  code: string;
-}) => {
+export const deleteProduct = async ({ code }: { code: string }) => {
   await dbConnect();
 
-  if (productType === "plant") {
+  if (code.charAt(0) === "1") {
     const product = await Plant.findOne({ code });
 
     if (!product) return { deletedCount: 0 };
@@ -674,7 +668,7 @@ export const deleteProduct = async ({
 
     const result = await Plant.deleteOne({ code });
     return result;
-  } else if (productType === "protection") {
+  } else if (code.charAt(0) === "2") {
     const product = await Protection.findOne({ code });
 
     if (!product) return { deletedCount: 0 };
@@ -685,7 +679,7 @@ export const deleteProduct = async ({
 
     const result = await Protection.deleteOne({ code });
     return result;
-  } else if (productType === "supplies") {
+  } else if (code.charAt(0) === "3") {
     const product = await Supplies.findOne({ code });
 
     if (!product) return { deletedCount: 0 };
@@ -762,7 +756,7 @@ export const getUser = async (email: string) => {
   }
 };
 
-export const getProductsAdmin = async (productType) => {
+export const getProductsAdmin = async (productType: string) => {
   await dbConnect();
 
   try {

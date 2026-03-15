@@ -1,9 +1,13 @@
 "use client";
 
 import toast from "react-hot-toast";
-import { useState } from "react";
 import * as Yup from "yup";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+
+import Modal from "../ModalRoot/ModalRoot";
 
 const updateProdSchema = Yup.object().shape({
   price: Yup.number()
@@ -16,128 +20,146 @@ const updateProdSchema = Yup.object().shape({
     .required("Кол-во обязательно"),
 });
 
-export default function ProductUpdate() {
-  const [code, setCode] = useState("");
-  const [product, setProduct] = useState(null);
+export default function ProductUpdate({ currentProducts }) {
+  const [productData, setProductData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [products, setProducts] = useState(currentProducts);
+  const router = useRouter();
 
-  const handleClick = async () => {
-    if (code.trim() === "") {
-      return toast.error("Укажите код товара");
-    } else if (product) setProduct(null);
-
-    const response = await fetch(`/api/search-product-bycode/${code}`);
-
-    if (response.ok) {
-      toast.success("Товар найден");
-      const productData = await response.json();
-      setProduct({
-        title: productData.title,
-        price: productData.price,
-        qty: productData.qty,
-      });
-    } else if (response.status === 404) {
-      setCode("");
-      toast.error("Товар не найден");
-    } else toast.error("Ошибка поиска, повторите снова");
-  };
+  useEffect(() => {
+    setProducts(currentProducts);
+  }, [currentProducts]);
 
   const handleSubmit = async (values, { resetForm }) => {
     const newValues = {
-      code,
+      code: productData.code,
       price: values.price,
       qty: values.qty,
     };
-
     const response = await fetch("/api/update-product", {
       method: "PATCH",
       body: JSON.stringify(newValues),
     });
     if (response.ok) {
       resetForm();
-      setCode("");
-      setProduct(null);
+      setShowModal(false);
+      setProductData(null);
       toast.success("Товар обновлен");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      router.refresh();
     } else toast.error("Ошибка при обновлении, повторите снова");
   };
   return (
     <>
-      <div className="w-full flex justify-center flex-row">
-        <input
-          className="w-full border-main border px-3 py-0.5 rounded-l-md rounded-r-none border-r-0"
-          type="text"
-          pattern="^[0-9\-]*$"
-          placeholder="Код товара"
-          maxLength={6}
-          value={code}
-          onChange={(evt) => setCode(evt.target.value)}
-        />
-        <button
-          className="flex items-center rounded-md rounded-l-none p-2.5 bg-main cursor-pointer"
-          type="button"
-          aria-label="поиск"
-          title="Поиск"
-          onClick={handleClick}
-        >
-          <svg className="h-3 w-3 md:w-6 md:h-6 fill-background">
-            <use href="/icons.svg#icon-search"></use>
-          </svg>
-        </button>
-      </div>
-      {product && (
-        <Formik
-          initialValues={product}
-          validationSchema={updateProdSchema}
-          enableReinitialize={true}
-          onSubmit={handleSubmit}
-        >
-          {({ values, isSubmitting }) => (
-            <Form className="mt-10">
-              <h1 className="mb-4 font-heading text-main md:text-lg lg:text-xl">
-                {values.title}
-              </h1>
-              <label className="mb-4 flex flex-col gap-1 font-heading">
-                Количество:
-                <div>
-                  <Field
-                    className="p-1.5 max-w-25 bg-background border-b border-b-main"
-                    type="number"
-                    name="qty"
-                  />
-                  <span>шт.</span>
-                </div>
-              </label>
-              <ErrorMessage
-                className="mb-2.5 font-text text-sm md:text-base text-red-500"
-                name="qty"
-                component="div"
-              />
-              <label className="mb-4 flex flex-col gap-1 font-heading">
-                Цена:
-                <div>
-                  <Field
-                    className="p-1.5 max-w-25 bg-background border-b border-b-main"
-                    type="number"
-                    name="price"
-                  />
-                  <span>грн.</span>
-                </div>
-              </label>
-              <ErrorMessage
-                className="mb-2.5 font-text text-sm md:text-base text-red-500"
-                name="price"
-                component="div"
-              />
+      <ul className="pt-2.5 flex flex-wrap justify-center gap-2.5">
+        {products &&
+          products.map(({ code, title, category, price, qty }) => (
+            <li
+              className="p-1 w-60 lg:max-w-60 flex flex-col justify-between border border-gray-300 rounded-lg"
+              key={code}
+            >
+              <div className="flex flex-col gap-2">
+                <p className="font-heading text-main md:text-lg lg:text-xl wrap-anywhere">
+                  {title}
+                </p>
+                <p className="text-sm md:text-base text-text wrap-anywhere">
+                  {`Арт. ${code}`}
+                </p>
+                <p className="text-sm md:text-base text-text wrap-anywhere">
+                  {`Категория: ${category.reduce((accum, item, idx) => {
+                    if (idx === 0) {
+                      return accum + item.label;
+                    } else {
+                      return accum + ", " + item.label;
+                    }
+                  }, "")}`}
+                </p>
+                <p className="text-sm md:text-base break-all text-text">
+                  {`Цена: ${price} грн`}
+                </p>
+                <p className="text-sm md:text-base break-all text-text">
+                  {`Кол-во: ${qty} шт`}
+                </p>
+              </div>
               <button
-                className="mt-5 button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
-                type="submit"
-                aria-label="delete product"
-                disabled={isSubmitting}
+                className="button ms-auto cursor-pointer"
+                type="button"
+                aria-label="обновить"
+                title="обновить"
+                onClick={() => {
+                  setProductData({ code, title, price, qty });
+                  setShowModal(true);
+                }}
               >
-                {isSubmitting ? "Сохранение" : "Сохранить изменения"}
+                <svg className="w-6 h-6 fill-border-gray hover:fill-red-500">
+                  <use href="/icons.svg#icon-refresh"></use>
+                </svg>
               </button>
-            </Form>
-          )}
-        </Formik>
+            </li>
+          ))}
+      </ul>
+      {showModal && productData && (
+        <Modal onClose={() => setShowModal(false)}>
+          <div className="w-full flex flex-col justify-center items-center">
+            <h3 className="font-heading text-xl text-center">
+              Обновление товара
+            </h3>
+            <Formik
+              initialValues={productData}
+              validationSchema={updateProdSchema}
+              enableReinitialize={true}
+              onSubmit={handleSubmit}
+            >
+              {({ values, isSubmitting }) => (
+                <Form className="mt-10">
+                  <h1 className="mb-4 font-heading text-main md:text-lg lg:text-xl">
+                    {values.title}
+                  </h1>
+                  <label className="mb-4 flex flex-col gap-1 font-heading">
+                    Цена:
+                    <div>
+                      <Field
+                        className="p-1.5 max-w-25 bg-background border-b border-b-main"
+                        type="number"
+                        name="price"
+                      />
+                      <span>грн.</span>
+                    </div>
+                  </label>
+                  <ErrorMessage
+                    className="mb-2.5 font-text text-sm md:text-base text-red-500"
+                    name="price"
+                    component="div"
+                  />
+                  <label className="mb-4 flex flex-col gap-1 font-heading">
+                    Количество:
+                    <div>
+                      <Field
+                        className="p-1.5 max-w-25 bg-background border-b border-b-main"
+                        type="number"
+                        name="qty"
+                      />
+                      <span>шт.</span>
+                    </div>
+                  </label>
+                  <ErrorMessage
+                    className="mb-2.5 font-text text-sm md:text-base text-red-500"
+                    name="qty"
+                    component="div"
+                  />
+                  <button
+                    className="mt-5 button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
+                    type="submit"
+                    aria-label="delete product"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Сохранение" : "Сохранить изменения"}
+                  </button>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        </Modal>
       )}
     </>
   );

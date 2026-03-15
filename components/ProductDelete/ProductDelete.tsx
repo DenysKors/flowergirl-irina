@@ -9,15 +9,11 @@ import { Product } from "@/types/types";
 
 type ProductDeleteProps = {
   currentProducts: Product[];
-  productType: string;
 };
 
 type productData = Pick<Product, "title" | "code">;
 
-export default function ProductDelete({
-  currentProducts,
-  productType,
-}: ProductDeleteProps) {
+export default function ProductDelete({ currentProducts }: ProductDeleteProps) {
   const [products, setProducts] = useState(currentProducts);
   const [productData, setProductData] = useState<productData | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -27,11 +23,9 @@ export default function ProductDelete({
   }, [currentProducts]);
 
   const handleDelete = async () => {
-    if (productType === "") return toast.error("Выберите вид товара");
-
     const response = await fetch("/api/delete-product", {
       method: "DELETE",
-      body: JSON.stringify({ productType, code: productData?.code }),
+      body: JSON.stringify({ code: productData?.code }),
     });
 
     if (response.ok) {
