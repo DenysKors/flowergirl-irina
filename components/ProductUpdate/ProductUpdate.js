@@ -22,7 +22,7 @@ const updateProdSchema = Yup.object().shape({
 
 export default function ProductUpdate({ currentProducts }) {
   const [productData, setProductData] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setisModalOpen] = useState(false);
   const [products, setProducts] = useState(currentProducts);
   const router = useRouter();
 
@@ -42,7 +42,7 @@ export default function ProductUpdate({ currentProducts }) {
     });
     if (response.ok) {
       resetForm();
-      setShowModal(false);
+      setisModalOpen(false);
       setProductData(null);
       toast.success("Товар обновлен");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -88,7 +88,7 @@ export default function ProductUpdate({ currentProducts }) {
                 title="обновить"
                 onClick={() => {
                   setProductData({ code, title, price, qty });
-                  setShowModal(true);
+                  setisModalOpen(true);
                 }}
               >
                 <svg className="w-6 h-6 fill-border-gray hover:fill-red-500">
@@ -98,8 +98,8 @@ export default function ProductUpdate({ currentProducts }) {
             </li>
           ))}
       </ul>
-      {showModal && productData && (
-        <Modal onClose={() => setShowModal(false)}>
+      {isModalOpen && productData && (
+        <Modal onClose={() => setisModalOpen(false)} isModalOpen isSelfClose>
           <div className="w-full flex flex-col justify-center items-center">
             <h3 className="font-heading text-xl text-center">
               Обновление товара

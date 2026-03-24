@@ -16,7 +16,7 @@ type productData = Pick<Product, "title" | "code">;
 export default function ProductDelete({ currentProducts }: ProductDeleteProps) {
   const [products, setProducts] = useState(currentProducts);
   const [productData, setProductData] = useState<productData | null>(null);
-  const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setisModalOpen] = useState(false);
 
   useEffect(() => {
     setProducts(currentProducts);
@@ -31,7 +31,7 @@ export default function ProductDelete({ currentProducts }: ProductDeleteProps) {
     if (response.ok) {
       setProducts(products.filter((item) => item.code !== productData?.code));
       toast.success(`Товар арт. ${productData?.code} удален`);
-      setShowModal(false);
+      setisModalOpen(false);
       setProductData(null);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
@@ -79,7 +79,7 @@ export default function ProductDelete({ currentProducts }: ProductDeleteProps) {
                 title="видалити"
                 onClick={() => {
                   setProductData({ title, code });
-                  setShowModal(true);
+                  setisModalOpen(true);
                 }}
               >
                 <svg className="w-6 h-6 fill-border-gray hover:fill-red-500">
@@ -89,8 +89,8 @@ export default function ProductDelete({ currentProducts }: ProductDeleteProps) {
             </li>
           ))}
       </ul>
-      {showModal && productData && (
-        <Modal onClose={() => setShowModal(false)}>
+      {isModalOpen && productData && (
+        <Modal onClose={() => setisModalOpen(false)} isModalOpen isSelfClose>
           <div className="w-full flex flex-col justify-center items-center">
             <h3 className="font-heading text-xl text-center">
               {`Вы действительно хотите удалить товар "${productData.title}" ?`}

@@ -17,7 +17,7 @@ export default function CategoriesList({
 }: CategoriesListProps) {
   const [categories, setCategories] = useState(productCategories);
   const [categoryLabel, setCategoryName] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setisModalOpen] = useState(false);
 
   useEffect(() => {
     setCategories(productCategories);
@@ -35,7 +35,7 @@ export default function CategoriesList({
       setCategories(
         productCategories.filter((item) => item.label !== categoryLabel)
       );
-      setShowModal(false);
+      setisModalOpen(false);
       setCategoryName("");
       window.scrollTo({ top: 0, behavior: "smooth" });
       toast.success(`Категория "${categoryLabel}" удалена`);
@@ -64,7 +64,7 @@ export default function CategoriesList({
                 title="видалити"
                 onClick={() => {
                   setCategoryName(label);
-                  setShowModal(true);
+                  setisModalOpen(true);
                 }}
               >
                 <svg className="w-6 h-6 fill-border-gray hover:fill-red-500">
@@ -74,8 +74,8 @@ export default function CategoriesList({
             </li>
           ))}
       </ul>
-      {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
+      {isModalOpen && (
+        <Modal onClose={() => setisModalOpen(false)} isModalOpen isSelfClose>
           <div className="w-full flex flex-col justify-center items-center">
             <h3 className="font-heading text-xl text-center">
               {`Вы действительно хотите удалить категорию "${categoryLabel}" ?`}
