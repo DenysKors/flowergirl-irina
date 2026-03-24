@@ -50,7 +50,7 @@ export default function ProductsList({ products }: ProductsListProps) {
             className="group/edit pb-3 md:pb-3.5 lg:pb-4 flex flex-col justify-between border-b border-b-border-gray"
           >
             <Link
-              className="h-full cursor-pointer"
+              className="cursor-pointer"
               href={{
                 pathname: `${pathname}/${code}`,
               }}

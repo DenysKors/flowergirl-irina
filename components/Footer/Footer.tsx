@@ -7,7 +7,7 @@ import ModalRoot from "../ModalRoot/ModalRoot";
 import ModalTerms from "../ModalTerms/ModalTerms";
 
 export default function Footer() {
-  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <footer className="pt-5 md:pt-8 lg:pt-10 bg-main">
@@ -31,12 +31,16 @@ export default function Footer() {
             <button
               className="font-text text-base md:text-lg lg:text-xl text-background hover:underline cursor-pointer"
               type="button"
-              onClick={() => setShowTermsModal(true)}
+              onClick={() => setIsModalOpen(true)}
             >
               Умови оплати та доставки
             </button>
-            {showTermsModal && (
-              <ModalRoot onClose={() => setShowTermsModal(false)}>
+            {isModalOpen && (
+              <ModalRoot
+                onClose={() => setIsModalOpen(false)}
+                isSelfClose
+                isModalOpen
+              >
                 <ModalTerms />
               </ModalRoot>
             )}

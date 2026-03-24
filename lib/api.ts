@@ -328,6 +328,48 @@ export const addOrder = async (orderData: FormData) => {
   const userProducts: BasketProduct[] = JSON.parse(productData);
   const totalPrice: number = JSON.parse(totalPriceData);
 
+  const parsedProducts = userProducts.reduce(
+    (prev: string, product: BasketProduct, idx: number) => {
+      return (
+        prev +
+        `${idx + 1}.${product.title}
+    - арт.${product.code}
+    - кол-во: ${product.userQty}
+    - цена: ${product.price} грн
+    - сумма: ${product.sumPrice} грн
+     `
+      );
+    },
+    ""
+  );
+
+  const orderMarkdown = `
+  # Новый заказ
+  ${parsedProducts}
+  # Всего: ${totalPrice} грн
+  Фамилия, имя: ${userName}
+  Моб.: ${userPhone}
+  Область: ${userRegion}
+  Город: ${userTown}
+  Номер отделения: ${userPostcode}
+  Комментарий: ${userComment}
+  `;
+  const telegramMarkdown = convert(orderMarkdown);
+
+  try {
+    await bot.api.sendMessage(chat_id, telegramMarkdown, {
+      parse_mode: "MarkdownV2",
+    });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err.message);
+      return err;
+    } else {
+      console.log(err);
+      return err;
+    }
+  }
+
   await dbConnect();
 
   const productsAmount = userProducts.length;
@@ -350,45 +392,6 @@ export const addOrder = async (orderData: FormData) => {
       let updatedQty = supplies.qty - userQty;
       if (updatedQty < 0) updatedQty = 0;
       await Supplies.updateOne({ code }, { qty: updatedQty });
-    }
-  }
-
-  const parsedProducts = userProducts.reduce(
-    (prev: string, product: BasketProduct, idx: number) => {
-      return (
-        prev +
-        `${idx + 1}.${product.title}
-    - арт.${product.code}
-    - кол-во: ${product.userQty}
-    - цена: ${product.price}грн
-    - сумма: ${product.sumPrice}грн
-     `
-      );
-    },
-    ""
-  );
-
-  const orderMarkdown = `
-  # Новый заказ
-  ${parsedProducts}
-  # Всего: ${totalPrice}грн
-  Фамилия, имя: ${userName}
-  Моб.: ${userPhone}
-  Область: ${userRegion}
-  Город: ${userTown}
-  Номер отделения: ${userPostcode}
-  Комментарий: ${userComment}
-  `;
-  const telegramMarkdown = convert(orderMarkdown);
-
-  try {
-    bot.api.sendMessage(chat_id, telegramMarkdown, {
-      parse_mode: "MarkdownV2",
-    });
-  } catch (err: unknown) {
-    if (err instanceof Error) console.log(err.message);
-    else {
-      console.log(err);
     }
   }
 };
@@ -482,10 +485,16 @@ export const getAnalytics = async () => {
     const plantsAmount = await Plant.countDocuments();
     const protectionAmount = await Protection.countDocuments();
     const suppliesAmount = await Supplies.countDocuments();
+    const plantsZeroQtyAmnt = await Plant.countDocuments({ qty: 0 });
+    const protectionZeroQtyAmnt = await Protection.countDocuments({ qty: 0 });
+    const suppliesZeroQtyAmnt = await Supplies.countDocuments({ qty: 0 });
     return {
       plantsAmount,
       protectionAmount,
       suppliesAmount,
+      plantsZeroQtyAmnt,
+      protectionZeroQtyAmnt,
+      suppliesZeroQtyAmnt,
     };
   } catch (err: unknown) {
     if (err instanceof Error) console.log(err.message);

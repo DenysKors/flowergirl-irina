@@ -10,7 +10,7 @@ import { useBasketStore } from "@/store/basketStore";
 const ProductBasket = dynamic(() => import("../ProductBasket/ProductBasket"));
 
 export default function BasketIcon() {
-  const [isShowBasket, setIsShowBasket] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const basketProducts = useBasketStore((state) => state.products);
   return (
     <>
@@ -18,7 +18,7 @@ export default function BasketIcon() {
         className="relative lg:p-2 flex flex-col items-center cursor-pointer justify-self-end lg:justify-self-center"
         type="button"
         aria-label="Кошик"
-        onClick={() => setIsShowBasket(true)}
+        onClick={() => setIsModalOpen(true)}
       >
         <svg
           className={`${
@@ -36,9 +36,9 @@ export default function BasketIcon() {
         )}
         Кошик
       </button>
-      {isShowBasket && (
-        <Modal onClose={() => setIsShowBasket(false)}>
-          <ProductBasket onClose={setIsShowBasket} />
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)} isModalOpen>
+          <ProductBasket onClose={setIsModalOpen} />
         </Modal>
       )}
     </>

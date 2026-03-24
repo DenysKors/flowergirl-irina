@@ -16,6 +16,7 @@ type ProductBasketProp = {
 
 export default function ProductBasket({ onClose }: ProductBasketProp) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isOrderAccepted, setIsOrderAccepted] = useState(false);
   const basketProducts = useBasketStore((state) => state.products);
   const totalPrice = useBasketStore((state) => state.totalPrice);
   const removeProduct = useBasketStore((state) => state.removeProduct);
@@ -32,6 +33,13 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
   const handleIncr = (code: string, stock: number, userQty: number) => {
     if (userQty >= stock) return;
     increaseQty(code, userQty);
+  };
+
+  const handleTermsApprove = () => {
+    setIsOrderAccepted(false);
+    reset();
+    onClose(false);
+    router.refresh();
   };
 
   const handleAccept = async (evt: React.FormEvent<HTMLFormElement>) => {
@@ -54,14 +62,9 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
         body: userOrder,
       });
       if (response.ok) {
-        reset();
-        onClose(false);
-        router.refresh();
-        window.alert(
-          "Дякуємо за замовлення. Найближчим часом ми з вами зв'яжемося для надання реквізитів на оплату."
-        );
+        setIsOrderAccepted(true);
       } else {
-        toast.error("Помилка при збереженні, повторіть знову");
+        toast.error("Помилка при збереженні замовлення, повторіть знову");
       }
     } catch (err) {
       console.log(err);
@@ -82,6 +85,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
           </p>
         )}
         {basketProducts.length > 0 &&
+          !isOrderAccepted &&
           basketProducts.map((product) => {
             return (
               <div
@@ -160,7 +164,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
               </div>
             );
           })}
-        {basketProducts.length > 0 && (
+        {basketProducts.length > 0 && !isOrderAccepted && (
           <>
             <p className="text-right">
               <strong className="mb-3 font-text lg:text-xl">
@@ -260,7 +264,34 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
             </div>
           </>
         )}
+        {isOrderAccepted && (
+          <div className="w-full flex flex-col gap-5">
+            <p className="font-text lg:text-xl text-center">
+              Дякуємо за замовлення. Найближчим часом ми з вами
+              зв`&apos;`яжемося для надання реквізитів на оплату.
+            </p>
+            <button
+              className="place-self-center button button-primary justify-center font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
+              type="button"
+              onClick={handleTermsApprove}
+            >
+              Закрити
+            </button>
+          </div>
+        )}
       </div>
+      {!isSubmitted && !isOrderAccepted && (
+        <div className="w-full flex justify-end">
+          <button
+            className="button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
+            type="button"
+            disabled={isSubmitted}
+            onClick={() => onClose(false)}
+          >
+            Продовжити покупки
+          </button>
+        </div>
+      )}
     </>
   );
 }
