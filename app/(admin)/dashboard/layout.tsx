@@ -43,7 +43,7 @@ export default function DashboardLayout({ children }: DashboardLayputProps) {
         </form>
       </header>
       <main className="mx-auto w-full max-w-7xl py-2 px-1 md:py-3 flex flex-row bg-background">
-        <aside className="py-2 rounded-tl-xs bg-main lg:pt-5 lg:rounded-tl-xl">
+        <aside className="py-2 rounded-tl-md rounded-bl-md bg-main lg:pt-5 lg:rounded-tl-lg lg:rounded-bl-lg">
           <NavDashboard />
         </aside>
         {children}

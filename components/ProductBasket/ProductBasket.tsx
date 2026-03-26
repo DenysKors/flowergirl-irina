@@ -167,7 +167,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
         {basketProducts.length > 0 && !isOrderAccepted && (
           <>
             <p className="text-right">
-              <strong className="mb-3 font-text lg:text-xl">
+              <strong className="mb-5 font-text lg:text-xl">
                 &#42;{`Всього: ${totalPrice} грн`}
               </strong>
             </p>
@@ -267,8 +267,8 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
         {isOrderAccepted && (
           <div className="w-full flex flex-col gap-5">
             <p className="font-text lg:text-xl text-center">
-              Дякуємо за замовлення. Найближчим часом ми з вами
-              зв`&apos;`яжемося для надання реквізитів на оплату.
+              Дякуємо за замовлення. Найближчим часом ми з вами зв&apos;яжемося
+              для надання реквізитів на оплату.
             </p>
             <button
               className="place-self-center button button-primary justify-center font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
