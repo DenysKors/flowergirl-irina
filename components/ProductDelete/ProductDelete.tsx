@@ -16,11 +16,24 @@ type productData = Pick<Product, "title" | "code">;
 export default function ProductDelete({ currentProducts }: ProductDeleteProps) {
   const [products, setProducts] = useState(currentProducts);
   const [productData, setProductData] = useState<productData | null>(null);
+  const [filterCode, setFilterCode] = useState("");
   const [isModalOpen, setisModalOpen] = useState(false);
 
   useEffect(() => {
     setProducts(currentProducts);
   }, [currentProducts]);
+
+  const filteredProducts = products.filter((product) => {
+    if (filterCode === "") {
+      return true;
+    } else {
+      return product.code === filterCode;
+    }
+  });
+
+  const handleFilterChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterCode(evt.target.value);
+  };
 
   const handleDelete = async () => {
     const response = await fetch("/api/delete-product", {
@@ -42,9 +55,22 @@ export default function ProductDelete({ currentProducts }: ProductDeleteProps) {
 
   return (
     <>
+      {products && (
+        <div className="mb-4 w-full flex justify-center flex-row">
+          <input
+            className="w-60 lg:max-w-60 border-main border px-3 py-0.5 rounded-md "
+            name="code"
+            type="text"
+            pattern="^[0-9\-]*$"
+            placeholder="Поиск по артикулу"
+            maxLength={6}
+            onChange={handleFilterChange}
+          />
+        </div>
+      )}
       <ul className="pt-2.5 flex flex-wrap justify-center gap-2.5">
         {products &&
-          products.map(({ code, title, category, price, qty }) => (
+          filteredProducts.map(({ code, title, category, price, qty }) => (
             <li
               className="p-1 w-60 lg:max-w-60 flex flex-col justify-between border border-gray-300 rounded-lg"
               key={code}

@@ -21,14 +21,27 @@ const updateProdSchema = Yup.object().shape({
 });
 
 export default function ProductUpdate({ currentProducts }) {
-  const [productData, setProductData] = useState(null);
-  const [isModalOpen, setisModalOpen] = useState(false);
   const [products, setProducts] = useState(currentProducts);
+  const [productData, setProductData] = useState(null);
+  const [filterCode, setFilterCode] = useState("");
+  const [isModalOpen, setisModalOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     setProducts(currentProducts);
   }, [currentProducts]);
+
+  const filteredProducts = products.filter((product) => {
+    if (filterCode === "") {
+      return true;
+    } else {
+      return product.code === filterCode;
+    }
+  });
+
+  const handleFilterChange = (evt) => {
+    setFilterCode(evt.target.value);
+  };
 
   const handleSubmit = async (values, { resetForm }) => {
     const newValues = {
@@ -49,11 +62,25 @@ export default function ProductUpdate({ currentProducts }) {
       router.refresh();
     } else toast.error("Ошибка при обновлении, повторите снова");
   };
+
   return (
     <>
-      <ul className="pt-2.5 flex flex-wrap justify-center gap-2.5">
+      {products && (
+        <div className="mb-4 w-full flex justify-center flex-row">
+          <input
+            className="w-60 lg:max-w-60 border-main border px-3 py-0.5 rounded-md "
+            name="code"
+            type="text"
+            pattern="^[0-9\-]*$"
+            placeholder="Поиск по артикулу"
+            maxLength={6}
+            onChange={handleFilterChange}
+          />
+        </div>
+      )}
+      <ul className="flex flex-wrap justify-center gap-2.5">
         {products &&
-          products.map(({ code, title, category, price, qty }) => (
+          filteredProducts.map(({ code, title, category, price, qty }) => (
             <li
               className="p-1 w-60 lg:max-w-60 flex flex-col justify-between border border-gray-300 rounded-lg"
               key={code}

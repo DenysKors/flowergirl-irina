@@ -622,7 +622,7 @@ export const deleteCategory = async (categoryData: {
 
     if (totalAmount > 0) {
       throw new Error(
-        `В данной категории есть ${totalAmount} товара. Удаление невозможно.`
+        `В данной категории есть ${totalAmount} товар(а). Удаление невозможно.`
       );
     }
 
