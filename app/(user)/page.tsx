@@ -8,6 +8,7 @@ export const metadata = {
     other: [
       {
         rel: "preload",
+        as: "image",
         url: "/images/bg-hero.jpg",
         fetchPriority: "high",
       },

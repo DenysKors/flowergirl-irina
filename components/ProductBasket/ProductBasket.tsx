@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 import { InputMask } from "@react-input/mask";
 
+// import BasketWidget from "@/components/BasketWidget/BasketWidget";
 import { CustomInput } from "../CustomInput/CustomInput";
 import { useBasketStore } from "@/store/basketStore";
 
@@ -17,6 +18,7 @@ type ProductBasketProp = {
 export default function ProductBasket({ onClose }: ProductBasketProp) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isOrderAccepted, setIsOrderAccepted] = useState(false);
+  // const [postLocation, setPostLocation] = useState(null);
   const basketProducts = useBasketStore((state) => state.products);
   const totalPrice = useBasketStore((state) => state.totalPrice);
   const removeProduct = useBasketStore((state) => state.removeProduct);
@@ -52,8 +54,12 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
     if (numericValue?.length !== 12)
       return toast.error("Недостатня кількість цифр. Перевірте номер телефону");
 
+    // if (!postLocation)
+    //   return toast.error("Оберіть відділення/поштомат Нової пошти");
+
     userOrder.append("products", JSON.stringify(basketProducts));
     userOrder.append("totalPrice", JSON.stringify(totalPrice));
+    // userOrder.append("postLocation", JSON.stringify(postLocation));
     setIsSubmitted(true);
 
     try {
@@ -236,6 +242,9 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                       />
                     </label>
                   </div>
+                  {/* <div className="my-2.5">
+                    <BasketWidget setPostLocation={setPostLocation} />
+                  </div> */}
                   <div className="my-2.5">
                     <label className="flex flex-col font-text">
                       Коментар(за потреби):
