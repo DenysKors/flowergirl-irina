@@ -1,13 +1,13 @@
-import { Suspense } from "react";
+// import { Suspense } from "react";
 
 import LinkBack from "@/components/LinkBack/LinkBack";
-import SectionFilters from "@/components/SectionFilters/SectionFilters";
-import SectionPlants from "@/components/SectionPlants/SectionPlants";
-import Skeleton from "@/components/Skeleton/Skeleton";
+// import SectionFilters from "@/components/SectionFilters/SectionFilters";
+// import SectionPlants from "@/components/SectionPlants/SectionPlants";
+// import Skeleton from "@/components/Skeleton/Skeleton";
 
 // import { getAllPlantsCategories } from "@/lib/api";
 // import { getPlants } from "@/lib/api";
-import { Categories } from "@/types/types";
+// import { Categories } from "@/types/types";
 
 export const metadata = {
   title: "Каталог рослин. Квіткова крамниця Flowergirl-irina",

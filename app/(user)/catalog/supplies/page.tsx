@@ -1,13 +1,13 @@
-import { Suspense } from "react";
+// import { Suspense } from "react";
 
 import LinkBack from "@/components/LinkBack/LinkBack";
-import SectionFilters from "@/components/SectionFilters/SectionFilters";
-import SectionSupplies from "@/components/SectionSupplies/SectionSupplies";
-import Skeleton from "@/components/Skeleton/Skeleton";
+// import SectionFilters from "@/components/SectionFilters/SectionFilters";
+// import SectionSupplies from "@/components/SectionSupplies/SectionSupplies";
+// import Skeleton from "@/components/Skeleton/Skeleton";
 
 // import { getAllSuppliesCategories } from "@/lib/api";
 // import { getSupplies } from "@/lib/api";
-import { Categories } from "@/types/types";
+// import { Categories } from "@/types/types";
 
 // export const metadata = {
 //   title: "Каталог допоміжних матеріалів. Квіткова крамниця Flowergirl-irina",

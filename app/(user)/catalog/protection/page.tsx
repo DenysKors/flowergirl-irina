@@ -1,13 +1,13 @@
-import { Suspense } from "react";
+// import { Suspense } from "react";
 
 import LinkBack from "@/components/LinkBack/LinkBack";
-import SectionFilters from "@/components/SectionFilters/SectionFilters";
-import SectionProtection from "@/components/SectionProtection/SectionProtection";
-import Skeleton from "@/components/Skeleton/Skeleton";
+// import SectionFilters from "@/components/SectionFilters/SectionFilters";
+// import SectionProtection from "@/components/SectionProtection/SectionProtection";
+// import Skeleton from "@/components/Skeleton/Skeleton";
 
 // import { getAllProtectionCategories } from "@/lib/api";
 // import { getProtection } from "@/lib/api";
-import { Categories } from "@/types/types";
+// import { Categories } from "@/types/types";
 
 export const metadata = {
   title: "Каталог засобів захисту рослин. Квіткова крамниця Flowergirl-irina",

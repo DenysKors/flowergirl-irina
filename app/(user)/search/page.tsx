@@ -1,9 +1,9 @@
 // import { getSearchedProducts } from "@/lib/api";
 
-import Pagination from "@/components/Pagination/Pagination";
-import SearchList from "@/components/SearchList/SearchList";
+// import Pagination from "@/components/Pagination/Pagination";
+// import SearchList from "@/components/SearchList/SearchList";
 
-import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
+// import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
 
 export const metadata = {
   title: "Пошук рослин. Квіткова крамниця Flowergirl-irina",

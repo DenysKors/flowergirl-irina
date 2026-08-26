@@ -1,13 +1,13 @@
-import { notFound } from "next/navigation";
-import type { Metadata } from "next";
+// import { notFound } from "next/navigation";
+// import type { Metadata } from "next";
 
 import LinkBack from "@/components/LinkBack/LinkBack";
-import ProductInteraction from "@/components/ProductInteraction/ProductInteraction";
-import ProductImgGallery from "@/components/ProductImgGallery/ProductImgGallery";
+// import ProductInteraction from "@/components/ProductInteraction/ProductInteraction";
+// import ProductImgGallery from "@/components/ProductImgGallery/ProductImgGallery";
 
 // import { getPlantByCode } from "@/lib/api";
-import { SELL_STATUS_ENUMS } from "@/constants/enums";
-import { Product } from "@/types/types";
+// import { SELL_STATUS_ENUMS } from "@/constants/enums";
+// import { Product } from "@/types/types";
 
 type Props = {
   params: Promise<{ id: string }>;
