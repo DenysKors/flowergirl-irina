@@ -1,0 +1,104 @@
+generator client {
+  provider   = "prisma-client"
+  output     = "./generated"
+}
+
+datasource db {
+  provider     = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus { 
+  pending
+  processing 
+  shipped 
+  completed 
+  cancelled 
+  paid 
+  failed 
+  }
+
+enum PaymentType { 
+  prepaid 
+  postpaid 
+  } 
+
+  enum Role {
+  ADMIN
+  MANAGER
+}
+
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  sku         String   @unique
+  name        String   @unique
+  description String   @db.Text
+  price       Decimal  @db.Decimal(10, 2)
+  qty         Int      @default(0)
+  unit        String   @default("шт.") @db.VarChar(20) 
+  images      Json     @default("[]") 
+  categoryId  Int
+  isDeleted   Boolean  @default(false)
+  category    Category @relation(fields: [categoryId], references: [id])
+  orderItems  OrderItem[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  @@map("products")
+}
+
+model Category {
+  id                Int      @id @default(autoincrement())
+  name              String   @unique
+  slug              String   @unique
+  parentId          Int?
+  isDeleted         Boolean  @default(false)
+  parent            Category?  @relation("SubCategories", fields: [parentId], references: [id])
+  subCategories     Category[] @relation("SubCategories")
+  products          Product[]
+  createdAt         DateTime  @default(now())
+  @@map("categories")
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  orderRef      String   @unique
+  publicId      String?  @unique 
+  amount        Decimal @db.Decimal(10, 2)
+  status        OrderStatus @default(pending) 
+  paymentType   PaymentType @default(prepaid) 
+  customerSurName   String @db.VarChar(100) 
+  customerFirstName String @db.VarChar(100) 
+  customerPhone     String @db.VarChar(30) 
+  postAddr      String @db.Text 
+  postName      String @db.Text
+  comment       String? @db.Text 
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  items         OrderItem[]  
+  @@map("orders") 
+}
+
+model OrderItem { 
+  id           Int @id @default(autoincrement()) 
+  orderId      Int 
+  order        Order @relation(fields: [orderId], references: [id], onDelete: Cascade) 
+  productId    Int 
+  product      Product @relation(fields: [productId], references: [id], onDelete: Restrict) 
+  qty          Int
+  price        Decimal @db.Decimal(10, 2)
+  total        Decimal @db.Decimal(10, 2)
+  @@map("order_items") 
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  passwordHash  String
+  firstName     String
+  surName       String
+  role          Role      @default(MANAGER)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}

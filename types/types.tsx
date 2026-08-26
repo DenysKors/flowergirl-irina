@@ -1,10 +1,22 @@
-export type FilterProps = {
-  categories: Categories[];
-};
+import { Prisma } from "@/prisma/generated/client";
+// import { ExtendedPrismaClient } from "@/lib/prisma";
 
-export type Categories = {
-  label: string;
-  value: string;
+export type CategoryWithSubs = Prisma.CategoryGetPayload<{
+  include: { subCategories: true };
+}>;
+
+// export type ProductWithCats = Prisma.Result<
+//   ExtendedPrismaClient["product"],
+//   { include: { category: true } },
+//   "findMany"
+//   >;
+
+type ProductWithCatsFromDB = Prisma.ProductGetPayload<{
+  include: { category: true };
+}>;
+
+export type ProductWithCats = Omit<ProductWithCatsFromDB, "price"> & {
+  price: number;
 };
 
 export type Product = {
@@ -17,21 +29,6 @@ export type Product = {
   qty: number;
 };
 
-export type PlantsData = {
-  plants: Product[];
-  totalAmount: number;
-};
-
-export type ProtectionData = {
-  protection: Product[];
-  totalAmount: number;
-};
-
-export type SuppliesData = {
-  supplies: Product[];
-  totalAmount: number;
-};
-
 export type BasketProduct = {
   code: string;
   title: string;
@@ -40,9 +37,4 @@ export type BasketProduct = {
   sumPrice: number;
   userQty: number;
   stock: number;
-};
-
-export type InitBasketState = {
-  products: BasketProduct[];
-  totalPrice: number;
 };

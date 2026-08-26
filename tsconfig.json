@@ -33,7 +33,6 @@
     "lib/connectDB.js",
     "modelsDB/plantsCategories.js",
     "app/(server)/api/all-plants",
-    "components/AddProductForm/AddProductForm.js",
     "lib/actions.js"
   ],
   "exclude": ["node_modules"]

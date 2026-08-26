@@ -14,7 +14,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  serverExternalPackages: ["grammy"],
 };
 
 export default nextConfig;

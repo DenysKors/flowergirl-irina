@@ -1,13 +1,13 @@
-import { getAnalytics } from "@/lib/api";
+// import { getAnalytics } from "@/lib/api";
 
 export default async function Analytics() {
-  const analyticsData = await getAnalytics();
+  // const analyticsData = await getAnalytics();
   return (
     <section className="w-full h-full">
       <h1 className="mb-2 font-heading lg:text-3xl uppercase text-center text-text">
         Аналитика
       </h1>
-      <div className="w-max flex flex-col justify-self-center gap-2 lg:gap-4">
+      {/* <div className="w-max flex flex-col justify-self-center gap-2 lg:gap-4">
         <div className="p-2 flex-1 text-center bg-gray-100 rounded-xl">
           <p className="font-text font-bold text-xs lg:text-xl">
             Товаров &#171;Растения&#187;
@@ -53,7 +53,7 @@ export default async function Analytics() {
             </span>
           </p>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

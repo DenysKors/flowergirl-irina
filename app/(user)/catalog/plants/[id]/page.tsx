@@ -5,7 +5,7 @@ import LinkBack from "@/components/LinkBack/LinkBack";
 import ProductInteraction from "@/components/ProductInteraction/ProductInteraction";
 import ProductImgGallery from "@/components/ProductImgGallery/ProductImgGallery";
 
-import { getPlantByCode } from "@/lib/api";
+// import { getPlantByCode } from "@/lib/api";
 import { SELL_STATUS_ENUMS } from "@/constants/enums";
 import { Product } from "@/types/types";
 
@@ -14,34 +14,34 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const plant: Product = await getPlantByCode(id);
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const { id } = await params;
+//   const plant: Product = await getPlantByCode(id);
 
-  if (!plant) {
-    notFound();
-  }
+//   if (!plant) {
+//     notFound();
+//   }
 
-  return {
-    title: `${plant.title} / Flowergirl-irina`,
-  };
-}
+//   return {
+//     title: `${plant.title} / Flowergirl-irina`,
+//   };
+// }
 
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
-  const plant: Product = await getPlantByCode(id);
+  // const plant: Product = await getPlantByCode(id);
 
-  if (!plant) {
-    notFound();
-  }
+  // if (!plant) {
+  //   notFound();
+  // }
 
-  const { code, title, description, category, price, qty, imagesUrl } = plant;
+  // const { code, title, description, category, price, qty, imagesUrl } = plant;
 
   return (
     <main className="container">
       <LinkBack />
       <section className="grid grid-rows-auto grid-cols-1 md:gap-x-5 md:grid-cols-[42%_minmax(0,1fr)] md:grid-rows-[min-content_minmax(0,1fr)] lg:gap-x-8 lg:grid-cols-2 w-full">
-        <div className="mb-2 md:mb-4">
+        {/* <div className="mb-2 md:mb-4">
           <h1 className="font-heading text-main text-3xl md:text-4xl">
             {title}
           </h1>
@@ -86,7 +86,7 @@ export default async function ProductPage({ params }: Props) {
               />
             )}
           </li>
-        </ul>
+        </ul> */}
       </section>
     </main>
   );

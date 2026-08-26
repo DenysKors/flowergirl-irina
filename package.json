@@ -9,13 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.0",
     "@react-input/mask": "^2.0.4",
+    "@tanstack/react-query": "^5.101.4",
+    "@tanstack/react-table": "^8.21.3",
     "bcrypt": "^6.0.0",
     "browser-image-compression": "^2.0.2",
     "cloudinary": "^2.9.0",
+    "dotenv": "^17.4.2",
     "formik": "^2.4.9",
-    "grammy": "^1.40.0",
-    "mongoose": "^9.1.6",
     "next": "16.1.4",
     "next-auth": "^5.0.0-beta.30",
     "next-cloudinary": "^6.17.5",
@@ -23,7 +25,7 @@
     "react-dom": "19.2.3",
     "react-hot-toast": "^2.6.0",
     "react-image-gallery": "^2.0.8",
-    "telegram-markdown-v2": "^0.0.4",
+    "slugify": "^1.6.9",
     "yup": "^1.7.1",
     "zustand": "^5.0.11"
   },
@@ -35,6 +37,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
+    "prisma": "^6.19.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

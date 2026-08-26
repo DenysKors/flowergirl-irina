@@ -28,6 +28,44 @@ export default function NavDashboard() {
         </svg>
       </Link>
       <Link
+        title="Товары"
+        className={`${
+          pathname === `/dashboard/products`
+            ? "p-1.5 mx-0.5 lg:p-2 rounded-tl-md rounded-bl-md bg-background lg:rounded-tl-lg lg:rounded-bl-lg"
+            : "p-1.5 mx-0.5 lg:p-2"
+        }`}
+        href="/dashboard/products"
+      >
+        <svg
+          className={`${
+            pathname === `/dashboard/products`
+              ? "w-6 h-6 fill-main lg:w-8 lg:h-8"
+              : "w-6 h-6 fill-background lg:w-8 lg:h-8"
+          }`}
+        >
+          <use href="/icons.svg#icon-products"></use>
+        </svg>
+      </Link>
+      <Link
+        title="Категории"
+        className={`${
+          pathname === `/dashboard/categories`
+            ? "p-1.5 mx-0.5 lg:p-2 rounded-tl-md rounded-bl-md bg-background lg:rounded-tl-lg lg:rounded-bl-lg"
+            : "p-1.5 mx-0.5 lg:p-2"
+        }`}
+        href="/dashboard/categories"
+      >
+        <svg
+          className={`${
+            pathname === `/dashboard/categories`
+              ? "w-6 h-6 fill-main lg:w-8 lg:h-8"
+              : "w-6 h-6 fill-background lg:w-8 lg:h-8"
+          }`}
+        >
+          <use href="/icons.svg#icon-categories"></use>
+        </svg>
+      </Link>
+      <Link
         title="Добавить товар"
         className={`${
           pathname === `/dashboard/add-product`
@@ -63,63 +101,6 @@ export default function NavDashboard() {
           }`}
         >
           <use href="/icons.svg#icon-add-category"></use>
-        </svg>
-      </Link>
-      <Link
-        title="Обновить товар"
-        className={`${
-          pathname === `/dashboard/update-product`
-            ? "p-1.5 mx-0.5 lg:p-2 rounded-tl-md rounded-bl-md bg-background lg:rounded-tl-lg lg:rounded-bl-lg"
-            : "p-1.5 mx-0.5 lg:p-2"
-        }`}
-        href="/dashboard/update-product"
-      >
-        <svg
-          className={`${
-            pathname === `/dashboard/update-product`
-              ? "w-6 h-6 fill-main lg:w-8 lg:h-8"
-              : "w-6 h-6 fill-background lg:w-8 lg:h-8"
-          }`}
-        >
-          <use href="/icons.svg#icon-refresh"></use>
-        </svg>
-      </Link>
-      <Link
-        title="Удалить товар"
-        className={`${
-          pathname === `/dashboard/delete-product`
-            ? "p-1.5 mx-0.5 lg:p-2 rounded-tl-md rounded-bl-md bg-background lg:rounded-tl-lg lg:rounded-bl-lg"
-            : "p-1.5 mx-0.5 lg:p-2"
-        }`}
-        href="/dashboard/delete-product"
-      >
-        <svg
-          className={`${
-            pathname === `/dashboard/delete-product`
-              ? "w-6 h-6 fill-main lg:w-8 lg:h-8"
-              : "w-6 h-6 fill-background lg:w-8 lg:h-8"
-          }`}
-        >
-          <use href="/icons.svg#icon-delete-product"></use>
-        </svg>
-      </Link>
-      <Link
-        title="Удалить категорию"
-        className={`${
-          pathname === `/dashboard/delete-category`
-            ? "p-1.5 mx-0.5 lg:p-2 rounded-tl-md rounded-bl-md bg-background lg:rounded-tl-lg lg:rounded-bl-lg"
-            : "p-1.5 mx-0.5 lg:p-2"
-        }`}
-        href="/dashboard/delete-category"
-      >
-        <svg
-          className={`${
-            pathname === `/dashboard/delete-category`
-              ? "w-6 h-6 fill-main lg:w-8 lg:h-8"
-              : "w-6 h-6 fill-background lg:w-8 lg:h-8"
-          }`}
-        >
-          <use href="/icons.svg#icon-delete-category"></use>
         </svg>
       </Link>
     </nav>
