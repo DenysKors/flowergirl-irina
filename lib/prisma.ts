@@ -17,7 +17,7 @@ const prismaClientSingleton = () => {
   });
 };
 
-// export type ExtendedPrismaClient = ReturnType<typeof prismaClientSingleton>;
+export type ExtendedPrismaClient = ReturnType<typeof prismaClientSingleton>;
 
 declare global {
   var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>;
