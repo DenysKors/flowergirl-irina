@@ -3,6 +3,8 @@ import { Toaster } from "react-hot-toast";
 import localFont from "next/font/local";
 import "./globals.css";
 
+import ReactQueryProvider from "@/app/providers/queryProvider";
+
 const alegreyaBold = localFont({
   src: "../assets/fonts/Alegreya-Bold.ttf",
   variable: "--font-Alegreya-Bold",
@@ -79,8 +81,10 @@ export default function RootLayout({
       <body
         className={`${alegreyaBold.variable} ${openSansRegular.variable} antialiased`}
       >
-        {children}
-        <div id="modal-root"></div>
+        <ReactQueryProvider>
+          {children}
+          <div id="modal-root"></div>
+        </ReactQueryProvider>
         <Toaster
           position="top-center"
           reverseOrder={false}

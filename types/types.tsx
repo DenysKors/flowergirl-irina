@@ -38,3 +38,8 @@ export type BasketProduct = {
   userQty: number;
   stock: number;
 };
+
+export type InitBasketState = {
+  products: BasketProduct[];
+  totalPrice: number;
+};
