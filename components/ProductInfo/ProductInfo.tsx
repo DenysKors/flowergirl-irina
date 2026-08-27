@@ -15,9 +15,10 @@ export default function ProductInfo({ productInfo }: ProductInfoProps) {
       <div className="flex items-center justify-between border-b border-b-border shrink-0">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center rounded-md font-text text-text bg-gray-200 px-2 py-0.5 text-xs">
-              {`Артикул: ${productInfo.sku}`}
-            </span>
+            <p className="flex items-center rounded-md font-text text-text bg-gray-200 px-2 py-0.5 text-xs">
+              Артикул:
+              <span className="whitespace-nowrap">{productInfo.sku}</span>
+            </p>
             <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
               {`Категория: ${productInfo.category.name}`}
             </span>
@@ -78,7 +79,7 @@ export default function ProductInfo({ productInfo }: ProductInfoProps) {
         <div className="p-6 space-y-5 rounded-[28px] bg-gray-200 text-text font-text leading-relaxed">
           <div className="rounded-[28px] bg-background p-4">
             <span className="text-xs font-text font-semibold uppercase tracking-wider text-text block mb-1">
-              Ціна
+              Цена
             </span>
             <div className="flex items-baseline gap-1">
               <span className="text-2xl font-text font-semibold tracking-tight text-text">

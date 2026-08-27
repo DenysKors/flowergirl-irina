@@ -59,7 +59,7 @@ export default function ProductsTable() {
   } = useQuery<ProductWithCats[]>({
     queryKey: ["admin-products"],
     queryFn: () =>
-      fetch("/api/admin/products").then((res) => {
+      fetch("/api/products").then((res) => {
         if (!res.ok) throw new Error("Ошибка при загрузке");
         return res.json();
       }),
@@ -166,7 +166,7 @@ export default function ProductsTable() {
           return (
             <div className="flex items-center text-sm justify-center">
               <button
-                className="button ms-auto p-2 mb-4 cursor-pointer"
+                className="button ms-auto p-2 cursor-pointer"
                 type="button"
                 aria-label="Удалить"
                 title="Удалить"
@@ -195,7 +195,7 @@ export default function ProductsTable() {
           return (
             <div className="flex items-center text-sm justify-center">
               <button
-                className="button ms-auto p-2 mb-4 cursor-pointer"
+                className="button ms-auto p-2 cursor-pointer"
                 type="button"
                 aria-label="Инфо"
                 title="Инфо"
@@ -448,7 +448,7 @@ export default function ProductsTable() {
               </button>
 
               <span className="flex items-center gap-1 text-gray-600 ml-2">
-                Сторінка{" "}
+                Стораница{" "}
                 <strong>
                   {table.getState().pagination.pageIndex + 1} из{" "}
                   {table.getPageCount()}
@@ -466,7 +466,7 @@ export default function ProductsTable() {
             </h3>
             <button
               disabled={deleteMutation.isPending}
-              className="mt-5 button font-text text-sm text-text bg-main uppercase cursor-pointer"
+              className="mt-5 button button-primary font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
               type="button"
               aria-label="удалить"
               onClick={handleDelete}

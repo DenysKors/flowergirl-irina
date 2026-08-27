@@ -54,10 +54,10 @@ export default function CategoriesTable({
                 key={item.id}
                 className="grid grid-cols-[1fr_1fr_auto] grow bg-background rounded-md border border-gray-300"
               >
-                <div className="p-1 text-center text-sm font-text border-b border-gray-300">
+                <div className="p-1 text-center text-sm font-text font-semibold border-b border-gray-300">
                   Категория
                 </div>
-                <div className="p-1 text-center text-sm font-text border-b border-gray-300">
+                <div className="p-1 text-center text-sm font-text font-semibold border-b border-gray-300">
                   Подкатегория
                 </div>
                 <div className="p-1 text-center text-sm border-b font-text border-gray-300"></div>
@@ -75,7 +75,7 @@ export default function CategoriesTable({
                       </div>
                       <div className="p-2 border-t border-gray-300">
                         <button
-                          className="button-icon bg-background cursor-pointer hover:bg-red-500 focus:bg-red-500"
+                          className="button-icon bg-background cursor-pointer"
                           type="button"
                           aria-label="Удалить"
                           title="Удалить"
@@ -87,7 +87,7 @@ export default function CategoriesTable({
                             setisModalOpen(true);
                           }}
                         >
-                          <svg className="h-5.5 w-5.5 fill-main">
+                          <svg className="h-5.5 w-5.5 fill-main hover:fill-red-500 focus:fill-red-500">
                             <use href="/icons.svg#icon-trash"></use>
                           </svg>
                         </button>
