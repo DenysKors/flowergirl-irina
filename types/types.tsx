@@ -29,6 +29,15 @@ export type Product = {
   qty: number;
 };
 
+export type ProductToUpdate = {
+  id: number;
+  description: string | null;
+  categoryId: number;
+  qty: number;
+  unit: string;
+  price: number;
+};
+
 export type BasketProduct = {
   code: string;
   title: string;

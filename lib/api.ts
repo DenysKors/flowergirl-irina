@@ -148,6 +148,19 @@ export const getAllAdminProdWithCats = async () => {
   return products;
 };
 
+export const getAdminProductById = async (id: string) => {
+  const product = await prisma.product.findUnique({
+    where: { id: parseInt(id) },
+    include: {
+      category: true,
+    },
+  });
+
+  if (!product || product.isDeleted) return null;
+
+  return product;
+};
+
 export const addProduct = async (productData: FormData) => {
   const name = productData.get("name") as string;
   const description = productData.get("description") as string;
@@ -248,6 +261,39 @@ export const deleteProduct = async (productId: number) => {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === "P2025") {
         throw new Error("Такого товара не существует");
+      }
+    }
+    throw err;
+  }
+};
+
+export const updateProduct = async (productData: FormData) => {
+  const id = Number(productData.get("id"));
+  const description = productData.get("description") as string;
+  const categoryId = Number(productData.get("categoryId"));
+  const qty = Number(productData.get("qty"));
+  const unit = productData.get("unit") as string;
+  const price = Number(productData.get("price"));
+
+  try {
+    const updatedProduct = await prisma.product.update({
+      where: { id },
+      data: {
+        description,
+        categoryId,
+        qty,
+        unit,
+        price,
+      },
+    });
+
+    return updatedProduct;
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      if (err.code === "P2025") {
+        throw new Error("Такого товара не существует");
+      } else if (err.code === "P2002") {
+        throw new Error("Обновление уникального поля невозможно");
       }
     }
     throw err;

@@ -108,7 +108,7 @@ export default function ProductsTable() {
             <Link
               className="underline cursor-pointer"
               href={{
-                pathname: `${pathname}/${info.row.original.name}`,
+                pathname: `${pathname}/${info.row.original.id}`,
               }}
             >
               {info.getValue()}
@@ -448,7 +448,7 @@ export default function ProductsTable() {
               </button>
 
               <span className="flex items-center gap-1 text-gray-600 ml-2">
-                Стораница{" "}
+                Страница{" "}
                 <strong>
                   {table.getState().pagination.pageIndex + 1} из{" "}
                   {table.getPageCount()}

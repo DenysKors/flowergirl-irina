@@ -65,7 +65,7 @@ export default function ProductInfo({ productInfo }: ProductInfoProps) {
                       }}
                     />
                     {idx === 0 && (
-                      <span className="absolute top-[5%] left-[5.5%] px-2 py-0.5 text-[11px]/[11px] tablet:text-[13px]/[13px] font-text font-medium uppercase rounded-[18px] bg-main text-white">
+                      <span className="absolute top-[5%] left-[50%] -translate-x-[50%] px-2 py-0.5 text-[11px]/[11px] tablet:text-[13px]/[13px] font-text font-medium uppercase rounded-[18px] bg-main text-white">
                         Главное
                       </span>
                     )}
