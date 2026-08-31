@@ -9,7 +9,7 @@ import { useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import type { Category } from "@/prisma/generated/client";
-import { PRODUCT_UNITS } from "@/lib/constants";
+import { PRODUCT_UNITS } from "@/constants/units";
 
 interface FormValues {
   name: string;

@@ -27,14 +27,14 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
   const reset = useBasketStore((state) => state.reset);
   const router = useRouter();
 
-  const handleDecr = (code: string, userQty: number) => {
+  const handleDecr = (id: number, userQty: number) => {
     if (userQty === 1) return;
-    decreaseQty(code, userQty);
+    decreaseQty(id, userQty);
   };
 
-  const handleIncr = (code: string, stock: number, userQty: number) => {
+  const handleIncr = (id: number, stock: number, userQty: number) => {
     if (userQty >= stock) return;
-    increaseQty(code, userQty);
+    increaseQty(id, userQty);
   };
 
   const handleTermsApprove = () => {
@@ -96,7 +96,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
             return (
               <div
                 className="mb-3 flex flex-row gap-1 justify-between border-b border-b-border-gray"
-                key={product.code}
+                key={product.id}
               >
                 <div className="flex gap-2">
                   <CldImage
@@ -105,7 +105,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                     loading="lazy"
                     quality={30}
                     src={product.imageUrl}
-                    alt={product.title}
+                    alt={product.name}
                     onError={(e) => {
                       const clickedElement = e.target as HTMLImageElement;
                       clickedElement.srcset = "/no-image-placeholder.png";
@@ -114,7 +114,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                   />
                   <div className="flex flex-col gap-1 justify-between">
                     <span className="font-heading text-main md:text-lg lg:text-xl">
-                      {product.title}
+                      {product.name}
                     </span>
                     <div className="w-min">
                       <div className="flex items-center border border-gray-900 content-justify bg-white rounded-lg">
@@ -123,7 +123,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                           type="button"
                           aria-label="зменшити кількість"
                           onClick={() =>
-                            handleDecr(product.code, product.userQty)
+                            handleDecr(product.id, product.userQty)
                           }
                         >
                           <svg className="w-4.5 h-4.5">
@@ -139,7 +139,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                           aria-label="збільшити кількість"
                           onClick={() =>
                             handleIncr(
-                              product.code,
+                              product.id,
                               product.stock,
                               product.userQty
                             )

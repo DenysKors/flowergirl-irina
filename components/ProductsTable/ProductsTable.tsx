@@ -118,7 +118,7 @@ export default function ProductsTable() {
         enableSorting: false,
       }),
       columnHelper.accessor("category.name", {
-        header: () => "Категория",
+        header: () => "Подкатегория",
         size: 130,
         filterFn: "arrIncludesSome",
         enableSorting: false,

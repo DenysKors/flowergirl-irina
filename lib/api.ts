@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import { Prisma } from "@/prisma/generated/client";
 import { uploadProductImage } from "@/lib/cloudinaryUpload";
 import { deleteImage } from "@/lib/cloudinaryDelete";
+import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
 
 export const getAllAdminSubCategories = async () => {
   const categories = await prisma.category.findMany({
@@ -296,6 +297,39 @@ export const updateProduct = async (productData: FormData) => {
         throw new Error("Обновление уникального поля невозможно");
       }
     }
+    throw err;
+  }
+};
+
+export const getSearchProducts = async (query: string, page: number) => {
+  const skip = (page - 1) * PRODUCT_PAGINATION_LIMIT;
+
+  const whereCondition = {
+    isDeleted: false,
+    OR: [{ name: { contains: query } }, { description: { contains: query } }],
+  };
+
+  try {
+    const [products, totalCount] = await Promise.all([
+      prisma.product.findMany({
+        where: whereCondition,
+        include: {
+          category: true,
+        },
+        take: PRODUCT_PAGINATION_LIMIT,
+        skip: skip,
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.product.count({ where: whereCondition }),
+    ]);
+
+    const totalPages = Math.ceil(totalCount / PRODUCT_PAGINATION_LIMIT);
+
+    return {
+      products,
+      pagination: { totalCount, totalPages },
+    };
+  } catch (err) {
     throw err;
   }
 };

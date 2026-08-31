@@ -1,56 +1,41 @@
 "use client";
 
+import Link from "next/link";
 import toast from "react-hot-toast";
 
-import { useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 
 import { useBasketStore } from "@/store/basketStore";
-import { Product, BasketProduct } from "@/types/types";
+import { ProductWithCats, BasketProduct } from "@/types/types";
 import { SELL_STATUS_ENUMS } from "@/constants/enums";
 
 type SearchListProps = {
-  products: Product[];
+  products: ProductWithCats[];
 };
 
 export default function SearchList({ products }: SearchListProps) {
   const basketProducts = useBasketStore((state) => state.products);
   const addProduct = useBasketStore((state) => state.addProduct);
-  const router = useRouter();
-
-  const handleBtnClick = (code: string) => {
-    const productTypeCode = code.charAt(0);
-
-    switch (productTypeCode) {
-      case "1":
-        router.push(`/catalog/plants/${code}`);
-        break;
-      case "2":
-        router.push(`/catalog/protection/${code}`);
-        break;
-      case "3":
-        router.push(`/catalog/supplies/${code}`);
-        break;
-      default:
-        router.push("/");
-    }
-  };
 
   const handleBasketClick = (
-    code: string,
-    title: string,
+    id: number,
+    sku: string,
+    name: string,
     price: number,
-    imagesUrl: string[],
-    qty: number
+    productImgArr: string[],
+    qty: number,
+    unit: string
   ): void | string => {
-    const searchedProduct = basketProducts.find((item) => item.code === code);
+    const searchedProduct = basketProducts.find((item) => item.id === id);
     if (searchedProduct) return toast.error("Цей товар вже у кошику");
     const basketProduct: BasketProduct = {
-      title,
+      id,
+      name,
+      sku,
       price,
+      unit,
       sumPrice: price * 1,
-      imageUrl: imagesUrl[0],
-      code,
+      imageUrl: productImgArr[0],
       userQty: 1,
       stock: qty,
     };
@@ -60,22 +45,25 @@ export default function SearchList({ products }: SearchListProps) {
 
   return (
     <ul className="mx-auto pb-6 grid grid-cols-1 min-[375px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-4 md:gap-8 justify-items-center">
-      {products.map(({ code, title, price, qty, imagesUrl }) => {
+      {products.map(({ id, sku, name, images, qty, unit, price }) => {
+        const productImgArr = images as string[];
         return (
           <li
-            key={code}
+            key={id}
             className="group/edit pb-3 md:pb-3.5 lg:pb-4 flex flex-col justify-between border-b border-b-border-gray"
           >
-            <button
+            <Link
               type="button"
               className="h-full cursor-pointer"
-              onClick={() => handleBtnClick(code)}
+              href={{
+                pathname: `/catalog/${id}`,
+              }}
             >
               <div className="overflow-hidden h-full flex justify-center">
                 <CldImage
                   className="object-contain w-full h-auto transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
-                  src={imagesUrl[0]}
-                  alt={title}
+                  src={productImgArr[0]}
+                  alt={name}
                   width={280}
                   height={498}
                   loading="lazy"
@@ -86,10 +74,10 @@ export default function SearchList({ products }: SearchListProps) {
                   }}
                 />
               </div>
-            </button>
+            </Link>
             <div className="mt-2 md:mt-4 flex flex-col gap-2 md:gap-4">
               <p className="font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline wrap-anywhere">
-                {title}
+                {name}
               </p>
               <div className="flex justify-between items-center">
                 <strong className="font-text md:text-lg lg:text-xl">{`${price} грн`}</strong>
@@ -100,7 +88,15 @@ export default function SearchList({ products }: SearchListProps) {
                     aria-label="Додати у кошик"
                     title="Додати у кошик"
                     onClick={() =>
-                      handleBasketClick(code, title, price, imagesUrl, qty)
+                      handleBasketClick(
+                        id,
+                        sku,
+                        name,
+                        price,
+                        productImgArr,
+                        qty,
+                        unit
+                      )
                     }
                   >
                     +

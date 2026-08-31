@@ -10,8 +10,8 @@ const initialState: InitBasketState = {
 type ProductState = typeof initialState & {
   addProduct: (product: BasketProduct) => void;
   removeProduct: (product: BasketProduct) => void;
-  increaseUserQty: (code: string, userQty: number) => void;
-  decreaseUserQty: (code: string, userQty: number) => void;
+  increaseUserQty: (id: number, userQty: number) => void;
+  decreaseUserQty: (id: number, userQty: number) => void;
   reset: () => void;
 };
 
@@ -24,13 +24,13 @@ export const useBasketStore = create<ProductState>()((set, get) => ({
     })),
   removeProduct: (product) =>
     set((state) => ({
-      products: state.products.filter((item) => item.code !== product.code),
+      products: state.products.filter((item) => item.id !== product.id),
       totalPrice: state.totalPrice - product.sumPrice,
     })),
-  increaseUserQty: (code, userQty) => {
+  increaseUserQty: (id, userQty) => {
     const products = get().products;
     const updatedProducts = products?.map((item) => {
-      if (item.code === code) {
+      if (item.id === id) {
         return {
           ...item,
           userQty: userQty + 1,
@@ -48,10 +48,10 @@ export const useBasketStore = create<ProductState>()((set, get) => ({
       totalPrice: updatedTotalPrice,
     }));
   },
-  decreaseUserQty: (code, userQty) => {
+  decreaseUserQty: (id, userQty) => {
     const products = get().products;
     const updatedProducts = products?.map((item) => {
-      if (item.code === code) {
+      if (item.id === id) {
         return {
           ...item,
           userQty: userQty - 1,

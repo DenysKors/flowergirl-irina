@@ -8,7 +8,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import { ProductWithCats, ProductToUpdate } from "@/types/types";
 import type { Category } from "@/prisma/generated/client";
-import { PRODUCT_UNITS } from "@/lib/constants";
+import { PRODUCT_UNITS } from "@/constants/units";
 
 interface FormAction {
   resetForm: () => void;
@@ -102,7 +102,7 @@ export default function UpdateProductForm({
         })}
         onSubmit={handleSubmit}
       >
-        {({ values, isSubmitting, setFieldValue }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form className="mx-auto max-w-xl">
             <label className="mt-6 max-w-100 flex flex-col gap-1 font-text">
               Описание:

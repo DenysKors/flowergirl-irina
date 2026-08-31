@@ -19,6 +19,11 @@ export type ProductWithCats = Omit<ProductWithCatsFromDB, "price"> & {
   price: number;
 };
 
+export type ProductsWithPagin = {
+  products: ProductWithCats[];
+  pagination: { totalCount: number; totalPages: number };
+};
+
 export type Product = {
   code: string;
   title: string;
@@ -39,9 +44,11 @@ export type ProductToUpdate = {
 };
 
 export type BasketProduct = {
-  code: string;
-  title: string;
+  id: number;
+  sku: string;
+  name: string;
   imageUrl: string;
+  unit: string;
   price: number;
   sumPrice: number;
   userQty: number;
