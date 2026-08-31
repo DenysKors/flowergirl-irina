@@ -22,7 +22,7 @@ export default function SearchList({ products }: SearchListProps) {
     sku: string,
     name: string,
     price: number,
-    productImgArr: string[],
+    imageUrl: string,
     qty: number,
     unit: string
   ): void | string => {
@@ -35,7 +35,7 @@ export default function SearchList({ products }: SearchListProps) {
       price,
       unit,
       sumPrice: price * 1,
-      imageUrl: productImgArr[0],
+      imageUrl,
       userQty: 1,
       stock: qty,
     };
@@ -93,7 +93,7 @@ export default function SearchList({ products }: SearchListProps) {
                         sku,
                         name,
                         price,
-                        productImgArr,
+                        productImgArr[0],
                         qty,
                         unit
                       )

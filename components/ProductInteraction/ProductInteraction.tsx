@@ -7,19 +7,23 @@ import { useState } from "react";
 import { useBasketStore } from "@/store/basketStore";
 
 type ProductInteractionProps = {
-  title: string;
+  id: number;
+  sku: string;
+  name: string;
   price: number;
   imageUrl: string;
-  code: string;
   qty: number;
+  unit: string;
 };
 
 export default function ProductInteraction({
-  title,
+  id,
+  sku,
+  name,
   price,
-  imageUrl,
-  code,
   qty,
+  unit,
+  imageUrl,
 }: ProductInteractionProps) {
   const [prodQty, setProdQty] = useState(1);
   const basketProducts = useBasketStore((state) => state.products);
@@ -36,16 +40,18 @@ export default function ProductInteraction({
   };
 
   const handleBasketClick = () => {
-    const searchedProduct = basketProducts.find((item) => item.code === code);
+    const searchedProduct = basketProducts.find((item) => item.id === id);
     if (searchedProduct) return toast.error("Цей товар вже у кошику");
     const basketProduct = {
-      title,
+      id,
+      sku,
+      name,
       price,
       sumPrice: price * prodQty,
       imageUrl,
-      code,
       userQty: prodQty,
       stock: qty,
+      unit: unit,
     };
     addProduct(basketProduct);
     toast.success("Товар додано у кошик");

@@ -20,22 +20,26 @@ export default function ProductsList({ products }: ProductsListProps) {
   const addProduct = useBasketStore((state) => state.addProduct);
 
   const handleBasketClick = (
-    code: string,
-    title: string,
+    id: number,
+    sku: string,
+    name: string,
     price: number,
-    imagesUrl: string[],
-    qty: number
+    imageUrl: string,
+    qty: number,
+    unit: string
   ): void | string => {
-    const searchedProduct = basketProducts.find((item) => item.code === code);
+    const searchedProduct = basketProducts.find((item) => item.id === id);
     if (searchedProduct) return toast.error("Цей товар вже у кошику");
     const basketProduct: BasketProduct = {
-      title,
+      id,
+      sku,
+      name,
       price,
       sumPrice: price * 1,
-      imageUrl: imagesUrl[0],
-      code,
+      imageUrl,
       userQty: 1,
       stock: qty,
+      unit,
     };
     addProduct(basketProduct);
     toast.success("Товар додано у кошик");
@@ -43,23 +47,24 @@ export default function ProductsList({ products }: ProductsListProps) {
 
   return (
     <ul className="mx-auto pb-6 grid grid-cols-1 min-[375px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-4 md:gap-8 justify-items-center">
-      {products.map(({ code, title, price, qty, imagesUrl }) => {
+      {products.map(({ id, name, sku, unit, price, qty, images }) => {
+        const productImgArr = images as string[];
         return (
           <li
-            key={code}
+            key={id}
             className="group/edit pb-3 md:pb-3.5 lg:pb-4 flex flex-col justify-between border-b border-b-border-gray"
           >
             <Link
               className="cursor-pointer"
               href={{
-                pathname: `${pathname}/${code}`,
+                pathname: `${pathname}/${id}`,
               }}
             >
               <div className="overflow-hidden h-full flex justify-center">
                 <CldImage
                   className="object-contain w-full h-auto transition-[transform] duration-300 ease group-hover/edit:transform-[scale(1.1)]"
-                  src={imagesUrl[0]}
-                  alt={title}
+                  src={productImgArr[0]}
+                  alt={name}
                   width={280}
                   height={498}
                   loading="lazy"
@@ -73,7 +78,7 @@ export default function ProductsList({ products }: ProductsListProps) {
             </Link>
             <div className="mt-2 md:mt-4 flex flex-col gap-2 md:gap-4">
               <p className="font-heading text-main md:text-lg lg:text-xl group-hover/edit:underline wrap-anywhere">
-                {title}
+                {name}
               </p>
               <div className="flex justify-between items-center">
                 <strong className="font-text md:text-lg lg:text-xl">{`${price} грн`}</strong>
@@ -84,7 +89,15 @@ export default function ProductsList({ products }: ProductsListProps) {
                     aria-label="Додати у кошик"
                     title="Додати у кошик"
                     onClick={() =>
-                      handleBasketClick(code, title, price, imagesUrl, qty)
+                      handleBasketClick(
+                        id,
+                        sku,
+                        name,
+                        price,
+                        productImgArr[0],
+                        qty,
+                        unit
+                      )
                     }
                   >
                     +

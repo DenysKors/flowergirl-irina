@@ -1,15 +1,13 @@
-import { Prisma } from "@/prisma/generated/client";
-// import { ExtendedPrismaClient } from "@/lib/prisma";
+import { Prisma, Product as PrismaProduct } from "@/prisma/generated/client";
 
 export type CategoryWithSubs = Prisma.CategoryGetPayload<{
   include: { subCategories: true };
 }>;
 
-// export type ProductWithCats = Prisma.Result<
-//   ExtendedPrismaClient["product"],
-//   { include: { category: true } },
-//   "findMany"
-//   >;
+export type Product = Omit<PrismaProduct, "isDeleted" | "price"> & {
+  price: number;
+  isDeleted: false;
+};
 
 type ProductWithCatsFromDB = Prisma.ProductGetPayload<{
   include: { category: true };
@@ -24,15 +22,15 @@ export type ProductsWithPagin = {
   pagination: { totalCount: number; totalPages: number };
 };
 
-export type Product = {
-  code: string;
-  title: string;
-  description: string;
-  category: { label: string; value: string }[];
-  imagesUrl: string[];
-  price: number;
-  qty: number;
-};
+// export type Product = {
+//   code: string;
+//   title: string;
+//   description: string;
+//   category: { label: string; value: string }[];
+//   imagesUrl: string[];
+//   price: number;
+//   qty: number;
+// };
 
 export type ProductToUpdate = {
   id: number;
