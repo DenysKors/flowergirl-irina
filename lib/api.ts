@@ -301,6 +301,50 @@ export const updateProduct = async (productData: FormData) => {
   }
 };
 
+export const getAdminAnalytics = async () => {
+  const [
+    totalProducts,
+    outOfStockProducts,
+    // ordersAmount,
+    // newOrders,
+  ] = await Promise.all([
+    prisma.product.count({
+      where: { isDeleted: false },
+    }),
+    prisma.product.count({
+      where: {
+        qty: 0,
+        isDeleted: false,
+      },
+    }),
+    // prisma.order.count({
+    //   where: {
+    //     OR: [
+    //       {
+    //         status: "pending",
+    //         paymentType: "postpaid",
+    //       },
+    //       // {
+    //       //   status: "paid",
+    //       //   paymentType: "prepaid",
+    //       // },
+    //       {
+    //         status: "pending",
+    //         paymentType: "prepaid",
+    //       },
+    //     ],
+    //   },
+    // }),
+  ]);
+
+  return {
+    totalProducts,
+    outOfStockProducts,
+    // ordersAmount,
+    // newOrders,
+  };
+};
+
 export const getSearchProducts = async (query: string, page: number) => {
   const skip = (page - 1) * PRODUCT_PAGINATION_LIMIT;
 

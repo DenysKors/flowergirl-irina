@@ -274,7 +274,7 @@ export default function ProductsTable() {
                 type="text"
                 value={globalFilter ?? ""}
                 onChange={(e) => table.setGlobalFilter(String(e.target.value))}
-                placeholder="Поиск по названию или арт."
+                placeholder="Поиск по назв. или арт."
                 className="w-full pl-3 pr-10 py-2 text-sm bg-background border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-main focus:bg-white transition-all text-gray-900"
               />
               {globalFilter && (

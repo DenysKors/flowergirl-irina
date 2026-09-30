@@ -21,9 +21,9 @@ interface FormValues {
   blobImage2: string | null;
   image3: Blob | null;
   blobImage3: string | null;
-  qty: number;
+  qty: number | string;
   unit: string;
-  price: number;
+  price: number | string;
 }
 
 interface FormAction {
@@ -98,8 +98,8 @@ export default function AddProductForm({
         blobImage2: null,
         image3: null,
         blobImage3: null,
-        qty: 0,
-        price: 0,
+        qty: "",
+        price: "",
         unit: "",
       }}
       validationSchema={Yup.object().shape({
@@ -145,7 +145,7 @@ export default function AddProductForm({
           <label className="mb-4 flex flex-col gap-1 font-heading">
             Описание:
             <Field
-              className="p-1 w-full font-text border border-border-gray rounded-b-md resize-none"
+              className="p-1 w-full font-text border border-border-gray rounded-md resize-none"
               component="textarea"
               name="description"
               rows="10"
@@ -183,7 +183,7 @@ export default function AddProductForm({
             Кол-во:
             <div>
               <Field
-                className="p-1.5 max-w-25 bg-background border-b border-b-main"
+                className="p-1.5 max-w-25 font-text bg-background border-b border-b-main"
                 type="number"
                 name="qty"
               />
@@ -221,7 +221,7 @@ export default function AddProductForm({
             Цена:
             <div>
               <Field
-                className="p-1.5 max-w-25 bg-background border-b border-b-main"
+                className="p-1.5 max-w-25 font-text bg-background border-b border-b-main"
                 type="number"
                 name="price"
               />

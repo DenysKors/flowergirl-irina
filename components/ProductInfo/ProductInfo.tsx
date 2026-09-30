@@ -15,9 +15,8 @@ export default function ProductInfo({ productInfo }: ProductInfoProps) {
       <div className="flex items-center justify-between border-b border-b-border shrink-0">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <p className="flex items-center rounded-md font-text text-text bg-gray-200 px-2 py-0.5 text-xs">
-              Артикул:
-              <span className="whitespace-nowrap">{productInfo.sku}</span>
+            <p className="flex items-center rounded-md font-text text-text bg-gray-200 px-2 py-0.5 text-xs whitespace-nowrap">
+              {`Артикул: ${productInfo.sku}`}
             </p>
             <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
               {`Категория: ${productInfo.category.name}`}
