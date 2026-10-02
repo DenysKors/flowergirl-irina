@@ -43,6 +43,73 @@ export const getAllAdminCatWithSubs = async () => {
   return categories;
 };
 
+export const getAllUserCategWithSubs = async () => {
+  const categories = await prisma.category.findMany({
+    where: {
+      parentId: null,
+      isDeleted: false,
+    },
+    include: {
+      subCategories: {
+        where: { isDeleted: false },
+      },
+    },
+  });
+  return categories;
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export const getUserFilterProducts = async (
+  categories: string[] | [],
+  page: number
+) => {
+  const skip = (page - 1) * PRODUCT_PAGINATION_LIMIT;
+
+  const whereCondiiton: any = { isDeleted: false };
+
+  if (categories.length > 0) {
+    whereCondiiton.category = {
+      slug: { in: categories },
+    };
+  }
+
+  const orderByCondition: any = { createdAt: "asc" };
+
+  try {
+    const [userProducts, totalCount] = await Promise.all([
+      prisma.product.findMany({
+        where: whereCondiiton,
+        orderBy: orderByCondition,
+        take: PRODUCT_PAGINATION_LIMIT,
+        skip: skip,
+        include: {
+          category: true,
+        },
+      }),
+      prisma.product.count({
+        where: whereCondiiton,
+      }),
+    ]);
+
+    const totalPages = Math.ceil(totalCount / PRODUCT_PAGINATION_LIMIT);
+
+    const products = userProducts.map((prod) => ({
+      ...prod,
+      price: prod.price.toNumber(),
+    }));
+
+    return {
+      products,
+      pagination: { totalCount, totalPages },
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export const addCategory = async (categoryData: FormData) => {
   const name = categoryData.get("name") as string;
   const parent = categoryData.get("parent") as string;
@@ -159,7 +226,12 @@ export const getAdminProductById = async (id: string) => {
 
   if (!product || product.isDeleted) return null;
 
-  return product;
+  const serializedProduct = {
+    ...product,
+    price: product.price.toNumber(),
+  };
+
+  return serializedProduct;
 };
 
 export const addProduct = async (productData: FormData) => {
@@ -354,7 +426,7 @@ export const getSearchProducts = async (query: string, page: number) => {
   };
 
   try {
-    const [products, totalCount] = await Promise.all([
+    const [userProducts, totalCount] = await Promise.all([
       prisma.product.findMany({
         where: whereCondition,
         include: {
@@ -368,6 +440,11 @@ export const getSearchProducts = async (query: string, page: number) => {
     ]);
 
     const totalPages = Math.ceil(totalCount / PRODUCT_PAGINATION_LIMIT);
+
+    const products = userProducts.map((prod) => ({
+      ...prod,
+      price: prod.price.toNumber(),
+    }));
 
     return {
       products,

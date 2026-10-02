@@ -4,18 +4,16 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 
 import { CldImage } from "next-cloudinary";
-import { usePathname } from "next/navigation";
 
 import { useBasketStore } from "@/store/basketStore";
-import { Product, BasketProduct } from "@/types/types";
+import { ProductWithCats, BasketProduct } from "@/types/types";
 import { SELL_STATUS_ENUMS } from "@/constants/enums";
 
 type ProductsListProps = {
-  products: Product[];
+  products: ProductWithCats[];
 };
 
 export default function ProductsList({ products }: ProductsListProps) {
-  const pathname = usePathname();
   const basketProducts = useBasketStore((state) => state.products);
   const addProduct = useBasketStore((state) => state.addProduct);
 
@@ -57,7 +55,7 @@ export default function ProductsList({ products }: ProductsListProps) {
             <Link
               className="cursor-pointer"
               href={{
-                pathname: `${pathname}/${id}`,
+                pathname: `catalog/${id}`,
               }}
             >
               <div className="overflow-hidden h-full flex justify-center">
