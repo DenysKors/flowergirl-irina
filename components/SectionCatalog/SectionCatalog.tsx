@@ -1,18 +1,32 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { userLinkMap } from "@/app/userLinkData";
 import PlantsImg from "../../assets/images/plants.jpg";
 import ProtectionImg from "../../assets/images/protection.jpg";
 import SuppliesImg from "../../assets/images/supplies.jpg";
 
-export default function SectionCatalog() {
+import { getAllUserSubCats } from "@/lib/api";
+
+export default async function SectionCatalog() {
+  const { plantsCatsSlugArr, protectionCatsArr, suppliesCatsArr } =
+    await getAllUserSubCats();
+
+  const plantsParams = new URLSearchParams();
+  const protectionParams = new URLSearchParams();
+  const suppliesParams = new URLSearchParams();
+
+  plantsCatsSlugArr.forEach((slug) => plantsParams.append("category", slug));
+  protectionCatsArr.forEach((slug) =>
+    protectionParams.append("category", slug)
+  );
+  suppliesCatsArr.forEach((slug) => suppliesParams.append("category", slug));
+
   return (
     <section className="container py-5">
       <div className="flex flex-col md:flex-row gap-4 md:gap-8 justify-self-center">
         <Link
           className="group/edit basis-[33.33%] flex flex-col"
-          href={userLinkMap.flowers}
+          href={`/catalog?${plantsParams.toString()}`}
         >
           <div className="overflow-hidden">
             <Image
@@ -32,7 +46,7 @@ export default function SectionCatalog() {
         </Link>
         <Link
           className="group/edit basis-[33.33%] flex flex-col"
-          href={userLinkMap.protection}
+          href={`/catalog?${protectionParams.toString()}`}
         >
           <div className="overflow-hidden">
             <Image
@@ -52,7 +66,7 @@ export default function SectionCatalog() {
         </Link>
         <Link
           className="group/edit basis-[33.33%] flex flex-col"
-          href={userLinkMap.supplies}
+          href={`/catalog?${suppliesParams.toString()}`}
         >
           <div className="overflow-hidden">
             <Image

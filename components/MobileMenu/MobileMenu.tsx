@@ -2,23 +2,25 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import SearchBar from "../SearchBar/SearchBar";
 import Logo from "../../assets/images/Logo.png";
-import { userLinkData } from "@/app/userLinkData";
 
 type MobileMenuProps = {
   isMobMenuShow: boolean;
   handleToggle: () => void;
+  plantsParams: URLSearchParams;
+  protectionParams: URLSearchParams;
+  suppliesParams: URLSearchParams;
 };
 
 export default function MobileMenu({
   isMobMenuShow,
   handleToggle,
+  plantsParams,
+  protectionParams,
+  suppliesParams,
 }: MobileMenuProps) {
-  const pathname = usePathname();
-
   return (
     <div
       className={`fixed lg:hidden overflow-y-auto z-50 bg-background top-0 w-screen h-dvh -left-full transition-transform duration-500 ease-out ${
@@ -49,24 +51,42 @@ export default function MobileMenu({
       </div>
       <nav aria-label="Мобільна навігація">
         <ul className="flex flex-col justify-start gap-x-8 xl:gap-x-10">
-          {userLinkData.map(({ title, href }) => (
-            <li key={title} className="px-6 border-b border-border-gray">
-              <Link
-                className={`${
-                  pathname === `${href}`
-                    ? "w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl text-main tracking-wider underline underline-offset-4 "
-                    : "w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl tracking-wider hover:underline hover:underline-offset-4 hover:text-main transition border-t-border-gray"
-                }`}
-                href={href}
-                onClick={handleToggle}
-              >
-                {title}
-                <svg className="h-4 w-4 fill-black">
-                  <use href="/icons.svg#icon-arrow-right"></use>
-                </svg>
-              </Link>
-            </li>
-          ))}
+          <li className="px-6 border-b border-border-gray">
+            <Link
+              className="w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl tracking-wider hover:underline hover:underline-offset-4 hover:text-main transition border-t-border-gray"
+              href={`/catalog?${plantsParams.toString()}`}
+              onClick={handleToggle}
+            >
+              Рослини
+              <svg className="h-4 w-4 fill-black">
+                <use href="/icons.svg#icon-arrow-right"></use>
+              </svg>
+            </Link>
+          </li>
+          <li className="px-6 border-b border-border-gray">
+            <Link
+              className="w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl tracking-wider hover:underline hover:underline-offset-4 hover:text-main transition border-t-border-gray"
+              href={`/catalog?${protectionParams.toString()}`}
+              onClick={handleToggle}
+            >
+              Захист рослин
+              <svg className="h-4 w-4 fill-black">
+                <use href="/icons.svg#icon-arrow-right"></use>
+              </svg>
+            </Link>
+          </li>
+          <li className="px-6 border-b border-border-gray">
+            <Link
+              className="w-full flex justify-between items-center gap-1 pt-4 pb-4 uppercase font-heading text-lg xl:text-xl tracking-wider hover:underline hover:underline-offset-4 hover:text-main transition border-t-border-gray"
+              href={`/catalog?${suppliesParams.toString()}`}
+              onClick={handleToggle}
+            >
+              Допоміжні матеріали
+              <svg className="h-4 w-4 fill-black">
+                <use href="/icons.svg#icon-arrow-right"></use>
+              </svg>
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>

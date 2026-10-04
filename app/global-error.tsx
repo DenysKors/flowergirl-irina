@@ -1,7 +1,10 @@
 "use client";
 
-import Header from "@/components/Header/Header";
+import Image from "next/image";
+import Link from "next/link";
+
 import Footer from "@/components/Footer/Footer";
+import Logo from "@/assets/images/Logo.png";
 
 export default function Error({
   error,
@@ -13,7 +16,27 @@ export default function Error({
   return (
     <html lang="uk">
       <body>
-        <Header />
+        <header className="container pt-3.5 lg:pb-3.5 flex items-center justify-center">
+          <Link
+            className="flex justify-center"
+            href="/"
+            title="На головну сторінку"
+          >
+            <div>
+              <Image
+                className="max-w-30 md:max-w-full"
+                src={Logo}
+                alt="Ірочка хозяйка логотип"
+                width={200}
+                height={200}
+                priority
+              />
+              <p className="font-text text-[10px] md:text-base text-center uppercase">
+                Квіткова крамниця
+              </p>
+            </div>
+          </Link>
+        </header>
         <main className="h-50 flex flex-col items-center justify-center gap-8">
           <p className="font-heading text-main lg:text-2xl">
             Щось пішло не так, як хотілось!

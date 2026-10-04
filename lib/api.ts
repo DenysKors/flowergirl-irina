@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import prisma from "@/lib/prisma";
 
+import { cache } from "react";
 import { Prisma } from "@/prisma/generated/client";
 import { uploadProductImage } from "@/lib/cloudinaryUpload";
 import { deleteImage } from "@/lib/cloudinaryDelete";
@@ -42,6 +43,35 @@ export const getAllAdminCatWithSubs = async () => {
   });
   return categories;
 };
+
+export const getAllUserSubCats = cache(async () => {
+  const [plantsCats, protectionCats, suppliesCats] = await Promise.all([
+    prisma.category.findMany({
+      where: {
+        parentId: 1,
+      },
+    }),
+    prisma.category.findMany({
+      where: {
+        parentId: 2,
+      },
+    }),
+    prisma.category.findMany({
+      where: {
+        parentId: 3,
+      },
+    }),
+  ]);
+  const plantsCatsSlugArr = plantsCats.map((item) => item.slug);
+  const protectionCatsArr = protectionCats.map((item) => item.slug);
+  const suppliesCatsArr = suppliesCats.map((item) => item.slug);
+
+  return {
+    plantsCatsSlugArr,
+    protectionCatsArr,
+    suppliesCatsArr,
+  };
+});
 
 export const getAllUserCategWithSubs = async () => {
   const categories = await prisma.category.findMany({
@@ -214,6 +244,23 @@ export const getAllAdminProdWithCats = async () => {
     },
   });
   return products;
+};
+
+export const getUserProductById = async (id: string) => {
+  const product = await prisma.product.findUnique({
+    where: { id: parseInt(id) },
+    include: {
+      category: true,
+    },
+  });
+
+  if (!product || product.isDeleted) return null;
+
+  const serializedProduct = {
+    ...product,
+    price: product.price.toNumber(),
+  };
+  return serializedProduct;
 };
 
 export const getAdminProductById = async (id: string) => {

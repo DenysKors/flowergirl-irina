@@ -9,10 +9,30 @@ import BasketIcon from "../BasketIcon/BasketIcon";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import SearchBar from "../SearchBar/SearchBar";
 import NavBar from "../NavBar/NavBar";
-import Logo from "../../assets/images/Logo.png";
+import Logo from "@/assets/images/Logo.png";
 
-export default function Header() {
+type HeaderProps = {
+  plantsCatsSlugArr: string[] | [];
+  protectionCatsArr: string[] | [];
+  suppliesCatsArr: string[] | [];
+};
+
+export default function Header({
+  plantsCatsSlugArr,
+  protectionCatsArr,
+  suppliesCatsArr,
+}: HeaderProps) {
   const [isMobMenuShow, setisMobMenuShow] = useState(false);
+
+  const plantsParams = new URLSearchParams();
+  const protectionParams = new URLSearchParams();
+  const suppliesParams = new URLSearchParams();
+
+  plantsCatsSlugArr.forEach((slug) => plantsParams.append("category", slug));
+  protectionCatsArr.forEach((slug) =>
+    protectionParams.append("category", slug)
+  );
+  suppliesCatsArr.forEach((slug) => suppliesParams.append("category", slug));
 
   const handleToggle = () => {
     setisMobMenuShow((prev) => !prev);
@@ -62,8 +82,18 @@ export default function Header() {
             <SearchBar />
           </div>
         </div>
-        <NavBar />
-        <MobileMenu isMobMenuShow={isMobMenuShow} handleToggle={handleToggle} />
+        <NavBar
+          plantsParams={plantsParams}
+          protectionParams={protectionParams}
+          suppliesParams={suppliesParams}
+        />
+        <MobileMenu
+          isMobMenuShow={isMobMenuShow}
+          handleToggle={handleToggle}
+          plantsParams={plantsParams}
+          protectionParams={protectionParams}
+          suppliesParams={suppliesParams}
+        />
       </header>
     </>
   );
