@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import BasketIcon from "../BasketIcon/BasketIcon";
 import MobileMenu from "../MobileMenu/MobileMenu";
@@ -24,6 +25,7 @@ export default function Header({
 }: HeaderProps) {
   const [isMobMenuShow, setisMobMenuShow] = useState(false);
 
+  const router = useRouter();
   const plantsParams = new URLSearchParams();
   const protectionParams = new URLSearchParams();
   const suppliesParams = new URLSearchParams();
@@ -33,6 +35,12 @@ export default function Header({
     protectionParams.append("category", slug)
   );
   suppliesCatsArr.forEach((slug) => suppliesParams.append("category", slug));
+
+  useEffect(() => {
+    const orderRef = localStorage.getItem("pending_order_ref");
+    if (!orderRef) return;
+    router.push(`/cart/success?ref=${orderRef}`);
+  }, [router]);
 
   const handleToggle = () => {
     setisMobMenuShow((prev) => !prev);

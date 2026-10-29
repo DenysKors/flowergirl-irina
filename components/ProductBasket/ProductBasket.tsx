@@ -1,13 +1,11 @@
 "use client";
 
-import toast from "react-hot-toast";
-
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 import { InputMask } from "@react-input/mask";
 
-// import BasketWidget from "@/components/BasketWidget/BasketWidget";
+import BasketWidget from "@/components/BasketWidget/BasketWidget";
+import WayForPay from "@/components/WayForPay/WayForPay";
 import { CustomInput } from "../CustomInput/CustomInput";
 import { useBasketStore } from "@/store/basketStore";
 
@@ -16,16 +14,26 @@ type ProductBasketProp = {
 };
 
 export default function ProductBasket({ onClose }: ProductBasketProp) {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isOrderAccepted, setIsOrderAccepted] = useState(false);
-  // const [postLocation, setPostLocation] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
+  const customerData = useBasketStore((state) => state.customerData);
+  const [localState, setLocalState] = useState({
+    lastName: customerData.lastName,
+    firstName: customerData.firstName,
+    phoneNumber: customerData.phoneNumber || "+38(0",
+    postLocation: "",
+    comment: customerData.comment,
+  });
   const basketProducts = useBasketStore((state) => state.products);
   const totalPrice = useBasketStore((state) => state.totalPrice);
   const removeProduct = useBasketStore((state) => state.removeProduct);
   const increaseQty = useBasketStore((state) => state.increaseUserQty);
   const decreaseQty = useBasketStore((state) => state.decreaseUserQty);
-  const reset = useBasketStore((state) => state.reset);
-  const router = useRouter();
+
+  const updateCustomerData = useBasketStore(
+    (state) => state.updateCustomerData
+  );
+  // const reset = useBasketStore((state) => state.reset);
+  // const router = useRouter();
 
   const handleDecr = (id: number, userQty: number) => {
     if (userQty === 1) return;
@@ -37,46 +45,32 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
     increaseQty(id, userQty);
   };
 
-  const handleTermsApprove = () => {
-    setIsOrderAccepted(false);
-    reset();
-    onClose(false);
-    router.refresh();
+  // const handleTermsApprove = () => {
+  //   reset();
+  //   onClose(false);
+  //   router.refresh();
+  // };
+
+  const handleChange = (
+    evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = evt.target;
+    setLocalState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAccept = async (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const handleBlur = (
+    evt: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = evt.target;
 
-    const userOrder = new FormData(evt.currentTarget);
-    const userMaskPhone = userOrder.get("phone") as string;
-    const numericValue = userMaskPhone.replace(/[^0-9]/g, "");
-
-    if (numericValue?.length !== 12)
-      return toast.error("Недостатня кількість цифр. Перевірте номер телефону");
-
-    // if (!postLocation)
-    //   return toast.error("Оберіть відділення/поштомат Нової пошти");
-
-    userOrder.append("products", JSON.stringify(basketProducts));
-    userOrder.append("totalPrice", JSON.stringify(totalPrice));
-    // userOrder.append("postLocation", JSON.stringify(postLocation));
-    setIsSubmitted(true);
-
-    try {
-      const response = await fetch("/api/add-order", {
-        method: "POST",
-        body: userOrder,
-      });
-      if (response.ok) {
-        setIsOrderAccepted(true);
-      } else {
-        toast.error("Помилка при збереженні замовлення, повторіть знову");
+    if (name === "phoneNumber") {
+      if (!value.startsWith("+38(0")) {
+        setLocalState((prev) => ({ ...prev, phoneNumber: "+38(0" }));
+        return;
       }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsSubmitted(false);
     }
+
+    updateCustomerData({ [name]: value.trim() });
   };
 
   return (
@@ -91,7 +85,6 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
           </p>
         )}
         {basketProducts.length > 0 &&
-          !isOrderAccepted &&
           basketProducts.map((product) => {
             return (
               <div
@@ -170,7 +163,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
               </div>
             );
           })}
-        {basketProducts.length > 0 && !isOrderAccepted && (
+        {basketProducts.length > 0 && (
           <>
             <p className="text-right">
               <strong className="mb-5 font-text lg:text-xl">
@@ -178,17 +171,34 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
               </strong>
             </p>
             <div>
-              <form onSubmit={handleAccept}>
+              <form>
                 <fieldset className="flex flex-col font-text">
                   Контактні дані для замовлення та відправки:
                   <div className="my-2.5">
                     <label className="flex flex-col font-text">
-                      Прізвище та Ім&apos;я:
+                      Прізвище:
                       <input
                         className="w-full md:w-80 outline-none focus:outline-none text-text font-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
                         type="text"
-                        name="name"
-                        autoComplete="false"
+                        name="lastName"
+                        value={localState.lastName}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        required
+                        maxLength={30}
+                      />
+                    </label>
+                  </div>
+                  <div className="my-2.5">
+                    <label className="flex flex-col font-text">
+                      Ім&apos;я:
+                      <input
+                        className="w-full md:w-80 outline-none focus:outline-none text-text font-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
+                        type="text"
+                        name="firstName"
+                        value={localState.firstName}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         required
                         maxLength={30}
                       />
@@ -198,53 +208,17 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                     <InputMask
                       component={CustomInput}
                       showMask={true}
-                      label="Номер телефону:"
+                      label="Номер телефону"
                       mask="+38(0__)___-__-__"
                       replacement={{ _: /\d/ }}
+                      value={localState.phoneNumber}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                     />
                   </div>
                   <div className="my-2.5">
-                    <label className="flex flex-col font-text">
-                      Область:
-                      <input
-                        className="w-full md:w-80 outline-none focus:outline-none text-text font-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
-                        type="text"
-                        name="region"
-                        autoComplete="false"
-                        required
-                        maxLength={50}
-                      />
-                    </label>
+                    <BasketWidget setPostLocation={setLocalState} />
                   </div>
-                  <div className="my-2.5">
-                    <label className="flex flex-col font-text">
-                      Населений пункт:
-                      <input
-                        className="w-full md:w-80 outline-none focus:outline-none text-text font-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
-                        type="text"
-                        name="town"
-                        autoComplete="false"
-                        required
-                        maxLength={30}
-                      />
-                    </label>
-                  </div>
-                  <div className="my-2.5">
-                    <label className="flex flex-col font-text">
-                      Відділення/поштомат &#171;Нова пошта&#187;:
-                      <input
-                        className="w-full md:w-80 outline-none focus:outline-none text-text font-text bg-transparent ring-transparent border border-slate-200 transition-all duration-300 ease-in text-sm rounded-md py-1 px-2.5 ring shadow-sm data-[icon-placement=start]:ps-9 data-[icon-placement=end]:pe-9 hover:border-slate-800 hover:ring-slate-800/10 focus:border-slate-800 focus:ring-slate-800/10 peer"
-                        type="text"
-                        name="postcode"
-                        autoComplete="false"
-                        required
-                        maxLength={20}
-                      />
-                    </label>
-                  </div>
-                  {/* <div className="my-2.5">
-                    <BasketWidget setPostLocation={setPostLocation} />
-                  </div> */}
                   <div className="my-2.5">
                     <label className="flex flex-col font-text">
                       Коментар(за потреби):
@@ -253,48 +227,36 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                         name="comment"
                         rows={4}
                         maxLength={240}
+                        value={localState.comment}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                       ></textarea>
                     </label>
                   </div>
                 </fieldset>
                 <p className="text-text">
-                  &#42;Загальна вартість без урахування вартості доставки
-                  товару. Вартість доставки сплачується покупцем при отриманні
-                  замовлення.
+                  <strong>
+                    &#42;Загальна вартість без урахування вартості доставки
+                    товару. Вартість доставки сплачується покупцем при отриманні
+                    замовлення.
+                  </strong>
                 </p>
-                <button
-                  className="mt-5 button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
-                  type="submit"
-                  disabled={isSubmitted}
-                >
-                  {isSubmitted ? "Відправка..." : "Підтвердити замовлення"}
-                </button>
+                <WayForPay
+                  isFetching={isFetching}
+                  setIsFetching={setIsFetching}
+                  localState={localState}
+                />
               </form>
             </div>
           </>
         )}
-        {isOrderAccepted && (
-          <div className="w-full flex flex-col gap-5">
-            <p className="font-text lg:text-xl text-center">
-              Дякуємо за замовлення. Найближчим часом ми з вами зв&apos;яжемося
-              для надання реквізитів на оплату.
-            </p>
-            <button
-              className="place-self-center button button-primary justify-center font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
-              type="button"
-              onClick={handleTermsApprove}
-            >
-              Закрити
-            </button>
-          </div>
-        )}
       </div>
-      {!isSubmitted && !isOrderAccepted && (
+      {!isFetching && (
         <div className="w-full flex justify-end">
           <button
             className="button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
             type="button"
-            disabled={isSubmitted}
+            disabled={isFetching}
             onClick={() => onClose(false)}
           >
             Продовжити покупки

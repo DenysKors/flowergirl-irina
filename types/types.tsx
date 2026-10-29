@@ -56,4 +56,38 @@ export type BasketProduct = {
 export type InitBasketState = {
   products: BasketProduct[];
   totalPrice: number;
+  orderId: string;
+  customerData: {
+    lastName: string;
+    firstName: string;
+    phoneNumber: string;
+    comment: string;
+  };
 };
+
+export type CreateOrderPayload = {
+  products: {
+    id: number;
+    price: number;
+    qty: number;
+  }[];
+  totalPrice: number;
+  customerData: {
+    lastName: string;
+    firstName: string;
+    phoneNumber: string;
+    postLocation: {
+      postAddr: string;
+      postName: string;
+    };
+    comment: string;
+  };
+};
+
+export type ProdForSignature = {
+  name: string;
+  price: number;
+  qty: number;
+};
+
+export type ProdOrderItem = Prisma.OrderItemCreateManyOrderInput;

@@ -5,10 +5,19 @@ import { BasketProduct, InitBasketState } from "@/types/types";
 const initialState: InitBasketState = {
   products: [],
   totalPrice: 0,
+  orderId: "",
+  customerData: {
+    lastName: "",
+    firstName: "",
+    phoneNumber: "",
+    comment: "",
+  },
 };
 
 type ProductState = typeof initialState & {
   addProduct: (product: BasketProduct) => void;
+  addOrderId: (orderId: string) => void;
+  updateCustomerData: (field: Partial<InitBasketState["customerData"]>) => void;
   removeProduct: (product: BasketProduct) => void;
   increaseUserQty: (id: number, userQty: number) => void;
   decreaseUserQty: (id: number, userQty: number) => void;
@@ -22,6 +31,9 @@ export const useBasketStore = create<ProductState>()((set, get) => ({
       products: [...state.products, product],
       totalPrice: state.totalPrice + product.sumPrice,
     })),
+  addOrderId: (orderId) => set({ orderId }),
+  updateCustomerData: (field) =>
+    set((state) => ({ customerData: { ...state.customerData, ...field } })),
   removeProduct: (product) =>
     set((state) => ({
       products: state.products.filter((item) => item.id !== product.id),

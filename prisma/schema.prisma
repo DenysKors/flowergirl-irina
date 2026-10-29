@@ -1,6 +1,5 @@
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
+  provider      = "prisma-client"
   output     = "./generated"
 }
 
@@ -68,12 +67,13 @@ model Order {
   amount        Decimal @db.Decimal(10, 2)
   status        OrderStatus @default(pending) 
   paymentType   PaymentType @default(prepaid) 
-  customerSurName   String @db.VarChar(100) 
+  customerLastName   String @db.VarChar(100) 
   customerFirstName String @db.VarChar(100) 
   customerPhone     String @db.VarChar(30) 
   postAddr      String @db.Text 
   postName      String @db.Text
-  comment       String? @db.Text 
+  comment       String? @db.Text
+  transaction   PaymentTransaction[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   items         OrderItem[]  
@@ -90,6 +90,15 @@ model OrderItem {
   price        Decimal @db.Decimal(10, 2)
   total        Decimal @db.Decimal(10, 2)
   @@map("order_items") 
+}
+
+model PaymentTransaction {
+  id          Int      @id @default(autoincrement())
+  orderId     Int
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  rawResponse Json
+  createdAt   DateTime @default(now())
+  @@map("payment_transactions")
 }
 
 model User {

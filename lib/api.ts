@@ -6,6 +6,8 @@ import { Prisma } from "@/prisma/generated/client";
 import { uploadProductImage } from "@/lib/cloudinaryUpload";
 import { deleteImage } from "@/lib/cloudinaryDelete";
 import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
+import { CreateOrderPayload } from "@/types/types";
+import { prepaidOrderTemplate } from "@/services/prepaidOrderTemplate";
 
 export const getAllAdminSubCategories = async () => {
   const categories = await prisma.category.findMany({
@@ -500,4 +502,14 @@ export const getSearchProducts = async (query: string, page: number) => {
   } catch (err) {
     throw err;
   }
+};
+
+export const addOrder = async (order: CreateOrderPayload) => {
+  order.products.forEach((prod) => {
+    if (prod.qty <= 0) {
+      throw new Error(`Некоректна кількість товару ID ${prod.id}`);
+    }
+  });
+  const newPrepaidOrder = await prepaidOrderTemplate(order);
+  return newPrepaidOrder;
 };

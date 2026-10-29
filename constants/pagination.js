@@ -1,1 +1,1 @@
-export const PRODUCT_PAGINATION_LIMIT = 1;
+export const PRODUCT_PAGINATION_LIMIT = 8;
