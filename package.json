@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.0",
+    "@prisma/adapter-mariadb": "^7.8.0",
+    "@prisma/client": "^7.8.0",
     "@react-input/mask": "^2.0.4",
     "@tanstack/react-query": "^5.101.4",
     "@tanstack/react-table": "^8.21.3",
@@ -21,6 +23,7 @@
     "next": "16.1.4",
     "next-auth": "^5.0.0-beta.30",
     "next-cloudinary": "^6.17.5",
+    "prisma": "^7.8.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hot-toast": "^2.6.0",
@@ -37,7 +40,6 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
-    "prisma": "^6.19.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
