@@ -45,7 +45,6 @@ export default function SuccessPrepaidOrder() {
   });
 
   const isFinal = data?.status === "paid" || data?.status === "failed";
-  const orderId = isFinal ? data.publicId : null;
 
   useEffect(() => {
     if (isFinal) {

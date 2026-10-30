@@ -42,7 +42,7 @@ export default function Error({
             Щось пішло не так, як хотілось!
           </p>
           <button
-            className="button button-primary justify-center self-end font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
+            className="button button-primary justify-center font-text text-background bg-violet-800 hover:bg-violet-950 py-2 xl:py-2.5 cursor-pointer"
             type="button"
             onClick={() => unstable_retry()}
           >
