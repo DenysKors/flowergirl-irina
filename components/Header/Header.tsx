@@ -39,7 +39,7 @@ export default function Header({
   useEffect(() => {
     const orderRef = localStorage.getItem("pending_order_ref");
     if (!orderRef) return;
-    router.push(`/cart/success?ref=${orderRef}`);
+    router.push(`/payment/success?ref=${orderRef}`);
   }, [router]);
 
   const handleToggle = () => {

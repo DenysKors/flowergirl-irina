@@ -8,7 +8,7 @@ export default async function Analytics() {
         Аналитика
       </h1>
       <div className="w-max flex flex-col justify-self-center gap-2 lg:gap-4">
-        <div className="p-2 flex-1 text-center bg-gray-100 rounded-xl">
+        <div className="p-2 flex-1 text-center bg-gray-200 rounded-xl">
           <p className="font-text font-bold text-xs lg:text-xl">
             Товаров на сайте:
           </p>

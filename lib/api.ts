@@ -2,7 +2,7 @@ import slugify from "slugify";
 import prisma from "@/lib/prisma";
 
 import { cache } from "react";
-import { Prisma } from "@/prisma/generated/client";
+import { Prisma, OrderStatus } from "@/prisma/generated/client";
 import { uploadProductImage } from "@/lib/cloudinaryUpload";
 import { deleteImage } from "@/lib/cloudinaryDelete";
 import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
@@ -469,36 +469,72 @@ export const getAdminAnalytics = async () => {
 export const getSearchProducts = async (query: string, page: number) => {
   const skip = (page - 1) * PRODUCT_PAGINATION_LIMIT;
 
-  const whereCondition = {
-    isDeleted: false,
-    OR: [{ name: { contains: query } }, { description: { contains: query } }],
-  };
-
+  const escaped = query.replace(/[\\%_]/g, "\\$&");
+  const pattern = `%${escaped}%`;
   try {
-    const [userProducts, totalCount] = await Promise.all([
-      prisma.product.findMany({
-        where: whereCondition,
-        include: {
-          category: true,
-        },
-        take: PRODUCT_PAGINATION_LIMIT,
-        skip: skip,
-        orderBy: { createdAt: "desc" },
-      }),
-      prisma.product.count({ where: whereCondition }),
+    const where = Prisma.sql`
+    isDeleted = 0 AND (
+      name LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci
+      OR description LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci
+    )`;
+
+    const [idRows, countRows] = await Promise.all([
+      prisma.$queryRaw<{ id: number }[]>`
+      SELECT id FROM products
+      WHERE ${where}
+      ORDER BY qty DESC, id DESC
+      LIMIT ${PRODUCT_PAGINATION_LIMIT} OFFSET ${skip}`,
+      prisma.$queryRaw<{ total: bigint }[]>`
+      SELECT COUNT(*) AS total FROM products
+      WHERE ${where}`,
     ]);
 
+    const totalCount = Number(countRows[0]?.total ?? 0);
     const totalPages = Math.ceil(totalCount / PRODUCT_PAGINATION_LIMIT);
+
+    const userProducts = await prisma.product.findMany({
+      where: { id: { in: idRows.map((r) => r.id) } },
+      include: { category: true },
+      orderBy: [{ qty: "desc" }, { id: "desc" }],
+    });
 
     const products = userProducts.map((prod) => ({
       ...prod,
       price: prod.price.toNumber(),
     }));
 
-    return {
-      products,
-      pagination: { totalCount, totalPages },
-    };
+    return { products, pagination: { totalCount, totalPages } };
+
+    // const whereCondition = {
+    //   isDeleted: false,
+    //   OR: [{ name: { contains: query } }, { description: { contains: query } }],
+    // };
+
+    // try {
+    //   const [userProducts, totalCount] = await Promise.all([
+    //     prisma.product.findMany({
+    //       where: whereCondition,
+    //       include: {
+    //         category: true,
+    //       },
+    //       take: PRODUCT_PAGINATION_LIMIT,
+    //       skip: skip,
+    //       orderBy: { createdAt: "desc" },
+    //     }),
+    //     prisma.product.count({ where: whereCondition }),
+    //   ]);
+
+    //   const totalPages = Math.ceil(totalCount / PRODUCT_PAGINATION_LIMIT);
+
+    //   const products = userProducts.map((prod) => ({
+    //     ...prod,
+    //     price: prod.price.toNumber(),
+    //   }));
+
+    //   return {
+    //     products,
+    //     pagination: { totalCount, totalPages },
+    //   };
   } catch (err) {
     throw err;
   }
@@ -512,4 +548,155 @@ export const addOrder = async (order: CreateOrderPayload) => {
   });
   const newPrepaidOrder = await prepaidOrderTemplate(order);
   return newPrepaidOrder;
+};
+
+export const getAdminOrders = async (
+  query: string,
+  page: number,
+  limit: number,
+  rawStatus: OrderStatus | null
+) => {
+  const skip = (page - 1) * limit;
+
+  const andConditions: Prisma.OrderWhereInput[] = [];
+
+  andConditions.push({
+    NOT: [
+      {
+        status: "pending",
+        paymentType: "prepaid",
+      },
+    ],
+  });
+
+  andConditions.push({
+    paymentType: "prepaid",
+  });
+
+  if (query) {
+    andConditions.push({
+      OR: [
+        { publicId: { contains: query } },
+        { customerFirstName: { contains: query } },
+        { customerLastName: { contains: query } },
+        { customerPhone: { contains: query } },
+      ],
+    });
+  }
+
+  if (rawStatus) {
+    andConditions.push({
+      status: rawStatus as OrderStatus,
+    });
+  }
+
+  const whereCondition: Prisma.OrderWhereInput =
+    andConditions.length > 0 ? { AND: andConditions } : {};
+
+  try {
+    const [orders, totalCount] = await Promise.all([
+      prisma.order.findMany({
+        where: whereCondition,
+        take: limit,
+        skip: skip,
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.order.count({
+        where: whereCondition,
+      }),
+    ]);
+
+    const totalPages = Math.ceil(totalCount / limit);
+
+    return {
+      orders,
+      pagination: { totalCount, totalPages },
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateOrderStatus = async (orderData: {
+  orderId: string;
+  newStatus: OrderStatus;
+}) => {
+  const id = parseInt(orderData.orderId);
+
+  try {
+    const updatedOrder = await prisma.order.update({
+      where: { id },
+      data: {
+        status: orderData.newStatus,
+      },
+      select: {
+        id: true,
+        status: true,
+      },
+    });
+
+    return updatedOrder;
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      if (err.code === "P2025") {
+        throw new Error("Такого товара не существует");
+      } else if (err.code === "P2002") {
+        throw new Error("Обновление уникального поля невозможно");
+      }
+    }
+    throw err;
+  }
+};
+
+export const getAdminOrderById = async (id: string) => {
+  const order = await prisma.order.findUnique({
+    where: { publicId: id },
+    include: {
+      items: {
+        include: {
+          product: true,
+        },
+      },
+    },
+  });
+
+  if (!order) return null;
+
+  const serializedOrder = {
+    ...order,
+    amount: order.amount.toNumber(),
+    items: order.items.map((item) => ({
+      ...item,
+      price: item.price.toNumber(),
+      total: item.total.toNumber(),
+      product: {
+        ...item.product,
+        price: item.product.price.toNumber(),
+      },
+    })),
+  };
+  return serializedOrder;
+};
+
+export const checkPaidOrderStatus = async (orderReference: string) => {
+  const order = await prisma.order.findUnique({
+    where: {
+      orderRef: orderReference,
+    },
+    select: {
+      status: true,
+      publicId: true,
+      amount: true,
+    },
+  });
+
+  if (!order) {
+    throw new Error("Замовлення не знайдено");
+  }
+
+  return {
+    status: order.status,
+    publicId: order.publicId,
+    amount: order.amount.toNumber(),
+  };
 };

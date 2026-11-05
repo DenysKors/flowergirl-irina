@@ -50,7 +50,7 @@ const adapter = new PrismaMariaDb({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: 3306,
-  connectionLimit: 1,
+  connectionLimit: 3,
 });
 
 declare global {

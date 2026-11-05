@@ -28,6 +28,25 @@ export default function NavDashboard() {
         </svg>
       </Link>
       <Link
+        title="Заказы"
+        className={`${
+          pathname === `/dashboard/orders`
+            ? "p-1.5 mx-0.5 lg:p-2 rounded-tl-md rounded-bl-md bg-background lg:rounded-tl-lg lg:rounded-bl-lg"
+            : "p-1.5 mx-0.5 lg:p-2"
+        }`}
+        href="/dashboard/orders"
+      >
+        <svg
+          className={`${
+            pathname === `/dashboard/orders`
+              ? "w-6 h-6 fill-main lg:w-8 lg:h-8"
+              : "w-6 h-6 fill-background lg:w-8 lg:h-8"
+          }`}
+        >
+          <use href="/icons.svg#icon-orders"></use>
+        </svg>
+      </Link>
+      <Link
         title="Товары"
         className={`${
           pathname === `/dashboard/products`

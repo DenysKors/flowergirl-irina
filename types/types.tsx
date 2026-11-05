@@ -1,4 +1,8 @@
-import { Prisma, Product as PrismaProduct } from "@/prisma/generated/client";
+import {
+  Prisma,
+  Order,
+  Product as PrismaProduct,
+} from "@/prisma/generated/client";
 
 export type CategoryWithSubs = Prisma.CategoryGetPayload<{
   include: { subCategories: true };
@@ -91,3 +95,38 @@ export type ProdForSignature = {
 };
 
 export type ProdOrderItem = Prisma.OrderItemCreateManyOrderInput;
+
+export type OrdersWithPagin = {
+  orders: Order[];
+  pagination: { totalCount: number; totalPages: number };
+};
+
+type OrderWithItemsProductDB = Prisma.OrderGetPayload<{
+  include: {
+    items: {
+      include: {
+        product: true;
+      };
+    };
+  };
+}>;
+
+export type OrderWithItemsProduct = Omit<
+  OrderWithItemsProductDB,
+  "amount" | "items"
+> & {
+  amount: number;
+  items: (Omit<
+    OrderWithItemsProductDB["items"][number],
+    "price" | "total" | "product"
+  > & {
+    price: number;
+    total: number;
+    product: Omit<
+      OrderWithItemsProductDB["items"][number]["product"],
+      "price"
+    > & {
+      price: number;
+    };
+  })[];
+};
