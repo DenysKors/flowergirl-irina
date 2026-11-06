@@ -31,9 +31,11 @@ export default function Footer() {
             <button
               className="font-text text-base md:text-lg lg:text-xl text-background hover:underline cursor-pointer"
               type="button"
+              title="Умови надання послуг та продажу товарів"
+              aria-label="Умови надання послуг та продажу товарів"
               onClick={() => setIsModalOpen(true)}
             >
-              Умови оплати та доставки
+              Умови надання послуг та продажу товарів
             </button>
             {isModalOpen && (
               <ModalRoot
@@ -63,6 +65,14 @@ export default function Footer() {
                 <h3 className="font-text text-base md:text-lg lg:text-xl text-background text-center md:text-left">
                   Контакти:
                 </h3>
+                <div className="mb-2">
+                  <p className="ml-3 font-text text-sm md:text-md lg:text-lg text-background text-left">
+                    ФОП Ляховольська Ірина Анатоліївна
+                  </p>
+                  <p className="ml-3 font-text text-sm md:text-md lg:text-lg text-background text-left">
+                    с.Нова Прага, вул.Золотий Яр, 2
+                  </p>
+                </div>
                 <Link
                   className="font-text text-sm md:text-base lg:text-lg text-background hover:underline text-center md:text-left"
                   href="tel:+380965950404"
