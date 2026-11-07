@@ -390,7 +390,7 @@ export default function OrdersTable() {
               <span className="flex items-center gap-1 text-gray-600 ml-2">
                 Страница{" "}
                 <strong>
-                  {pageIndex + 1} з {data.pagination.totalPages ?? 0}
+                  {pageIndex + 1} из {data.pagination.totalPages ?? 0}
                 </strong>
               </span>
             </div>

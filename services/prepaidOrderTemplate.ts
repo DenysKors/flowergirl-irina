@@ -10,7 +10,6 @@ import {
 
 export const prepaidOrderTemplate = async (order: CreateOrderPayload) => {
   const { customerData, products } = order;
-
   const publicId = null;
   const orderRef = generateWayForPayRef();
   const orderDate = Math.floor(Date.now() / 1000).toString();

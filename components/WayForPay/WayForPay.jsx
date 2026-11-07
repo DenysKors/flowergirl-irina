@@ -27,6 +27,9 @@ export default function WayForPay({ setIsFetching, isFetching, localState }) {
     if (localState.postLocation === "")
       return toast.error("Виберіть відділення або поштомат Нової Пошти");
 
+    const customerData = basketCustomerData;
+    customerData.postLocation = localState.postLocation;
+
     try {
       setIsFetching(true);
       const products = basketProducts.map((prod) => {
@@ -40,7 +43,7 @@ export default function WayForPay({ setIsFetching, isFetching, localState }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          customerData: basketCustomerData,
+          customerData,
           products,
           totalPrice: basketTotalPrice,
         }),
@@ -64,7 +67,7 @@ export default function WayForPay({ setIsFetching, isFetching, localState }) {
         setIsFetching(false);
         return alert("Сума замовлення не співпадає. Сформуйте кошик знову.");
       }
-
+      return;
       localStorage.setItem("pending_order_ref", orderRef);
 
       const productName = productData.map((item) => item.name);
