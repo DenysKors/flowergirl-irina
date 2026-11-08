@@ -67,7 +67,7 @@ export default function WayForPay({ setIsFetching, isFetching, localState }) {
         setIsFetching(false);
         return alert("Сума замовлення не співпадає. Сформуйте кошик знову.");
       }
-      return;
+
       localStorage.setItem("pending_order_ref", orderRef);
 
       const productName = productData.map((item) => item.name);
