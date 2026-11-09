@@ -30,9 +30,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    "lib/connectDB.js",
-    "modelsDB/plantsCategories.js",
-    "app/(server)/api/all-plants",
     "lib/actions.js"
   ],
   "exclude": ["node_modules"]

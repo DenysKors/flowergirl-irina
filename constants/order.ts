@@ -8,12 +8,12 @@ export const PAYMENT_TYPE = {
 
 // If changed, Prisma schema OrderStatus enum update needed!
 export const ORDER_STATUS_TYPE: Record<OrderStatus, string> = {
-  pending: "НЕОБРАБОТАНЫ",
+  pending: "НЕОБРАБОТАН",
   processing: "В РАБОТЕ",
-  shipped: "ОТПРАВЛЕНЫ",
-  completed: "ЗАВЕРШЕНЫ",
-  cancelled: "ОТМЕНЕНЫ",
-  paid: "ОПЛАЧЕНЫ",
+  shipped: "ОТПРАВЛЕН",
+  completed: "ЗАВЕРШЕН",
+  cancelled: "ОТМЕНЕН",
+  paid: "ОПЛАЧЕН",
   failed: "С ОШИБКОЙ",
 } as const;
 

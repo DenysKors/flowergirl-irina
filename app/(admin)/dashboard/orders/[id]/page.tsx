@@ -30,7 +30,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
           <div className="flex items-center gap-3">
             <h1 className="font-heading lg:text-2xl text-text tracking-tight wrap-break-word">
               Заказ{" "}
-              <span className="block tablet:inline">{order.publicId}</span>
+              <span className="font-text block tablet:inline">{order.publicId}</span>
             </h1>
             <span className="self-start inline-flex items-center rounded-md bg-blue-50 px-2 py-0.5 text-xs font-text text-blue-700 ring-1 ring-inset ring-blue-700/10">
               {statusName}

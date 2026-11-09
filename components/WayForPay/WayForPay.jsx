@@ -103,6 +103,7 @@ export default function WayForPay({
         function (response) {
           const orderReference = response.orderReference;
           router.push(`/payment/success?ref=${orderReference}`);
+          onClose(false);
         },
         function () {
           localStorage.removeItem("pending_order_ref");
@@ -113,7 +114,6 @@ export default function WayForPay({
       console.error("Помилка платежу:", error);
     } finally {
       setIsFetching(false);
-      onClose(false);
     }
   };
 

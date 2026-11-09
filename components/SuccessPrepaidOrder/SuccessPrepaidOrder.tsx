@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useBasketStore } from "@/store/basketStore";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -23,6 +24,7 @@ export default function SuccessPrepaidOrder() {
     return null;
   });
 
+  const reset = useBasketStore((state) => state.reset);
   const searchParams = useSearchParams();
 
   const urlOrderRef = searchParams.get("ref");
@@ -49,6 +51,7 @@ export default function SuccessPrepaidOrder() {
   useEffect(() => {
     if (isFinal) {
       localStorage.removeItem("pending_order_ref");
+      reset();
     }
   }, [isFinal]);
 

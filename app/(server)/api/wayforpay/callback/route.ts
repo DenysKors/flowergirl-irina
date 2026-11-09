@@ -19,8 +19,6 @@ export async function POST(request: NextRequest) {
       merchantSignature: incomingSignature,
     } = data;
 
-    console.log(data);
-
     const signString = [
       merchantAccount,
       orderReference,
