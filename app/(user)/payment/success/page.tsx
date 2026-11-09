@@ -4,7 +4,7 @@ import SuccessPrepaidOrder from "@/components/SuccessPrepaidOrder/SuccessPrepaid
 
 export default function SuccessOrderPage() {
   return (
-    <main className="container pb-6">
+    <main className="container py-6">
       <Suspense>
         <SuccessPrepaidOrder />
       </Suspense>

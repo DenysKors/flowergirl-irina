@@ -7,7 +7,12 @@ import { useRouter } from "next/navigation";
 
 import { useBasketStore } from "@/store/basketStore";
 
-export default function WayForPay({ setIsFetching, isFetching, localState }) {
+export default function WayForPay({
+  setIsFetching,
+  isFetching,
+  localState,
+  onClose,
+}) {
   const basketProducts = useBasketStore((state) => state.products);
   const basketTotalPrice = useBasketStore((state) => state.totalPrice);
   const basketCustomerData = useBasketStore((state) => state.customerData);
@@ -90,7 +95,7 @@ export default function WayForPay({ setIsFetching, isFetching, localState }) {
           productPrice,
           productCount,
           clientFirstName: basketCustomerData.firstName,
-          clientLastName: basketCustomerData.surName,
+          clientLastName: basketCustomerData.lastName,
           clientPhone: basketCustomerData.phoneNumber,
           language: "UA",
           serviceUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/api/wayforpay/callback`,
@@ -108,6 +113,7 @@ export default function WayForPay({ setIsFetching, isFetching, localState }) {
       console.error("Помилка платежу:", error);
     } finally {
       setIsFetching(false);
+      onClose(false);
     }
   };
 

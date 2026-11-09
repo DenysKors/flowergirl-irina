@@ -245,6 +245,7 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
                   isFetching={isFetching}
                   setIsFetching={setIsFetching}
                   localState={localState}
+                  onClose={onClose}
                 />
               </form>
             </div>
