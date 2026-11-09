@@ -20,6 +20,7 @@ export function proxy(request: NextRequest) {
   if (
     pathname.startsWith("/maintenance") ||
     pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
     pathname.includes(".")
   ) {
     return NextResponse.next();
