@@ -95,7 +95,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
                 </li>
               ))}
             </ul>
-            <div className="border-t border-gray-200 bg-gray-50 px-5 py-4">
+            <div className="border-t border-gray-200 rounded-bl-xl rounded-br-xl bg-gray-50 px-5 py-4">
               <div className="flex justify-between font-text text-text">
                 <span>Всего:</span>
                 <div>

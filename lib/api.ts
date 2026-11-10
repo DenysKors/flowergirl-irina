@@ -690,7 +690,7 @@ export const checkPaidOrderStatus = async (orderReference: string) => {
     },
   });
 
-  if (!order) {
+  if (!order || order.status === "cancelled") {
     throw new Error("Замовлення не знайдено");
   }
 

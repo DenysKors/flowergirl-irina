@@ -26,9 +26,9 @@ export default function OrderStatusAction({
   const handleStatusChange = async (
     evt: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    if (evt.target.value === status) return;
+    if (evt.target.value ===  orderStatus) return;
 
-    const response = await fetch(`/api/admin/update-order/${orderId}`, {
+    const response = await fetch(`/api/update-order/${orderId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

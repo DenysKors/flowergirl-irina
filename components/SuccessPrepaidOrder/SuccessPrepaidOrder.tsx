@@ -5,6 +5,16 @@ import { useBasketStore } from "@/store/basketStore";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+class ApiError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+    public code?: string,
+  ) {
+    super(message);
+  }
+}
+
 const fetchOrderStatus = async (orderReference: string) => {
   const response = await fetch("/api/orders/check-status", {
     method: "POST",
@@ -12,7 +22,10 @@ const fetchOrderStatus = async (orderReference: string) => {
     body: JSON.stringify({ orderReference }),
   });
 
-  if (!response.ok) throw new Error("Помилка сервера");
+  if (!response.ok ) {
+    const body = await response.json().catch(() => null);
+    throw new ApiError(response.status, body?.message ?? "Request failed", body?.code);
+  } 
   return response.json();
 };
 
@@ -35,27 +48,39 @@ export default function SuccessPrepaidOrder() {
     queryKey: ["orderStatus", activeOrderRef],
     queryFn: () => fetchOrderStatus(activeOrderRef!),
     enabled: !!activeOrderRef,
+    retry: (failureCount, err) => {
+    if (err instanceof ApiError && err.status >= 400 && err.status < 500) {
+      return false;
+    }
+    return failureCount < 3;
+  },
     refetchInterval: (query) => {
       const status = query.state.data?.status;
 
       if (status === "paid" || status === "failed") {
         return false;
-      }
+      } else if (query.state.status === "error") { return false }
+      
       return 2000;
     },
     refetchIntervalInBackground: false,
   });
 
   const isFinal = data?.status === "paid" || data?.status === "failed";
+  const isOrderNotFound = error instanceof ApiError && (error.status === 422 || error.status === 404);
 
   useEffect(() => {
     if (isFinal) {
       localStorage.removeItem("pending_order_ref");
       reset();
     }
-  }, [isFinal]);
+    
+    if (isOrderNotFound) { 
+      localStorage.removeItem("pending_order_ref");
+    }
+  }, [isFinal, isOrderNotFound]);
 
-  if (!activeOrderRef) {
+  if (!activeOrderRef || isOrderNotFound) {
     return (
       <div className="font-text text-base md:text-lg lg:text-xl text-text text-center">
         Номер замовлення не знайдено. Зв&apos;яжіться з менеджером.
@@ -97,7 +122,7 @@ export default function SuccessPrepaidOrder() {
             Платіж успішно прийнято!
           </h1>
           <p className="pb-4 font-text text-base md:text-lg lg:text-xl text-text text-center">
-            {`Номер вашого замовлення: ${data.publicId}`}
+            Номер вашого замовлення:{" "} <span className="font-text text-base md:text-lg lg:text-xl text-text whitespace-nowrap">{data.publicId}</span>
           </p>
           <p className="font-text text-base md:text-lg lg:text-xl text-text text-center">
             Найближчим часом ми з вами зв&apos;яжемося та повідомимо про деталі

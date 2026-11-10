@@ -14,12 +14,17 @@ export async function POST(request: NextRequest) {
 
   try {
     const orderData = await checkPaidOrderStatus(orderReference);
-    return NextResponse.json(orderData);
+
+    if (orderData.status === "paid" || orderData.status === "failed") { return NextResponse.json(orderData); }
+    else if (orderData.status === "shipped" || orderData.status === "completed") {
+      orderData.status = "paid";
+      return NextResponse.json(orderData);
+    }
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.log("error", error);
       return new Response(JSON.stringify(`${error.message}`), {
-        status: 422,
+        status: 404,
       });
     } else {
       return new Response(JSON.stringify("Operation failed"), {
