@@ -125,8 +125,7 @@ export default function SuccessPrepaidOrder() {
             Номер вашого замовлення:{" "} <span className="font-text text-base md:text-lg lg:text-xl text-text whitespace-nowrap">{data.publicId}</span>
           </p>
           <p className="font-text text-base md:text-lg lg:text-xl text-text text-center">
-            Найближчим часом ми з вами зв&apos;яжемося та повідомимо про деталі
-            відправки.
+            Ваше замовлення буде відправлене впродовж 5 робочих днів за сприятливих погодних умов.
           </p>
         </>
       )}

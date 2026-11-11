@@ -2,12 +2,14 @@ import slugify from "slugify";
 import prisma from "@/lib/prisma";
 
 import { cache } from "react";
-import { Prisma, OrderStatus } from "@/prisma/generated/client";
+import { Prisma, OrderStatus, Role } from "@/prisma/generated/client";
 import { uploadProductImage } from "@/lib/cloudinaryUpload";
 import { deleteImage } from "@/lib/cloudinaryDelete";
 import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
 import { CreateOrderPayload } from "@/types/types";
 import { prepaidOrderTemplate } from "@/services/prepaidOrderTemplate";
+// import { hashPassword} from "@/lib/utils";
+import { verifyPassword } from "@/lib/utils";
 
 export const getAllAdminSubCategories = async () => {
   const categories = await prisma.category.findMany({
@@ -698,5 +700,55 @@ export const checkPaidOrderStatus = async (orderReference: string) => {
     status: order.status,
     publicId: order.publicId,
     amount: order.amount.toNumber(),
+  };
+};
+
+// export const createUser = async () => {
+//   const adminEmail = "irina.flowergirl@gmail.com";
+
+//   const existingAdmin = await prisma.user.findUnique({
+//     where: { email: adminEmail },
+//   });
+
+//   if (!existingAdmin) {
+//     const hashedPassword = hashPassword("qazwsxedc455");
+
+//     const admin = await prisma.user.create({
+//       data: {
+//         email: adminEmail,
+//         passwordHash: hashedPassword,
+//         firstName: "Ірина",
+//         surName: "Ляховольська",
+//         role: Role.ADMIN,
+//         isActive: true,
+//       },
+//     });
+//     console.log(`✅ Единственный администратор успешно создан: ${admin.email}`);
+//   }
+// };
+
+export const getUser = async (email: string, password: string) => {
+  const user = await prisma.user.findUnique({
+    where: { email: email.toLowerCase().trim() },
+  });
+
+  if (!user) {
+    throw new Error("Логін або пароль вказано невірно");
+  }
+
+  const isVerified = verifyPassword(password, user.passwordHash);
+
+  if (!isVerified) {
+    throw new Error("Логін або пароль вказано невірно");
+  }
+
+  if (!user.isActive) {
+    throw new Error("Обліковий запис деактивовано.");
+  }
+
+  return {
+    firstName: user.firstName,
+    surName: user.surName,
+    role: user.role,
   };
 };
