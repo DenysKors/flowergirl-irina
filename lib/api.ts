@@ -570,7 +570,7 @@ export const getAdminOrders = async (
     SELECT id FROM orders
     WHERE publicId          LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci
        OR customerFirstName LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci
-       OR customerSurName   LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci
+       OR customerLastName   LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci
        OR customerPhone     LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci`;
 
     andConditions.push({ id: { in: matched.map((r) => r.id) } });
