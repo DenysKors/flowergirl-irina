@@ -2,7 +2,7 @@ import slugify from "slugify";
 import prisma from "@/lib/prisma";
 
 import { cache } from "react";
-import { Prisma, OrderStatus, Role } from "@/prisma/generated/client";
+import { Prisma, OrderStatus, PaymentType} from "@/prisma/generated/client";
 import { uploadProductImage } from "@/lib/cloudinaryUpload";
 import { deleteImage } from "@/lib/cloudinaryDelete";
 import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
@@ -562,34 +562,35 @@ export const getAdminOrders = async (
 
   const andConditions: Prisma.OrderWhereInput[] = [];
 
-  andConditions.push({
-    NOT: [
-      {
-        status: "pending",
-        paymentType: "prepaid",
-      },
-    ],
-  });
-
-  andConditions.push({
-    paymentType: "prepaid",
-  });
-
   if (query) {
-    andConditions.push({
-      OR: [
-        { publicId: { contains: query } },
-        { customerFirstName: { contains: query } },
-        { customerLastName: { contains: query } },
-        { customerPhone: { contains: query } },
-      ],
-    });
+    const escaped = query.replace(/[\\%_]/g, "\\$&");
+    const pattern = `%${escaped}%`;
+
+    const matched = await prisma.$queryRaw<{ id: number }[]>`
+    SELECT id FROM orders
+    WHERE publicId          LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci
+       OR customerFirstName LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci
+       OR customerSurName   LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci
+       OR customerPhone     LIKE CONVERT(${pattern} USING utf8mb4) COLLATE utf8mb4_unicode_ci`;
+
+    andConditions.push({ id: { in: matched.map((r) => r.id) } });
   }
 
-  if (rawStatus) {
-    andConditions.push({
-      status: rawStatus as OrderStatus,
+
+  andConditions.push({ paymentType: PaymentType.prepaid });
+ 
+   andConditions.push({
+       NOT: [
+        {
+         status: "pending",
+         paymentType: "prepaid",
+        },
+       ],
     });
+
+
+  if (rawStatus) {
+    andConditions.push({ status: rawStatus as OrderStatus });
   }
 
   const whereCondition: Prisma.OrderWhereInput =
@@ -600,20 +601,14 @@ export const getAdminOrders = async (
       prisma.order.findMany({
         where: whereCondition,
         take: limit,
-        skip: skip,
-        orderBy: { createdAt: "desc" },
+        skip,
+        orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       }),
-      prisma.order.count({
-        where: whereCondition,
-      }),
+      prisma.order.count({ where: whereCondition }),
     ]);
 
     const totalPages = Math.ceil(totalCount / limit);
-
-    return {
-      orders,
-      pagination: { totalCount, totalPages },
-    };
+    return { orders, pagination: { totalCount, totalPages } };
   } catch (err) {
     throw err;
   }

@@ -1,17 +1,18 @@
 import { getAdminOrders } from "@/lib/api";
 import type { OrderStatus } from "@/prisma/generated/client";
-// import { auth } from "@/lib/auth";
+import { auth } from "@/app/auth";
 
 export async function GET(request: Request) {
-  //   const session = await auth();
+  
+    const session = await auth();
 
-  //   if (!session) {
-  //     return Response.json({ error: "Not authorized." }, { status: 401 });
-  //   }
+    if (!session) {
+      return Response.json({ error: "Not authorized." }, { status: 401 });
+    }
 
-  //   if (session.user?.role !== "ADMIN") {
-  //     return Response.json({ error: "Access denied." }, { status: 403 });
-  //   }
+    if (session.user?.role !== "ADMIN") {
+      return Response.json({ error: "Access denied." }, { status: 403 });
+    }
 
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("search") || "";
