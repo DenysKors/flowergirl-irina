@@ -33,8 +33,6 @@ export default function UpdateProductForm({
   ) => {
     const productData = new FormData();
 
-    if (!values.description) return toast.error("Добавьте описание");
-    productData.append("description", values.description);
     productData.append("description", values.description);
     productData.append("id", product.id.toString());
     productData.append("categoryId", values.categoryId.toString());
@@ -80,9 +78,7 @@ export default function UpdateProductForm({
         initialValues={product}
         enableReinitialize={true}
         validationSchema={Yup.object().shape({
-          description: Yup.string()
-            .max(50, "Название слишком длинное")
-            .required("Название обязательно"),
+        description: Yup.string().required("Описание обязательно"),
           categoryId: Yup.number()
             .test("valid", "Категория не выбрана", (val) => {
               if (val && allCategoriesId.includes(val)) return true;

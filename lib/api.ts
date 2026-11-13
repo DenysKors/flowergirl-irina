@@ -425,11 +425,15 @@ export const updateProduct = async (productData: FormData) => {
 };
 
 export const getAdminAnalytics = async () => {
+    const thirtyDaysAgo = new Date();
+
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
   const [
     totalProducts,
     outOfStockProducts,
-    // ordersAmount,
-    // newOrders,
+    ordersAmount,
+    newOrders,
   ] = await Promise.all([
     prisma.product.count({
       where: { isDeleted: false },
@@ -440,31 +444,30 @@ export const getAdminAnalytics = async () => {
         isDeleted: false,
       },
     }),
-    // prisma.order.count({
-    //   where: {
-    //     OR: [
-    //       {
-    //         status: "pending",
-    //         paymentType: "postpaid",
-    //       },
-    //       // {
-    //       //   status: "paid",
-    //       //   paymentType: "prepaid",
-    //       // },
-    //       {
-    //         status: "pending",
-    //         paymentType: "prepaid",
-    //       },
-    //     ],
-    //   },
-    // }),
+    prisma.order.count({
+      where: {
+        createdAt: { gte: thirtyDaysAgo },
+        NOT: [
+          {
+            paymentType: "prepaid",
+            status: "pending",
+          },
+        ],
+      },
+    }),
+    prisma.order.count({
+      where: {       
+            status: "paid",
+            paymentType: "prepaid",
+      },
+    }),
   ]);
 
   return {
     totalProducts,
     outOfStockProducts,
-    // ordersAmount,
-    // newOrders,
+    ordersAmount,
+    newOrders,
   };
 };
 

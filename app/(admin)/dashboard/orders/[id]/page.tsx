@@ -2,7 +2,7 @@ import { connection } from "next/server";
 import { notFound } from "next/navigation";
 
 import OrderStatusAction from "@/components/OrderSatusAction/OrderSatusAction";
-import ClientOrderDate from "@/components/ClientOrderDate/ClientOrderDate";
+import ClientDate from "@/components/ClientDate/ClientDate";
 
 import { ORDER_STATUS_TYPE, PAYMENT_TYPE } from "@/constants/order";
 import { getAdminOrderById } from "@/lib/api";
@@ -38,7 +38,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
           </div>
           <div className="mt-1 md:justify-normal font-text text-xs text-gray-900">
             <span className="self-start mr-1 md:mr-3">Создан:</span>
-            <ClientOrderDate createdAt={order.createdAt} />
+            <ClientDate date={order.createdAt} />
           </div>
           {order.paymentType === PAYMENT_TYPE.PREPAID && (
             <div className="mt-1 md:justify-normal font-text text-xs text-gray-900">

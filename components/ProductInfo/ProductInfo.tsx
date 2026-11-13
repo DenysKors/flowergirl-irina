@@ -1,5 +1,7 @@
 import { CldImage } from "next-cloudinary";
 
+import ClientDate from "@/components/ClientDate/ClientDate";
+
 import { ProductWithCats } from "@/types/types";
 
 type ProductInfoProps = {
@@ -120,21 +122,11 @@ export default function ProductInfo({ productInfo }: ProductInfoProps) {
           <div className="rounded-[28px] bg-background p-4 space-y-2.5">
             <div className="flex items-center justify-between md:gap-3 md:justify-normal text-xs">
               <span className="self-start">Создано:</span>
-              <span className="font-text text-xs text-slate-600">
-                {new Intl.DateTimeFormat("uk-UA", {
-                  dateStyle: "long",
-                  timeStyle: "short",
-                }).format(new Date(productInfo.createdAt))}
-              </span>
+              <ClientDate date={ productInfo.createdAt} className="font-text text-xs text-slate-600"/>
             </div>
             <div className="flex items-center justify-between md:gap-3 md:justify-normal text-xs">
               <span className="self-start">Обновлено:</span>
-              <span className="font-text text-xs text-slate-600">
-                {new Intl.DateTimeFormat("uk-UA", {
-                  dateStyle: "long",
-                  timeStyle: "short",
-                }).format(new Date(productInfo.updatedAt))}
-              </span>
+              <ClientDate date={ productInfo.updatedAt} className="font-text text-xs text-slate-600"/>
             </div>
           </div>
         </div>

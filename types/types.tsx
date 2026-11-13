@@ -38,7 +38,7 @@ export type ProductsWithPagin = {
 
 export type ProductToUpdate = {
   id: number;
-  description: string | null;
+  description: string;
   categoryId: number;
   qty: number;
   unit: string;
