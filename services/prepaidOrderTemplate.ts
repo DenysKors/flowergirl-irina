@@ -33,13 +33,13 @@ export const prepaidOrderTemplate = async (order: CreateOrderPayload) => {
 
       if (product.qty < prod.qty) {
         throw new Error(
-          `Недостатня кількість товара арт. ${product.sku} на складі. Сформуйте кошик заново.`
+          `Недостатня кількість товара арт. ${product.sku} на складі. Сформуйте кошик знову.`
         );
       }
 
       if (Number(product.price) !== prod.price) {
         throw new Error(
-          `Ціна товара арт. ${product.sku} змінилась. Сформуйте кошик заново.`
+          `Ціна товара арт. ${product.sku} змінилась. Сформуйте кошик знову.`
         );
       }
 

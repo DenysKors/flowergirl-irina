@@ -15,8 +15,8 @@ export async function POST(request: NextRequest) {
   try {
     const orderData = await checkPaidOrderStatus(orderReference);
 
-    if (orderData.status === "paid" || orderData.status === "failed" || orderData.status === "pending") { return NextResponse.json(orderData); }
-    else if (orderData.status === "shipped" || orderData.status === "completed") {
+    if (orderData.status === "paid" || orderData.status === "failed") { return NextResponse.json(orderData); }
+    else if (orderData.status === "shipped" || orderData.status === "completed" || orderData.status === "processing") {
       orderData.status = "paid";
       return NextResponse.json(orderData);
     }

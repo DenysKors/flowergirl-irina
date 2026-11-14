@@ -57,8 +57,9 @@ export default function WayForPay({
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data);
+       return toast.error(data);
       }
+
       const {
         merchantAccount,
         merchantSignature,
@@ -72,8 +73,6 @@ export default function WayForPay({
         setIsFetching(false);
         return alert("Сума замовлення не співпадає. Сформуйте кошик знову.");
       }
-
-      localStorage.setItem("pending_order_ref", orderRef);
 
       const productName = productData.map((item) => item.name);
       const productPrice = productData.map((item) => Number(item.price));
@@ -102,11 +101,15 @@ export default function WayForPay({
         },
         function (response) {
           const orderReference = response.orderReference;
+          localStorage.setItem("pending_order_ref", orderReference);
           router.push(`/payment/success?ref=${orderReference}`);
           onClose(false);
         },
         function () {
-          localStorage.removeItem("pending_order_ref");
+          const orderReference = response.orderReference;
+          localStorage.setItem("pending_order_ref", orderReference);
+          router.push(`/payment/success?ref=${orderReference}`);
+          onClose(false);
         },
         async function () {}
       );

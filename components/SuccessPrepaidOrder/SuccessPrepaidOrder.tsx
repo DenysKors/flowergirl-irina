@@ -106,11 +106,6 @@ export default function SuccessPrepaidOrder() {
 
   return (
     <>
-      {data && data.status === "pending" && !isLoading && !error && (
-        <div className="font-text text-base md:text-lg lg:text-xl text-text text-center">
-          Платіж в стадії обробки.
-        </div>
-      )}
       {data && data.status === "failed" && !isLoading && !error && (
         <div className="font-text text-base md:text-lg lg:text-xl text-text text-center">
           Помилка при оплаті.
