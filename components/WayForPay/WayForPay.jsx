@@ -74,6 +74,8 @@ export default function WayForPay({
         return alert("Сума замовлення не співпадає. Сформуйте кошик знову.");
       }
 
+      // localStorage.setItem("pending_order_ref", orderRef);
+
       const productName = productData.map((item) => item.name);
       const productPrice = productData.map((item) => Number(item.price));
       const productCount = productData.map((item) => Number(item.qty));
@@ -98,17 +100,16 @@ export default function WayForPay({
           clientPhone: basketCustomerData.phoneNumber,
           language: "UA",
           serviceUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/api/wayforpay/callback`,
+          returnUrl:`${process.env.NEXT_PUBLIC_SITE_URL}/payment/success?ref=${orderRef}`,
         },
         function (response) {
-          const orderReference = response.orderReference;
-          localStorage.setItem("pending_order_ref", orderReference);
-          router.push(`/payment/success?ref=${orderReference}`);
+          // const orderReference = response.orderReference;
+          // router.push(`/payment/success?ref=${orderReference}`);
           onClose(false);
         },
         function () {
-          const orderReference = response.orderReference;
-          localStorage.setItem("pending_order_ref", orderReference);
-          router.push(`/payment/success?ref=${orderReference}`);
+          // const orderReference = response.orderReference;
+          // router.push(`/payment/success?ref=${orderReference}`);
           onClose(false);
         },
         async function () {}

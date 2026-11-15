@@ -57,9 +57,11 @@ export default function SuccessPrepaidOrder() {
     refetchInterval: (query) => {
       const status = query.state.data?.status;
 
-      if (status === "paid" || status === "failed") {
-        return false;
-      } else if (query.state.status === "error") { return false }
+      if (status === "paid" || status === "failed") return false;
+
+      if (query.state.status === "error") return false;
+
+      if (query.state.dataUpdateCount < 10) return false;
       
       return 2000;
     },

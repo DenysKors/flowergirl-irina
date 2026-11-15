@@ -36,11 +36,11 @@ export default function Header({
   );
   suppliesCatsArr.forEach((slug) => suppliesParams.append("category", slug));
 
-  useEffect(() => {
-    const orderRef = localStorage.getItem("pending_order_ref");
-    if (!orderRef) return;
-    router.push(`/payment/success?ref=${orderRef}`);
-  }, [router]);
+  // useEffect(() => {
+  //   const orderRef = localStorage.getItem("pending_order_ref");
+  //   if (!orderRef) return;
+  //   router.push(`/payment/success?ref=${orderRef}`);
+  // }, [router]);
 
   const handleToggle = () => {
     setisMobMenuShow((prev) => !prev);
