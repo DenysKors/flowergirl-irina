@@ -1,9 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { useBasketStore } from "@/store/basketStore";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 
 class ApiError extends Error {
   constructor(
@@ -30,24 +31,15 @@ const fetchOrderStatus = async (orderReference: string) => {
 };
 
 export default function SuccessPrepaidOrder() {
-  const [localRef] = useState<string | null>(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("pending_order_ref");
-    }
-    return null;
-  });
-
   const reset = useBasketStore((state) => state.reset);
   const searchParams = useSearchParams();
 
   const urlOrderRef = searchParams.get("ref");
 
-  const activeOrderRef = urlOrderRef || localRef;
-
   const { data, error, isLoading } = useQuery({
-    queryKey: ["orderStatus", activeOrderRef],
-    queryFn: () => fetchOrderStatus(activeOrderRef!),
-    enabled: !!activeOrderRef,
+    queryKey: ["orderStatus", urlOrderRef],
+    queryFn: () => fetchOrderStatus(urlOrderRef!),
+    enabled: !!urlOrderRef,
     retry: (failureCount, err) => {
     if (err instanceof ApiError && err.status >= 400 && err.status < 500) {
       return false;
@@ -61,7 +53,7 @@ export default function SuccessPrepaidOrder() {
 
       if (query.state.status === "error") return false;
 
-      if (query.state.dataUpdateCount < 10) return false;
+      if (query.state.dataUpdateCount >= 1) return false;
       
       return 2000;
     },
@@ -71,18 +63,13 @@ export default function SuccessPrepaidOrder() {
   const isFinal = data?.status === "paid" || data?.status === "failed";
   const isOrderNotFound = error instanceof ApiError && (error.status === 422 || error.status === 404);
 
-  useEffect(() => {
+    useEffect(() => {
     if (isFinal) {
-      localStorage.removeItem("pending_order_ref");
       reset();
     }
-    
-    if (isOrderNotFound) { 
-      localStorage.removeItem("pending_order_ref");
-    }
-  }, [isFinal, isOrderNotFound]);
+  }, [isFinal]);
 
-  if (!activeOrderRef || isOrderNotFound) {
+  if (!urlOrderRef || isOrderNotFound) {
     return (
       <div className="font-text text-base md:text-lg lg:text-xl text-text text-center">
         Номер замовлення не знайдено. Зв&apos;яжіться з менеджером.
@@ -108,9 +95,24 @@ export default function SuccessPrepaidOrder() {
 
   return (
     <>
+      {data && data.status === "pending" && !isLoading && !error && (
+        <div className="flex flex-col items-center gap-6">
+          <p className="font-text text-base md:text-lg lg:text-xl text-text text-center">Платіж в стадії обробки або оплату скасовано покупцем. <br/> Якщо самостійно скасували оплату, перейдіть на головну сторінку.</p>
+          <Link className="py-2 xl:py-2.5 px-6 rounded-lg font-text text-background bg-violet-800 hover:bg-violet-950 cursor-pointer"
+            href="/"
+            title="На головну сторінку"
+          >На головну
+            </Link>
+        </div>
+      )}
       {data && data.status === "failed" && !isLoading && !error && (
-        <div className="font-text text-base md:text-lg lg:text-xl text-text text-center">
-          Помилка при оплаті.
+                <div className="flex flex-col items-center gap-6">
+          <p className="font-text text-base md:text-lg lg:text-xl text-text text-center">Помилка при оплаті.</p>
+          <Link className="py-2 xl:py-2.5 px-6 rounded-lg font-text text-background bg-violet-800 hover:bg-violet-950 cursor-pointer"
+            href="/"
+            title="На головну сторінку"
+          >На головну
+            </Link>
         </div>
       )}
       {data && data.status === "paid" && !isLoading && !error && (
@@ -121,9 +123,16 @@ export default function SuccessPrepaidOrder() {
           <p className="pb-4 font-text text-base md:text-lg lg:text-xl text-text text-center">
             Номер вашого замовлення:{" "} <span className="font-text text-base md:text-lg lg:text-xl text-text whitespace-nowrap">{data.publicId}</span>
           </p>
-          <p className="font-text text-base md:text-lg lg:text-xl text-text text-center">
+          <p className="pb-6 font-text text-base md:text-lg lg:text-xl text-text text-center">
             Ваше замовлення буде відправлене впродовж 5 робочих днів за сприятливих погодних умов.
           </p>
+          <div className="flex justify-center">
+          <Link className="inline-block py-2 xl:py-2.5 px-6 rounded-lg font-text text-background bg-violet-800 hover:bg-violet-950 cursor-pointer"
+            href="/"
+            title="На головну сторінку"
+            >На головну
+            </Link>
+            </div>
         </>
       )}
     </>

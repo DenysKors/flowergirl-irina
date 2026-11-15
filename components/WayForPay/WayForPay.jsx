@@ -100,19 +100,23 @@ export default function WayForPay({
           clientPhone: basketCustomerData.phoneNumber,
           language: "UA",
           serviceUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/api/wayforpay/callback`,
-          returnUrl:`${process.env.NEXT_PUBLIC_SITE_URL}/payment/success?ref=${orderRef}`,
+          returnUrl:`${process.env.NEXT_PUBLIC_SITE_URL}/api/payment/return?ref=${orderRef}`,
         },
         function (response) {
-          // const orderReference = response.orderReference;
-          // router.push(`/payment/success?ref=${orderReference}`);
+          const orderReference = response.orderReference;
+          router.push(`/payment/success?ref=${orderReference}`);
           onClose(false);
         },
         function () {
-          // const orderReference = response.orderReference;
-          // router.push(`/payment/success?ref=${orderReference}`);
+          const orderReference = response.orderReference;
+          router.push(`/payment/success?ref=${orderReference}`);
           onClose(false);
         },
-        async function () {}
+        async function () {
+          const orderReference = response.orderReference;
+          router.push(`/payment/success?ref=${orderReference}`);
+          onClose(false);
+        }
       );
     } catch (error) {
       console.error("Помилка платежу:", error);

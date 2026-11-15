@@ -15,11 +15,10 @@ export async function POST(request: NextRequest) {
   try {
     const orderData = await checkPaidOrderStatus(orderReference);
 
-    if (orderData.status === "paid" || orderData.status === "failed") { return NextResponse.json(orderData); }
-    else if (orderData.status === "shipped" || orderData.status === "completed" || orderData.status === "processing") {
-      orderData.status = "paid";
-      return NextResponse.json(orderData);
-    }
+    if (orderData.status === "shipped" || orderData.status === "completed" || orderData.status === "processing") {
+      const successOrder = { ...orderData, status: "paid" };
+      return NextResponse.json(successOrder);
+    } else { return NextResponse.json(orderData)}
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.log("error", error);
