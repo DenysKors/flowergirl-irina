@@ -32,8 +32,6 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
   const updateCustomerData = useBasketStore(
     (state) => state.updateCustomerData
   );
-  // const reset = useBasketStore((state) => state.reset);
-  // const router = useRouter();
 
   const handleDecr = (id: number, userQty: number) => {
     if (userQty === 1) return;
@@ -44,12 +42,6 @@ export default function ProductBasket({ onClose }: ProductBasketProp) {
     if (userQty >= stock) return;
     increaseQty(id, userQty);
   };
-
-  // const handleTermsApprove = () => {
-  //   reset();
-  //   onClose(false);
-  //   router.refresh();
-  // };
 
   const handleChange = (
     evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

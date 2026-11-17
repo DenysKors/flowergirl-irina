@@ -1,4 +1,5 @@
 import { connection } from "next/server";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import OrderStatusAction from "@/components/OrderSatusAction/OrderSatusAction";
@@ -30,7 +31,9 @@ export default async function OrderPage({ params }: OrderPageProps) {
           <div className="flex items-center gap-3">
             <h1 className="font-heading lg:text-2xl text-text tracking-tight wrap-break-word">
               Заказ{" "}
-              <span className="font-text block tablet:inline">{order.publicId}</span>
+              <span className="font-text block tablet:inline">
+                {order.publicId}
+              </span>
             </h1>
             <span className="self-start inline-flex items-center rounded-md bg-blue-50 px-2 py-0.5 text-xs font-text text-blue-700 ring-1 ring-inset ring-blue-700/10">
               {statusName}
@@ -46,6 +49,12 @@ export default async function OrderPage({ params }: OrderPageProps) {
             </div>
           )}
         </div>
+        <Link
+          className="w-fit rounded-md border border-gray-300 bg-background px-4 py-2 text-sm font-text- text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+          href={`/dashboard/orders/${id}/print`}
+        >
+          Версия для печати
+        </Link>
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">

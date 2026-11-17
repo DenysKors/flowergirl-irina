@@ -213,7 +213,7 @@ export default function BasketWidget({ setPostLocation }) {
       <div className="modal-overlay" id="modal-overlay">
         <div className="modal">
           <header className="modal-header">
-            <h2>Вибрати відділення</h2>
+            <h2>Вибрати відділення:</h2>
             <span className="modal-close" onClick={closeFrame}>
               &times;
             </span>
