@@ -74,8 +74,6 @@ export default function WayForPay({
         return alert("Сума замовлення не співпадає. Сформуйте кошик знову.");
       }
 
-      // localStorage.setItem("pending_order_ref", orderRef);
-
       const productName = productData.map((item) => item.name);
       const productPrice = productData.map((item) => Number(item.price));
       const productCount = productData.map((item) => Number(item.qty));
@@ -109,6 +107,7 @@ export default function WayForPay({
         },
         function () {
           const orderReference = response.orderReference;
+          console.log(orderReference);
           router.push(`/payment/success?ref=${orderReference}`);
           onClose(false);
         },

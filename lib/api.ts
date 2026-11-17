@@ -2,7 +2,7 @@ import slugify from "slugify";
 import prisma from "@/lib/prisma";
 
 import { cache } from "react";
-import { Prisma, OrderStatus, PaymentType} from "@/prisma/generated/client";
+import { Prisma, OrderStatus, PaymentType } from "@/prisma/generated/client";
 import { uploadProductImage } from "@/lib/cloudinaryUpload";
 import { deleteImage } from "@/lib/cloudinaryDelete";
 import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
@@ -425,43 +425,39 @@ export const updateProduct = async (productData: FormData) => {
 };
 
 export const getAdminAnalytics = async () => {
-    const thirtyDaysAgo = new Date();
+  const thirtyDaysAgo = new Date();
 
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  const [
-    totalProducts,
-    outOfStockProducts,
-    ordersAmount,
-    newOrders,
-  ] = await Promise.all([
-    prisma.product.count({
-      where: { isDeleted: false },
-    }),
-    prisma.product.count({
-      where: {
-        qty: 0,
-        isDeleted: false,
-      },
-    }),
-    prisma.order.count({
-      where: {
-        createdAt: { gte: thirtyDaysAgo },
-        NOT: [
-          {
-            paymentType: "prepaid",
-            status: "pending",
-          },
-        ],
-      },
-    }),
-    prisma.order.count({
-      where: {       
-            status: "paid",
-            paymentType: "prepaid",
-      },
-    }),
-  ]);
+  const [totalProducts, outOfStockProducts, ordersAmount, newOrders] =
+    await Promise.all([
+      prisma.product.count({
+        where: { isDeleted: false },
+      }),
+      prisma.product.count({
+        where: {
+          qty: 0,
+          isDeleted: false,
+        },
+      }),
+      prisma.order.count({
+        where: {
+          createdAt: { gte: thirtyDaysAgo },
+          NOT: [
+            {
+              paymentType: "prepaid",
+              status: "pending",
+            },
+          ],
+        },
+      }),
+      prisma.order.count({
+        where: {
+          status: "paid",
+          paymentType: "prepaid",
+        },
+      }),
+    ]);
 
   return {
     totalProducts,
@@ -509,37 +505,6 @@ export const getSearchProducts = async (query: string, page: number) => {
     }));
 
     return { products, pagination: { totalCount, totalPages } };
-
-    // const whereCondition = {
-    //   isDeleted: false,
-    //   OR: [{ name: { contains: query } }, { description: { contains: query } }],
-    // };
-
-    // try {
-    //   const [userProducts, totalCount] = await Promise.all([
-    //     prisma.product.findMany({
-    //       where: whereCondition,
-    //       include: {
-    //         category: true,
-    //       },
-    //       take: PRODUCT_PAGINATION_LIMIT,
-    //       skip: skip,
-    //       orderBy: { createdAt: "desc" },
-    //     }),
-    //     prisma.product.count({ where: whereCondition }),
-    //   ]);
-
-    //   const totalPages = Math.ceil(totalCount / PRODUCT_PAGINATION_LIMIT);
-
-    //   const products = userProducts.map((prod) => ({
-    //     ...prod,
-    //     price: prod.price.toNumber(),
-    //   }));
-
-    //   return {
-    //     products,
-    //     pagination: { totalCount, totalPages },
-    //   };
   } catch (err) {
     throw err;
   }
@@ -579,18 +544,16 @@ export const getAdminOrders = async (
     andConditions.push({ id: { in: matched.map((r) => r.id) } });
   }
 
-
   andConditions.push({ paymentType: PaymentType.prepaid });
- 
-   andConditions.push({
-       NOT: [
-        {
-         status: "pending",
-         paymentType: "prepaid",
-        },
-       ],
-    });
 
+  andConditions.push({
+    NOT: [
+      {
+        status: "pending",
+        paymentType: "prepaid",
+      },
+    ],
+  });
 
   if (rawStatus) {
     andConditions.push({ status: rawStatus as OrderStatus });
