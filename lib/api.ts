@@ -713,3 +713,17 @@ export const getUser = async (email: string, password: string) => {
     role: user.role,
   };
 };
+
+export const deleteOrdersCron = async () => {
+  const expiredFrom = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
+  const delOrdersCount = await prisma.order.deleteMany({
+    where: {
+      status: "pending",
+      paymentType: "prepaid",
+      createdAt: { lt: expiredFrom },
+    },
+  });
+
+  return delOrdersCount.count;
+};
