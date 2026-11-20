@@ -107,9 +107,14 @@ export default function OrdersTable() {
           }),
         }
       );
+
+      const orderData = await response.json();
+
+      if (orderData.status === "cancelled")
+        toast.success("Кол-во товаров из заказа возвращено на остаток");
+
       if (!response.ok) {
-        const errData = await response.json();
-        toast.error(errData);
+        toast.error(orderData);
       }
     },
     onSuccess: () => {

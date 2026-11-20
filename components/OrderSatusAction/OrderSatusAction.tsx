@@ -26,7 +26,7 @@ export default function OrderStatusAction({
   const handleStatusChange = async (
     evt: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    if (evt.target.value ===  orderStatus) return;
+    if (evt.target.value === orderStatus) return;
 
     const response = await fetch(`/api/update-order/${orderId}`, {
       method: "PATCH",
@@ -36,9 +36,13 @@ export default function OrderStatusAction({
         newStatus: evt.target.value,
       }),
     });
+    const orderData = await response.json();
+
+    if (orderData.status === "cancelled")
+      toast.success("Кол-во товаров из заказа возвращено на остаток");
+
     if (!response.ok) {
-      const errData = await response.json();
-      toast.error(errData);
+      toast.error(orderData);
     }
     router.refresh();
   };
