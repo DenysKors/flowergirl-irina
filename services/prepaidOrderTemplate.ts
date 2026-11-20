@@ -27,7 +27,7 @@ export const prepaidOrderTemplate = async (order: CreateOrderPayload) => {
         where: { id: prod.id },
       });
 
-      if (!product) {
+      if (!product || product.isDeleted) {
         throw new Error(`Товар з ID ${prod.id} не знайдено`);
       }
 

@@ -8,6 +8,7 @@ import { deleteImage } from "@/lib/cloudinaryDelete";
 import { PRODUCT_PAGINATION_LIMIT } from "@/constants/pagination";
 import { CreateOrderPayload } from "@/types/types";
 import { prepaidOrderTemplate } from "@/services/prepaidOrderTemplate";
+import { cancelOrder } from "@/services/cancelOrder";
 // import { hashPassword} from "@/lib/utils";
 import { verifyPassword } from "@/lib/utils";
 
@@ -587,22 +588,27 @@ export const updateOrderStatus = async (orderData: {
   const id = parseInt(orderData.orderId);
 
   try {
-    const updatedOrder = await prisma.order.update({
-      where: { id },
-      data: {
-        status: orderData.newStatus,
-      },
-      select: {
-        id: true,
-        status: true,
-      },
-    });
+    if (orderData.newStatus === OrderStatus.cancelled) {
+      const updatedOrder = await cancelOrder(id);
+      return updatedOrder;
+    } else {
+      const updatedOrder = await prisma.order.update({
+        where: { id },
+        data: {
+          status: orderData.newStatus,
+        },
+        select: {
+          id: true,
+          status: true,
+        },
+      });
 
-    return updatedOrder;
+      return updatedOrder;
+    }
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === "P2025") {
-        throw new Error("Такого товара не существует");
+        throw new Error("Такого заказа не существует");
       } else if (err.code === "P2002") {
         throw new Error("Обновление уникального поля невозможно");
       }
