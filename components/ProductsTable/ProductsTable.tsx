@@ -20,6 +20,7 @@ import {
 
 import ProductInfo from "@/components/ProductInfo/ProductInfo";
 import Modal from "@/components/ModalRoot/ModalRoot";
+import { TableQtyCell } from "@/components/TableQtyCell/TableQtyCell";
 import { CategoryFilter } from "@/components/CategoryFilter/CategoryFilter";
 import { SortIcon } from "@/components/SortIcon/SortIcon";
 import { ProductWithCats } from "@/types/types";
@@ -55,6 +56,7 @@ export default function ProductsTable() {
     data = [],
     isLoading,
     isError,
+    isFetching,
     error,
   } = useQuery<ProductWithCats[]>({
     queryKey: ["admin-products"],
@@ -75,6 +77,28 @@ export default function ProductsTable() {
   const categoryOptions = Array.from(
     new Map(unsortedOptions.map((item) => [item.label, item])).values()
   ) as { label: string; value: string }[];
+
+  const updateMutation = useMutation({
+    mutationFn: async ({ id, qty }: { id: number; qty: number }) => {
+      const response = await fetch(`/api/update-product/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, qty }),
+      });
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        throw new Error(body ?? "Ошибка обновления");
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      toast.success("Кол-во изменено");
+      return queryClient.invalidateQueries({ queryKey: ["admin-products"] });
+    },
+  });
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
@@ -130,8 +154,19 @@ export default function ProductsTable() {
       }),
       columnHelper.accessor("qty", {
         header: () => "Кол-во",
-        size: 130,
+        size: 80,
         enableSorting: true,
+        cell: (info) => (
+          <div className="flex justify-center w-full">
+            <TableQtyCell
+              id={info.row.original.id}
+              value={info.getValue()}
+              onBlur={(id, qty, onDone) =>
+                updateMutation.mutate({ id, qty }, { onSettled: onDone })
+              }
+            />
+          </div>
+        ),
       }),
       columnHelper.accessor("unit", {
         header: () => "Ед.",
@@ -297,7 +332,9 @@ export default function ProductsTable() {
           </div>
           <div className="overflow-x-auto border border-gray-200 rounded-lg">
             <table
-              className="min-w-full divide-y divide-gray-200 text-left text-sm"
+              className={`min-w-full divide-y divide-gray-200 text-left text-sm ${
+                isFetching ? "opacity-40" : ""
+              }`}
               style={{ width: table.getTotalSize() }}
             >
               <thead className="bg-gray-100">

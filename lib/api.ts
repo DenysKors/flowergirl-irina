@@ -425,6 +425,34 @@ export const updateProduct = async (productData: FormData) => {
   }
 };
 
+export const updateProductQty = async ({
+  id,
+  qty,
+}: {
+  id: number;
+  qty: number;
+}) => {
+  try {
+    const updatedProduct = await prisma.product.update({
+      where: { id },
+      data: {
+        qty,
+      },
+    });
+
+    return updatedProduct;
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      if (err.code === "P2025") {
+        throw new Error("Такого товара не существует");
+      } else if (err.code === "P2002") {
+        throw new Error("Обновление уникального поля невозможно");
+      }
+    }
+    throw err;
+  }
+};
+
 export const getAdminAnalytics = async () => {
   const thirtyDaysAgo = new Date();
 
