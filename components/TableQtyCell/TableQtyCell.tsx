@@ -37,23 +37,6 @@ export function TableQtyCell({ id, value, onBlur, isFetching }: QtyCellProps) {
     }
     setDraft(null);
   };
-  // const [userQty, setUserQty] = useState(value?.toString() ?? "");
-
-  // useEffect(() => {
-  //   setUserQty(value?.toString() ?? "");
-  // }, [value]);
-
-  // const record = () => {
-  //   try {
-  //     const qty = qtySchema.validateSync(userQty);
-  //     if (qty !== value) onBlur(id, qty, () => setUserQty(value.toString()));
-  //   } catch (err) {
-  //     if (err instanceof Yup.ValidationError) {
-  //       toast.error(err.message);
-  //     }
-  //     setUserQty(value.toString());
-  //   }
-  // };
 
   return (
     <input

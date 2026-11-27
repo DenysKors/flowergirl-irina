@@ -15,9 +15,10 @@ export default function ModalTerms() {
       <div className="p-4 md:p-8">
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           Цей документ є офіційною пропозицією (публічною офертою)
-          інтернет-магазину Ірочка Хазяйка (далі — Продавець) для будь-якої
-          фізичної або юридичної особи (далі — Покупець) укласти договір
-          купівлі-продажу товарів на сайті Продавця на вказаних нижче умовах.
+          інтернет-магазину Ірочка Хазяйка (ФОП Ляховольська Ірина Анатоліївна),
+          (далі — Продавець) для будь-якої фізичної або юридичної особи (далі —
+          Покупець) укласти договір купівлі-продажу товарів на сайті Продавця на
+          вказаних нижче умовах.
         </p>
         <br />
         <h2 className="font-heading text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
@@ -43,13 +44,13 @@ export default function ModalTerms() {
           2. СТРОКИ ОБРОБКИ ТА НАДАННЯ ТОВАРУ
         </h2>
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
-          2.1. Після оформлення Замовлення на сайті менеджер магазину
-          підтверджує його протягом 1-2 робочих днів.
+          2.1. Після оформлення та оплати Замовлення на сайті менеджер магазину
+          обробляє його протягом 1-2 робочих днів.
         </p>
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           2.2. Збір, підготовка, професійне пакування та відправка рослин
-          здійснюються протягом 2–5 робочих днів з моменту підтвердження
-          Замовлення (або з моменту отримання онлайн-оплати).{" "}
+          здійснюються протягом 2–5 робочих днів з моменту отримання
+          онлайн-оплати.
         </p>
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           2.3. Відправка живих рослин може бути тимчасово призупинена або
@@ -67,12 +68,12 @@ export default function ModalTerms() {
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           3.2. Доставка можлива у всі населені пункти України (міста, смт,
           села), де функціонують чинні відділення або поштомати логістичної
-          служби доставки «Нова Пошта».{" "}
+          служби доставки «Нова Пошта».
         </p>
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           3.3. Доставка НЕ здійснюється до тимчасово окупованих територій
           України, а також у зони активних бойових дій, де логістичні компанії
-          призупинили свою роботу.{" "}
+          призупинили свою роботу.
         </p>
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           3.4. Міжнародна доставка в інші країни світу не здійснюється.
@@ -84,7 +85,7 @@ export default function ModalTerms() {
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           4.1. Доставка всіх Замовлень по території України здійснюється
           логістичною компанією «Нова Пошта».
-        </p>{" "}
+        </p>
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           4.2. Покупець може обрати відділення або поштомат, з наявних, при
           оформленні замовлення.
@@ -101,10 +102,10 @@ export default function ModalTerms() {
           Покупець може оплатити Замовлення наступним чином:
         </p>
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
-          5.1. Онлайн-оплата на сайті: Безпечна оплата банківською картою (Visa,
+          5.1. Онлайн-оплата на сайті: Безпечна оплата платіжними картами (Visa,
           Mastercard) через інтегровану платіжну систему WayForPay відразу під
-          час оформлення Замовлення.{" "}
-        </p>{" "}
+          час оформлення Замовлення.
+        </p>
         <br />
         <h2 className="font-heading text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           6. ПРАВИЛА ПОВЕРНЕННЯ ТА ПРЕТЕНЗІЙ
@@ -113,13 +114,13 @@ export default function ModalTerms() {
           6.1. Відповідно до Постанови Кабінету Міністрів України № 172, живі
           рослини та продукція рослинництва належної якості не підлягають обміну
           або поверненню.
-        </p>{" "}
+        </p>
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           6.2. У разі виявлення суттєвих недоліків (рослина повністю згнила,
           заражена небезпечними шкідниками або сталася помилка
           сорту/пересортиця) Продавець зобов&apos;язується повернути кошти або
-          замінити Товар.{" "}
-        </p>{" "}
+          замінити Товар.
+        </p>
         <p className="font-text text-base/relaxed md:text-lg/relaxed lg:text-xl/loose text-justify tracking-wide">
           6.3. Претензії щодо якості рослин приймаються протягом 24 годин з
           моменту отримання посилки у відділенні «Нова Пошта». Для розгляду

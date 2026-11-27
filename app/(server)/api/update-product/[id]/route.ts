@@ -1,5 +1,8 @@
+import * as Yup from "yup";
+
 import { updateProduct, updateProductQty } from "@/lib/api";
 import { auth } from "@/app/auth";
+import { qtySchema } from "@/app/schema/qtySchema";
 
 export async function PATCH(
   request: Request,
@@ -37,40 +40,41 @@ export async function PATCH(
       return Response.json(updatedProduct);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.log("error", error);
         return new Response(JSON.stringify(`${error.message}`), {
           status: 422,
         });
       } else {
         return new Response(JSON.stringify("Operation failed"), {
-          status: 422,
+          status: 500,
         });
       }
     }
   } else {
     const productData = await request.json();
+
     if (Number(id) !== productData.id) {
       return new Response(
         JSON.stringify("Идентификаторы заказов не совпадают"),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
+        { status: 400 }
       );
     }
 
     try {
-      const updatedProduct = await updateProductQty(productData);
+      const qty = qtySchema.validateSync(productData.qty);
+      const updatedProduct = await updateProductQty({ ...productData, qty });
       return Response.json(updatedProduct);
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log("error", error);
+      if (error instanceof Yup.ValidationError) {
+        return new Response(JSON.stringify(`${error.message}`), {
+          status: 422,
+        });
+      } else if (error instanceof Error) {
         return new Response(JSON.stringify(`${error.message}`), {
           status: 422,
         });
       } else {
         return new Response(JSON.stringify("Operation failed"), {
-          status: 422,
+          status: 500,
         });
       }
     }

@@ -5,9 +5,11 @@ import Link from "next/link";
 
 import ModalRoot from "../ModalRoot/ModalRoot";
 import ModalTerms from "../ModalTerms/ModalTerms";
+import ModalRefund from "../ModalRefund/ModalRefund";
 
 export default function Footer() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
+  const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
 
   return (
     <footer className="pt-5 md:pt-8 lg:pt-10 bg-main">
@@ -28,25 +30,49 @@ export default function Footer() {
         </div>
         <div className="container pt-8 pb-6 md:pt-10 lg:pb-5">
           <div className="py-8 flex flex-col gap-3 justify-self-center md:flex-row md:justify-between md:items-start md:justify-self-auto">
-            <button
-              className="font-text text-base md:text-lg lg:text-xl text-background hover:underline cursor-pointer"
-              type="button"
-              title="Умови надання послуг та продажу товарів"
-              aria-label="Умови надання послуг та продажу товарів"
-              onClick={() => setIsModalOpen(true)}
-            >
-              Умови надання послуг та продажу товарів
-            </button>
-            {isModalOpen && (
-              <ModalRoot
-                onClose={() => setIsModalOpen(false)}
-                isSelfClose
-                isModalOpen
-              >
-                <ModalTerms />
-              </ModalRoot>
-            )}
-            <div>
+            <div className="md:basis-1/2 text-center">
+              <div className="mb-3">
+                <button
+                  className="font-text text-base md:text-lg lg:text-xl text-background hover:underline cursor-pointer underline"
+                  type="button"
+                  title="Правила і умови"
+                  aria-label="Правила і умови"
+                  onClick={() => setIsTermsModalOpen(true)}
+                >
+                  Умови надання послуг та продажу товарів
+                </button>
+                {isTermsModalOpen && (
+                  <ModalRoot
+                    onClose={() => setIsTermsModalOpen(false)}
+                    isSelfClose
+                    isModalOpen
+                  >
+                    <ModalTerms />
+                  </ModalRoot>
+                )}
+              </div>
+              <div>
+                <button
+                  className="font-text text-base md:text-lg lg:text-xl text-background hover:underline cursor-pointer underline"
+                  type="button"
+                  title="Правила і умови"
+                  aria-label="Правила і умови"
+                  onClick={() => setIsRefundModalOpen(true)}
+                >
+                  Повернення та обмін
+                </button>
+                {isRefundModalOpen && (
+                  <ModalRoot
+                    onClose={() => setIsRefundModalOpen(false)}
+                    isSelfClose
+                    isModalOpen
+                  >
+                    <ModalRefund />
+                  </ModalRoot>
+                )}
+              </div>
+            </div>
+            <div className="md:basis-1/2">
               <div className="mb-2">
                 <h3 className="font-text text-base md:text-lg lg:text-xl text-background text-center md:text-left">
                   Час роботи (обробка замовлень):
@@ -63,14 +89,17 @@ export default function Footer() {
               </div>
               <div className="flex flex-col gap-1">
                 <h3 className="font-text text-base md:text-lg lg:text-xl text-background text-center md:text-left">
-                  Контакти:
+                  Контактна інформація:
                 </h3>
                 <div className="mb-2">
                   <p className="ml-3 font-text text-sm md:text-md lg:text-lg text-background text-left">
                     ФОП Ляховольська Ірина Анатоліївна
+                    <br />
+                    ІПН ОК039110
                   </p>
                   <p className="ml-3 font-text text-sm md:text-md lg:text-lg text-background text-left">
-                    с.Нова Прага, вул.Золотий Яр, 2
+                    Україна, 28042, Кіровоградська обл., Олександрівський р-н,
+                    селище Нова Прага, вул.Золотий Яр, будинок 2
                   </p>
                 </div>
                 <Link
